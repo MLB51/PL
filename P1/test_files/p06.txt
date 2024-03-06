@@ -1,0 +1,23 @@
+
+funcion p06;
+
+blq
+ var a:entero;
+ fvar
+
+ a := 2;
+ a := a + 2;
+ blq
+       var b:entero;
+       fvar
+
+       blq
+          var c:real; fvar
+
+          b := a+3  /* falta ';' */
+
+          a := b
+       fblq
+  fblq
+fblq
+

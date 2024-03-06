@@ -1,0 +1,19 @@
+/*estoy intentando probar variedad de movidas a ver qe apsa*/
+funcion memuero23
+;
+
+   blq
+var perra:real   /*lol*/   ;
+
+
+
+
+fvar
+var         nose: tabla de real [82371..13456787654]; /*socorro*/ fvar
+perra := nose * 3 / 4 + 35 % 26.23456;
+                    escribe(perra);
+
+fblq
+        blq 
+        escribe(nose)
+        fblq

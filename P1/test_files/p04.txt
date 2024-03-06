@@ -1,0 +1,14 @@
+
+funcion p04;
+ blq
+  var a:real; fvar
+  blq
+   var b:real; fvar
+   blq
+     var a:entero; fvar
+     
+     a := a-a+a+a-a+a+a-a+a-a
+   fblq
+  fblq
+/* falta 'fblq' */
+

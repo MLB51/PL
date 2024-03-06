@@ -1,0 +1,53 @@
+Pred(S - funcion id pyc S B) = funcion
+Pred(S - €) = Sig(S) = $ blq
+Pred(D - var L fvar) = var
+Pred(L - V Lp) = Prim(V) = id 
+Pred(Lp - V Lp) = Prim(V) = id
+Pred(Lp - €) = Sig(Lp) = fvar
+Pred(V - id dosp C pyc) = id 
+Pred(C - A C) = Prim(A) = tabla 
+Pred(C - P) = Prim(P) = puntero entero real
+Pred(A - tabla cori R cord de) = tabla
+Pred(R - G Rp) = Prim(G) = numentero
+Pred(Rp - coma G Rp) = coma 
+Pred(Rp - €) = Sig(Rp) = cord
+Pred(G - numentero pto pto numentero) = numentero  
+Pred(P - puntero de P) = puntero 
+Pred(P - TIPO) = Prim(TIPO) = entero real
+Pred(TIPO - entero) = entero 
+Pred(TIPO - real) = real
+Pred(B - blq D SI fblq) = blq 
+Pred(SI - I M) = Prim(I) = id escribe blq
+Pred(M - pyc I M) = pyc 
+Pred(M - €) = Sig(M) = fblq
+Pred(I - id asig E) = id 
+Pred(I - escribe pari E pard) = escribe
+Pred(I - B) = Prim(B) = blq 
+Pred(E - T Ep) = Prim(T) = numentero numreal id 
+Pred(Ep - opas T Ep) = opas 
+Pred(Ep - €) = Sig(Ep) =  pyc fblq pard
+Pred(T - F Tp) = Prim(F) = numentero numreal id 
+Pred(Tp - opmul F Tp) = opmul 
+Pred(Tp - €) = Sig(Tp) = opas pyc fblq pard
+Pred(F - numentero) = numentero
+Pred(F - numreal) = numreal
+Pred(F - id) = id
+
+
+
+####################################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

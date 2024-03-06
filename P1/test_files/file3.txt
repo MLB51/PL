@@ -1,0 +1,7 @@
+blq;
+a := 23.45;
+b := a % b + 0;
+funcion ayayay(var)
+    tabla de real [3 ..14];
+    
+fblq;
