@@ -1,0 +1,8 @@
+funcion pc01;
+blq
+
+  var a tabla[1..2] de entero;
+
+    /* error sintactico en 'tabla' */
+
+fblq

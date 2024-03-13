@@ -1,0 +1,8 @@
+funcion pc05;
+
+blq
+
+  var a : real;
+
+  blq  /* error sintactico en 'blq' esperaba id o 'fvar' */
+  

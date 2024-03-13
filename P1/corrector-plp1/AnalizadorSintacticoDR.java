@@ -67,7 +67,7 @@ public class AnalizadorSintacticoDR {
     }
 
     public void S(){
-        // simbolo inciial es publico, el resto no
+        // simbolño inciial es publico, el resto no
         if(tipoToken == Token.FUNCION){
             reglas.append(1);
             reglas.append(' ');

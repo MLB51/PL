@@ -1,0 +1,40 @@
+funcion abuela;
+
+  funcion madre;
+
+     funcion hija;
+     blq
+        var a: tabla [1..3] de real;
+        fvar
+        escribe(7)
+     fblq
+  blq
+     var b:entero; fvar
+     blq
+       var n:real;
+       fvar
+       n := 123.456
+     fblq;
+     escribe(39)
+  fblq
+
+blq
+  var 
+     a : entero;
+     b : real;
+     c : puntero de entero;
+     d : puntero de puntero de entero;
+     e : tabla [1..4,2..5,3..6,4..7] de real;
+     f : tabla [100..105,200..201] de entero;
+     ascii : tabla[127..255]de entero;
+  fvar
+
+  blq var i:entero; fvar
+    a := 7
+  fblq;
+
+  escribe(2+4*5-a // 2);
+  a := 37 % 30 // 2;
+  b := a/2
+fblq
+  
