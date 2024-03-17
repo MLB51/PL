@@ -1,0 +1,16 @@
+
+funcion prueba;
+
+blq
+ var a : entero;
+     b : real;
+     c : entero;
+ fvar
+
+   a := 7 - b + 2 + 2.3;
+   escribe(c + 2- 3 - 4.5 );
+   blq
+     var e:real; fvar
+     e := 7
+   fblq
+fblq

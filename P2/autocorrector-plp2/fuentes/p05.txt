@@ -1,0 +1,14 @@
+funcion p05;
+
+blq
+  var tabla : real;
+      de : entero;
+      puntero : real;
+  fvar
+
+  de := 23 - 4 + 5 + 2;
+  puntero := de + 3 - 7;
+  
+  escribe(de);        /* 26 */
+  escribe(puntero)    /* 22 */
+fblq
