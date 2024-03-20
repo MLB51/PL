@@ -1,0 +1,7 @@
+funcion pc02;
+
+blq
+
+  /* comentario que no termina:
+
+     Error lexico: fin de fichero inesperado

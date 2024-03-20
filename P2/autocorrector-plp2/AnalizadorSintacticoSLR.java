@@ -1,7 +1,9 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -172,6 +174,25 @@ public class AnalizadorSintacticoSLR {
         public String get(int state, int token) {
             return data.getOrDefault(state, new HashMap<>()).getOrDefault(token, "No action found");
         }
+        public int[] getSiguientes(int state) {
+            Set<Integer> values = data.getOrDefault(state, new HashMap<>()).keySet();
+            //System.err.println(state);
+            ArrayList<Integer> filtered_values = new ArrayList<>();
+
+            for(Integer aux: values){
+                if(aux<90){
+                    filtered_values.add(aux);
+                }
+            }
+
+            int[] value_array = new int[filtered_values.size()];
+            int i=0;
+            for(int aux: filtered_values){
+                value_array[i] = aux; 
+                i++;
+            }
+            return value_array;
+        }
         
     }
     
@@ -254,9 +275,9 @@ public class AnalizadorSintacticoSLR {
 
         do{
             //this.printPila();
-            //System.out.printf("%n   %d - %s => ",estado, tokenActual.getLexema());
+            //System.err.printf("%n   %d - %s => ",estado, tokenActual.getLexema());
             action = acciones.get(estado, this.tipoToken);
-            //System.out.println(action);
+            //System.err.println(action);
             
             if(action.charAt(0) == 'd'){
                 // añade el estado a la pila
@@ -285,7 +306,7 @@ public class AnalizadorSintacticoSLR {
                 estado = estadoActual();
 
             }else if(action != "acepta"){
-                errorSintaxis(); //! REVISAR 
+                errorSintaxis(acciones.getSiguientes(estado)); //! REVISAR 
             }
             //System.out.println();
             

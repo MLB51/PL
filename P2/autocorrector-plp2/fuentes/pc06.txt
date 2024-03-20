@@ -1,0 +1,9 @@
+funcion pc06;
+
+blq
+    var a : real;
+    fvar
+
+    a := .27 ; /* Error léxico en '.' */
+
+fblq

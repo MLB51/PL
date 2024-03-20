@@ -1,0 +1,7 @@
+funcion pc04;
+
+blq
+
+  var a : tabla [1..2 de real;
+
+  /* error sintactico en 'de'  */
