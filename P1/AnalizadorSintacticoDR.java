@@ -6,12 +6,13 @@ public class AnalizadorSintacticoDR {
     private int tipoToken;
     boolean printeaReglas = true;
     StringBuilder reglas = new StringBuilder();
-
+    int profundidad_S;
 
     public AnalizadorSintacticoDR(AnalizadorLexico al){
         this.al = al;
         this.tokenActual = al.siguienteToken();
         this.tipoToken = this.tokenActual.getTipo();
+        this.profundidad_S = 0;
     }
 
 
@@ -74,8 +75,20 @@ public class AnalizadorSintacticoDR {
             emparejar(Token.FUNCION);
             emparejar(Token.ID);
             emparejar(Token.PYC);
+            // S();
+            // B();
+
+            this.profundidad_S++;
             S();
+            this.profundidad_S--;
             B();
+            if(this.profundidad_S==0){
+                if(tipoToken == Token.EOF){
+                    this.tipoToken = this.tokenActual.getTipo();
+                }else{
+                    errorSintaxis(Token.EOF);
+                }
+            }
         }else if(tipoToken == Token.EOF || tipoToken == Token.BLQ){
             // regla  epsilon == pasar de largo, no?
             reglas.append(2);

@@ -263,7 +263,7 @@ public class AnalizadorLexico {
                     this.entrada.close();
                     break;
                 }else if(actual_int == -1 && !token.empty()){
-                    this.entrada.read(); //! what
+                    //this.entrada.read(); //! what
                     break;
                 }
             }while(this.estado != 0); // cuando llega de nuevo al 0 es porque consigue un token
@@ -276,7 +276,7 @@ public class AnalizadorLexico {
             tokens.add(token);
             return token;
         }catch(IOException e){
-            System.out.println("file closed");
+            System.out.println(e);
             return null;
         }
         //catch(InterruptedException e){
