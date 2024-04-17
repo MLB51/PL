@@ -1,0 +1,109 @@
+private Atributos getTraduccionOperacion(Atributos attr1, Atributos attr2, String op){
+        Atributos atrs = new Atributos();
+        String tipo1=attr1.getAttr("tipo"), tipo2=attr2.getAttr("tipo");
+        String trad1=attr1.getAttr("trad"), trad2=attr2.getAttr("trad");
+
+        if(op=="%"){
+            if(tipo1==tipo2 && tipo1=="int"){
+                atrs.setAttr("tipo", "int");
+                atrs.setAttr(
+                    "trad", 
+                    trad1 + " " + op + " " + trad2
+                );
+            }else if(tipo1=="float"){
+                errorSemantico(ERRNOENTEROIZQ, tokenActual);
+            }else if(tipo2=="float"){
+                errorSemantico(ERRNOENTERODER, tokenActual);
+            }
+        }else if(op=="//"){
+            if(tipo1==tipo2 && tipo1=="int"){
+                atrs.setAttr("tipo", "int");
+                atrs.setAttr(
+                    "trad", 
+                    trad1 + " /i " + trad2
+                );
+            }else if(tipo1=="float"){
+                errorSemantico(ERRNOENTEROIZQ, tokenActual);
+            }else if(tipo2=="float"){
+                errorSemantico(ERRNOENTERODER, tokenActual);
+            }
+        }else if(op=="/"){
+            if(tipo1=="int"){
+                trad1 = "itor("+trad1+")";
+            }
+            if(tipo2=="int"){
+                trad2 = "itor("+trad2+")";
+            }
+            atrs.setAttr("tipo", "float");
+            atrs.setAttr(
+                "trad", 
+                trad1 + " " + op + "r " + trad2
+            );
+        }else{
+
+        }
+
+        
+
+        return atrs;
+    } 
+
+
+
+
+
+
+
+
+
+
+
+
+    if(tp_atrs.getAttr("trad")!=""){
+        // si Tp -> epsilon
+        // devuelve el tipo de f y "op f.trad"
+        atrs.setAttr("tipo", f_atrs.getAttr("tipo"));
+        atrs.setAttr("trad", operation + " " + f_atrs.getAttr("trad"));
+    }else{
+        // si Tp devuelve trad hay que procesar los tipos comparando F y Tp
+        String tipo1=f_atrs.getAttr("tipo"), tipo2=tp_atrs.getAttr("tipo");
+        String trad1=f_atrs.getAttr("trad"), trad2=tp_atrs.getAttr("trad");
+        String previous_op = trad2.substring(0, 2).replaceAll("\\s", "");
+        trad2 = trad2.substring(2); // se le quita el operador a la trad
+
+
+
+
+
+
+
+
+
+    if(tipo1==tipo2 && tipo1=="int"){
+        atrs.setAttr("tipo", "int");
+        atrs.setAttr(
+            "trad", 
+            trad1 + " " + previous_op + "i " + trad2
+        );
+    }else if(tipo1==tipo2 && tipo1=="float"){
+        atrs.setAttr("tipo", "float");
+        atrs.setAttr(
+            "trad", 
+            trad1 + " " + previous_op + "r " + trad2
+        );
+    }else if(tipo1=="float"){
+        atrs.setAttr("tipo", "float");
+        atrs.setAttr(
+            "trad", 
+            trad1 + " " + previous_op + "r itor(" + trad2 + ")"
+        );
+    }else if(tipo2=="float"){
+        atrs.setAttr("tipo", "float");
+        atrs.setAttr(
+            "trad", 
+            " itor(" + trad1 + ") " + previous_op + "r " + trad2
+        );
+    }
+
+
+

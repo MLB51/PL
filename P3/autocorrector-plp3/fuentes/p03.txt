@@ -1,0 +1,27 @@
+
+funcion p03;
+
+blq
+  var a:entero;
+      b:entero;
+  fvar
+
+  blq
+     var c:real;
+     fvar
+
+     blq 
+         var d:entero;
+         fvar
+
+         blq 
+            var c:entero; 
+            fvar
+
+            c := d+1
+         fblq;
+         c := d+1
+     fblq;
+     c := d+1   /* error semantico 'd' no ha sido declarado */
+   fblq
+fblq

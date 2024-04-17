@@ -112,9 +112,9 @@ public class TraductorDR {
             this.profundidad_S++;
             String s1_trad = S();
             this.profundidad_S--;
-            Atributos b_atrs = new Atributos();
-            b_atrs.setAttr("nombre_funcion", id_lex);
+            
             Atributos atrs_transmitidos = new Atributos();
+            atrs_transmitidos.setAttr("nombre_funcion", id_lex);
             atrs_transmitidos.setAttr("prefijo", "");
             String b_trad = B(atrs_transmitidos);
 
@@ -416,20 +416,53 @@ public class TraductorDR {
     }
 
     private String I(Atributos atrs_heredados){
+        String n_funcion = atrs_heredados.getAttr("nombre_funcion");
+
         if(tipoToken == Token.ID){
             reglas.append(23);
             reglas.append(' ');
             String id_lex = tokenActual.getLexema();
             emparejar(Token.ID);
             emparejar(Token.ASIG);
-            Atributos e_atrs = E(); //! DE AQUI SE HEREDA EL TIPO DE VAR
-            return id_lex + "" + e_atrs.getAttr("trad") + ";";
+            Atributos e_atrs = E(atrs_heredados);
+            String e_trad=e_atrs.getAttr("trad"), e_tipo=e_atrs.getAttr("tipo");
+
+            String prefijo = id_lex;
+            if(id_lex==n_funcion){
+                prefijo = "return ";
+                if(e_tipo == "int"){
+                    e_trad = "itor("+e_trad+")";
+                }
+
+            }else{
+
+
+                Simbolo simb = tsActual.buscar(id_lex); 
+                //! OJO, buscar o buscarAmbito?
+                //! yo creo que buscar tiene mas sentido 
+                if(simb == null){
+                    errorSemantico(ERRNODECL, tokenActual);
+                }else if(simb.tipo == Simbolo.ENTERO){
+                    if(e_tipo == "float"){
+                        errorSemantico(ERRTIPOS, tokenActual);
+                    }
+                }else if(simb.tipo == Simbolo.REAL){
+                    if(e_tipo == "int"){
+                        e_trad = "itor("+e_trad+")";
+                    }
+                }else{
+                    errorSemantico(ERRNOSIMPLE, tokenActual);
+                }
+                prefijo += " = ";
+            }
+
+            return prefijo + e_trad + ";";
         }else if(tipoToken == Token.ESCRIBE){
             reglas.append(24);
             reglas.append(' ');
             emparejar(Token.ESCRIBE);
             emparejar(Token.PARI);
-            Atributos e_atrs = E(); //! WAIT PERO DE AQUI NO, ESTO ME ROMPE LOS ESQUEMAS
+            Atributos e_atrs = E(atrs_heredados);
             emparejar(Token.PARD);
             String format_type = (e_atrs.getAttr("tipo")=="float") ? "f" : "d";
             return "printf(\"%" + format_type + ", " + e_atrs.getAttr("trad") +");";
@@ -437,6 +470,7 @@ public class TraductorDR {
             reglas.append(25);
             reglas.append(' ');
             Atributos atrs_transmitidos = new Atributos();
+            atrs_transmitidos.setAttr("nombre_funcion", n_funcion);
             atrs_transmitidos.setAttr("prefijo", atrs_heredados.getAttr("prefijo")+"_");
             String trad = B(atrs_transmitidos);
             return trad;
@@ -450,30 +484,109 @@ public class TraductorDR {
     //#################################################################################################################################
     //#################################################################################################################################
     //! el tipo de las cosas debe ser atr heredado e ir añadiendo los itor de izq a der
-    private Atributos E(){
+    private Atributos E(Atributos atrs_heredados){
         Atributos atrs = new Atributos();
         if(tipoToken == Token.NUMENTERO || tipoToken == Token.NUMREAL || tipoToken == Token.ID){
             reglas.append(26);
             reglas.append(' ');
-            T();
-            Ep();
-            atrs.setAttr("tipo", "");
-            atrs.setAttr("trad", "");
+            Atributos t_atrs  = T(atrs_heredados);
+            Atributos ep_atrs = Ep(atrs_heredados);
+            
+            if(ep_atrs.getAttr("trad")!=""){
+                // si Tp -> epsilon
+                // devuelve el tipo de f y "op f.trad"
+                atrs.setAttr("tipo", t_atrs.getAttr("tipo"));
+                atrs.setAttr("trad", t_atrs.getAttr("trad"));
+            }else{
+                // si Tp devuelve trad hay que procesar los tipos comparando F y Tp
+                String tipo1=t_atrs.getAttr("tipo"), tipo2=ep_atrs.getAttr("tipo");
+                String trad1=t_atrs.getAttr("trad"), trad2=ep_atrs.getAttr("trad");
+                String previous_op = trad2.substring(0, 2).replaceAll("\\s", "");
+                trad2 = trad2.substring(2); // se le quita el operador a la trad
+        
+                if(tipo1==tipo2 && tipo1=="int"){
+                    atrs.setAttr("tipo", "int");
+                    atrs.setAttr(
+                        "trad", 
+                        trad1 + " " + previous_op + "i " + trad2
+                    );
+                }else if(tipo1==tipo2 && tipo1=="float"){
+                    atrs.setAttr("tipo", "float");
+                    atrs.setAttr(
+                        "trad", 
+                        trad1 + " " + previous_op + "r " + trad2
+                    );
+                }else if(tipo1=="float"){
+                    atrs.setAttr("tipo", "float");
+                    atrs.setAttr(
+                        "trad", 
+                        trad1 + " " + previous_op + "r itor(" + trad2 + ")"
+                    );
+                }else if(tipo2=="float"){
+                    atrs.setAttr("tipo", "float");
+                    atrs.setAttr(
+                        "trad", 
+                        "itor(" + trad1 + ") " + previous_op + "r " + trad2
+                    );
+                }
+            }
         }else{
             errorSintaxis(Token.ID, Token.NUMENTERO, Token.NUMREAL);
         }
         return atrs;
     }
-    private Atributos Ep(){
+    
+    private Atributos Ep(Atributos atrs_heredados){
         Atributos atrs = new Atributos();
         if(tipoToken == Token.OPAS){
             reglas.append(27);
             reglas.append(' ');
+            String operation = tokenActual.getLexema();
             emparejar(Token.OPAS);
-            T();
-            Ep();
-            atrs.setAttr("tipo", "");
-            atrs.setAttr("trad", "");
+
+            Atributos t_atrs  = T(atrs_heredados);
+            Atributos ep_atrs = Ep(atrs_heredados);
+            
+            if(ep_atrs.getAttr("trad")!=""){
+                // si Tp -> epsilon
+                // devuelve el tipo de f y "op f.trad"
+                atrs.setAttr("tipo", t_atrs.getAttr("tipo"));
+                atrs.setAttr("trad", operation + " " + t_atrs.getAttr("trad"));
+            }else{
+                // si Tp devuelve trad hay que procesar los tipos comparando F y Tp
+                String tipo1=t_atrs.getAttr("tipo"), tipo2=ep_atrs.getAttr("tipo");
+                String trad1=t_atrs.getAttr("trad"), trad2=ep_atrs.getAttr("trad");
+                String previous_op = trad2.substring(0, 2).replaceAll("\\s", "");
+                trad2 = trad2.substring(2); // se le quita el operador a la trad
+        
+                if(tipo1==tipo2 && tipo1=="int"){
+                    atrs.setAttr("tipo", "int");
+                    atrs.setAttr(
+                        "trad", 
+                        operation + " " + trad1 + " " + previous_op + "i " + trad2
+                    );
+                }else if(tipo1==tipo2 && tipo1=="float"){
+                    atrs.setAttr("tipo", "float");
+                    atrs.setAttr(
+                        "trad", 
+                        operation + " " + trad1 + " " + previous_op + "r " + trad2
+                    );
+                }else if(tipo1=="float"){
+                    atrs.setAttr("tipo", "float");
+                    atrs.setAttr(
+                        "trad", 
+                        operation + " " + trad1 + " " + previous_op + "r itor(" + trad2 + ")"
+                    );
+                }else if(tipo2=="float"){
+                    atrs.setAttr("tipo", "float");
+                    atrs.setAttr(
+                        "trad", 
+                        operation + " itor(" + trad1 + ") " + previous_op + "r " + trad2
+                    );
+                }
+            }
+
+
         }else if(tipoToken == Token.PYC || tipoToken == Token.FBLQ || tipoToken == Token.PARD){
             // regla eps
             reglas.append(28);
@@ -486,19 +599,98 @@ public class TraductorDR {
         return atrs;
     }
 
-    private Atributos T(){
+    private Atributos T(Atributos atrs_heredados){
         Atributos atrs = new Atributos();
         if(tipoToken == Token.NUMENTERO || tipoToken == Token.NUMREAL || tipoToken == Token.ID){
             reglas.append(29);
             reglas.append(' ');
-            F();
-            Tp();
+
+            Atributos f_atrs  = F(atrs_heredados);
+            Atributos tp_atrs = Tp(atrs_heredados);
+
+            if(tp_atrs.getAttr("trad")!=""){
+                // si Tp -> epsilon
+                // devuelve el tipo de f y "op f.trad"
+                atrs.setAttr("tipo", f_atrs.getAttr("tipo"));
+                atrs.setAttr("trad", f_atrs.getAttr("trad"));
+            }else{
+                // si Tp devuelve trad hay que procesar los tipos comparando F y Tp
+                String tipo1=f_atrs.getAttr("tipo"), tipo2=tp_atrs.getAttr("tipo");
+                String trad1=f_atrs.getAttr("trad"), trad2=tp_atrs.getAttr("trad");
+                String previous_op = trad2.substring(0, 2).replaceAll("\\s", "");
+                trad2 = trad2.substring(2); // se le quita el operador a la trad
+
+                if(previous_op=="%"){
+                    if(tipo1==tipo2 && tipo1=="int"){
+                        atrs.setAttr("tipo", "int");
+                        atrs.setAttr(
+                            "trad", 
+                            trad1 + " " + previous_op + " " + trad2
+                        );
+                    }else if(tipo1=="float"){
+                        errorSemantico(ERRNOENTEROIZQ, tokenActual);
+                    }else if(tipo2=="float"){
+                        errorSemantico(ERRNOENTERODER, tokenActual);
+                    }
+                }else if(previous_op=="//"){
+                    if(tipo1==tipo2 && tipo1=="int"){
+                        atrs.setAttr("tipo", "int");
+                        atrs.setAttr(
+                            "trad", 
+                            trad1 + " /i " + trad2
+                        );
+                    }else if(tipo1=="float"){
+                        errorSemantico(ERRNOENTEROIZQ, tokenActual);
+                    }else if(tipo2=="float"){
+                        errorSemantico(ERRNOENTERODER, tokenActual);
+                    }
+                }else if(previous_op=="/"){
+                    if(tipo1=="int"){
+                        trad1 = "itor("+trad1+")";
+                    }
+                    if(tipo2=="int"){
+                        trad2 = "itor("+trad2+")";
+                    }
+                    atrs.setAttr("tipo", "float");
+                    atrs.setAttr(
+                        "trad", 
+                        trad1 + " " + previous_op + "r " + trad2
+                    );
+                }else{ // TIENE que ser "*" si o si
+                    if(tipo1==tipo2 && tipo1=="int"){
+                        atrs.setAttr("tipo", "int");
+                        atrs.setAttr(
+                            "trad", 
+                            trad1 + " " + previous_op + "i " + trad2
+                        );
+                    }else if(tipo1==tipo2 && tipo1=="float"){
+                        atrs.setAttr("tipo", "float");
+                        atrs.setAttr(
+                            "trad", 
+                            trad1 + " " + previous_op + "r " + trad2
+                        );
+                    }else if(tipo1=="float"){
+                        atrs.setAttr("tipo", "float");
+                        atrs.setAttr(
+                            "trad", 
+                            trad1 + " " + previous_op + "r itor(" + trad2 + ")"
+                        );
+                    }else if(tipo2=="float"){
+                        atrs.setAttr("tipo", "float");
+                        atrs.setAttr(
+                            "trad", 
+                            " itor(" + trad1 + ") " + previous_op + "r " + trad2
+                        );
+                    }
+                }
+            }
         }else{
             errorSintaxis(Token.ID, Token.NUMENTERO, Token.NUMREAL);
         }
         return atrs;
     }
-    private Atributos Tp(){
+    
+    private Atributos Tp(Atributos atrs_heredados){
         Atributos atrs = new Atributos();
         if(tipoToken == Token.OPMUL){
             reglas.append(30);
@@ -506,26 +698,101 @@ public class TraductorDR {
             String operation = tokenActual.getLexema();
             emparejar(Token.OPMUL);
 
-            Atributos f_atrs  = F();
-            Atributos tp_atrs = Tp();
-            Atributos op_atrs = selectTipo(f_atrs.getAttr("tipo"), tp_atrs.getAttr("tipo"), operation);
-            atrs.setAttr("tipo", op_atrs.getAttr("tipo"));
-            atrs.setAttr(
-                "trad", 
-                op_atrs.getAttr("op")+f_atrs.getAttr("trad")+tp_atrs.getAttr("trad")
-            );
+            Atributos f_atrs  = F(atrs_heredados);
+            Atributos tp_atrs = Tp(atrs_heredados);
+            
+            if(tp_atrs.getAttr("trad")!=""){
+                // si Tp -> epsilon
+                // devuelve el tipo de f y "op f.trad"
+                atrs.setAttr("tipo", f_atrs.getAttr("tipo"));
+                atrs.setAttr("trad", operation + " " + f_atrs.getAttr("trad"));
+            }else{
+                // si Tp devuelve trad hay que procesar los tipos comparando F y Tp
+                String tipo1=f_atrs.getAttr("tipo"), tipo2=tp_atrs.getAttr("tipo");
+                String trad1=f_atrs.getAttr("trad"), trad2=tp_atrs.getAttr("trad");
+                String previous_op = trad2.substring(0, 2).replaceAll("\\s", "");
+                trad2 = trad2.substring(2); // se le quita el operador a la trad
+
+                if(previous_op=="%"){
+                    if(tipo1==tipo2 && tipo1=="int"){
+                        atrs.setAttr("tipo", "int");
+                        atrs.setAttr(
+                            "trad", 
+                            operation + " " + trad1 + " " + previous_op + " " + trad2
+                        );
+                    }else if(tipo1=="float"){
+                        errorSemantico(ERRNOENTEROIZQ, tokenActual);
+                    }else if(tipo2=="float"){
+                        errorSemantico(ERRNOENTERODER, tokenActual);
+                    }
+                }else if(previous_op=="//"){
+                    if(tipo1==tipo2 && tipo1=="int"){
+                        atrs.setAttr("tipo", "int");
+                        atrs.setAttr(
+                            "trad", 
+                            operation + " " + trad1 + " /i " + trad2
+                        );
+                    }else if(tipo1=="float"){
+                        errorSemantico(ERRNOENTEROIZQ, tokenActual);
+                    }else if(tipo2=="float"){
+                        errorSemantico(ERRNOENTERODER, tokenActual);
+                    }
+                }else if(previous_op=="/"){
+                    if(tipo1=="int"){
+                        trad1 = "itor("+trad1+")";
+                    }
+                    if(tipo2=="int"){
+                        trad2 = "itor("+trad2+")";
+                    }
+                    atrs.setAttr("tipo", "float");
+                    atrs.setAttr(
+                        "trad", 
+                        operation + " " + trad1 + " " + previous_op + "r " + trad2
+                    );
+                }else{ // TIENE que ser "*" si o si
+                    if(tipo1==tipo2 && tipo1=="int"){
+                        atrs.setAttr("tipo", "int");
+                        atrs.setAttr(
+                            "trad", 
+                            operation + " " + trad1 + " " + previous_op + "i " + trad2
+                        );
+                    }else if(tipo1==tipo2 && tipo1=="float"){
+                        atrs.setAttr("tipo", "float");
+                        atrs.setAttr(
+                            "trad", 
+                            operation + " " + trad1 + " " + previous_op + "r " + trad2
+                        );
+                    }else if(tipo1=="float"){
+                        atrs.setAttr("tipo", "float");
+                        atrs.setAttr(
+                            "trad", 
+                            operation + " " + trad1 + " " + previous_op + "r itor(" + trad2 + ")"
+                        );
+                    }else if(tipo2=="float"){
+                        atrs.setAttr("tipo", "float");
+                        atrs.setAttr(
+                            "trad", 
+                            operation + " itor(" + trad1 + ") " + previous_op + "r " + trad2
+                        );
+                    }
+                }
+            }
+
+
 
         }else if(tipoToken == Token.OPAS || tipoToken == Token.PYC || tipoToken == Token.FBLQ || tipoToken == Token.PARD){
             // regla eps
             reglas.append(31);
             reglas.append(' ');
+            atrs.setAttr("tipo", "");
+            atrs.setAttr("trad", "");
         }else{
             errorSintaxis(Token.OPMUL, Token.OPAS, Token.PYC, Token.FBLQ, Token.PARD);
         }
         return atrs;
     }
 
-    private Atributos F(){
+    private Atributos F(Atributos atrs_heredados){
         Atributos atrs = new Atributos();
         if(tipoToken == Token.NUMENTERO){
             reglas.append(32);
@@ -542,55 +809,34 @@ public class TraductorDR {
         }else if(tipoToken == Token.ID) {
             reglas.append(34);
             reglas.append(' ');
+            String id_lex = tokenActual.getLexema();
             emparejar(Token.ID);
 
-            Simbolo simb = tsActual.buscar(tokenActual.getLexema()); 
-            //! OJO, buscar o buscarAmbito?
-            //! yo creo que buscar tiene mas sentido 
-            if(simb == null){
-                errorSemantico(ERRNODECL, tokenActual);
-            }else if(simb.tipo == Simbolo.ENTERO){
-                atrs.setAttr("tipo", "int");
-            }else if(simb.tipo == Simbolo.REAL){
-                atrs.setAttr("tipo", "float");
+            if(id_lex==atrs_heredados.getAttr("nombre_funcion")){
+                errorSemantico(ERRNOMFUNC, tokenActual);
             }else{
-                errorSemantico(ERRNOSIMPLE, tokenActual);
+                Simbolo simb = tsActual.buscar(id_lex); 
+                //! OJO, buscar o buscarAmbito?
+                //! yo creo que buscar tiene mas sentido 
+                if(simb == null){
+                    errorSemantico(ERRNODECL, tokenActual);
+                }else if(simb.tipo == Simbolo.ENTERO){
+                    atrs.setAttr("tipo", "int");
+                }else if(simb.tipo == Simbolo.REAL){
+                    atrs.setAttr("tipo", "float");
+                }else{
+                    errorSemantico(ERRNOSIMPLE, tokenActual);
+                }
+                atrs.setAttr("trad", simb.nomtrad);
             }
 
-            atrs.setAttr("trad", simb.nomtrad);
         }else{
             errorSintaxis(Token.NUMENTERO, Token.NUMREAL, Token.ID);
         }
         return atrs;
     }
 
-    private Atributos selectTipo(String t1, String t2, String op){
-        Atributos atrs = new Atributos();
-        if(op=="%"){
-            if(t1==t2 && t1=="int"){
-                atrs.setAttr("op", op);
-                atrs.setAttr("tipo", "int");
-            }else if(t1=="float"){
-                errorSemantico(ERRNOENTEROIZQ, tokenActual);
-            }else if(t2=="float"){
-                errorSemantico(ERRNOENTERODER, tokenActual);
-            }
-        }else if(op=="//"){
-            if(t1==t2 && t1=="int"){
-                atrs.setAttr("op", "/i"); //! DUDA 
-                atrs.setAttr("tipo", "int");
-            }else if(t1=="float"){
-                errorSemantico(ERRNOENTEROIZQ, tokenActual);
-            }else if(t2=="float"){
-                errorSemantico(ERRNOENTERODER, tokenActual);
-            }
-        }else if(op=="/"){
 
-        }
-
-        
-
-        return atrs;
-    }    
+       
 }    
 

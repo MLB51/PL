@@ -1,0 +1,34 @@
+funcion p05;
+
+blq
+  var a : real;
+      o : entero;
+      p : real;
+  fvar
+
+  o := 23 - 4 + 5 + 2;
+  p := o + 3.5 - 7;
+  
+  escribe(o);   
+  escribe(p);
+  blq 
+     var olvi : entero;
+         p : entero;
+     fvar
+  
+    olvi := 777-555
+  fblq;
+  blq
+    var q : real;
+    fvar
+ 
+    blq
+      var a : entero;
+      fvar
+ 
+      a := 7;
+      p := a+3;
+      q := 1 - 2 + 3 - 4.5
+    fblq
+  fblq
+fblq

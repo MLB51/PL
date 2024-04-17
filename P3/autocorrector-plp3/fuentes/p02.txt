@@ -1,0 +1,11 @@
+funcion p02;
+
+blq
+  var a : entero ;
+      b : puntero de real;
+      c : tabla [200..201] de entero;
+      a : entero ;  /* error semantico 'a' ya existe en este ambito */
+  fvar
+
+
+fblq
