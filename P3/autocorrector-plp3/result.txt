@@ -1,0 +1,137 @@
+*********************************************************
+Autocorrector plp3 
+ Generando ficheros auxiliares... 
+*********************************************************
+ Compilando...
+*********************************************************
+
+*********************************************************
+ Ejecutando y comprobando salida a la vez...
+*********************************************************
+Prueba: p01
+--- Fallo en la traducción ----------
+0a1,37
+> 
+> float hija()
+> {
+> float c;
+> 
+>   return 7.555;
+> }
+> 
+> float prueba()
+> {
+> int a;
+> float b[7][3];
+> int** c;
+> float d;
+> int* e[5][2];
+> 
+>   d = itor(7 % a) /r itor(2) *r 2.3;
+>   printf("%f",d +r itor(2 /i 3) -r 4.5);
+> {
+> float _c;
+> 
+>   _c = itor(256 % 2);
+> }
+> {
+> int _cc;
+> 
+> {
+> int __d;
+> float __b;
+> 
+>   __b = itor(_cc);
+>   printf("%d",6);
+>   return itor(7 +i 5 *i 4);
+> }
+> }
+> }
+> 
+--------------------------
+Prueba: p02
+--- Fallo en los errores ----------
+1c1
+< Error semantico (7,9): en ':', ya existe en este ambito
+---
+> Error semantico (7,7): en 'a', ya existe en este ambito
+--------------------------
+Prueba: p03
+--- Fallo en los errores ----------
+1c1
+< Error semantico (25,12): en '+', no ha sido declarado
+---
+> Error semantico (25,11): en 'd', no ha sido declarado
+--------------------------
+Prueba: p04
+--- Fallo en los errores ----------
+1c1
+< Error semantico (19,3): en 'fblq', tipos incompatibles entero/real
+---
+> Error semantico (18,9): en ':=', tipos incompatibles entero/real
+--------------------------
+Prueba: p05
+--- Fallo en la traducción ----------
+1,2c1,3
+<  
+< float p05() {float a;
+---
+> float p05()
+> {
+> float a;
+7,9c9,12
+<  printf("%d, o);
+<  printf("%f, p);
+<  {int _olvi;
+---
+>   printf("%d",o);
+>   printf("%f",p);
+> {
+> int _olvi;
+13,14c17,22
+<  {float _q;
+<  {int __a;
+---
+> {
+> float _q;
+> 
+> {
+> int __a;
+> 
+17c25
+<  _q = itor(1) -r itor(2) +r itor(3) -r 4.5;
+---
+>   _q = itor(1 -i 2 +i 3) -r 4.5;
+--------------------------
+Prueba: p06
+--- Fallo en la traducción ----------
+0a1,21
+> float p06()
+> {
+> int a;
+> 
+>   a = 2;
+>   a = a +i 2;
+> {
+> int _b;
+> 
+> {
+> float __c;
+> 
+>   _b = a +i 3;
+>   a = _b;
+>   __c = itor(a);
+>   __c = itor(a) /r itor(_b);
+> }
+>   return itor(_b *i a);
+> }
+> }
+> 
+--------------------------
+
+OJO: FALLAN 6 PRUEBAS DEL AUTOCORRECTOR
+
+
+
+AVISO IMPORTANTE: este autocorrector NO prueba todos los casos posibles
+
