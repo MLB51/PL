@@ -50,25 +50,13 @@ Prueba: p01
 > 
 --------------------------
 Prueba: p02
---- Fallo en los errores ----------
-1c1
-< Error semantico (7,9): en ':', ya existe en este ambito
----
-> Error semantico (7,7): en 'a', ya existe en este ambito
+OK
 --------------------------
 Prueba: p03
---- Fallo en los errores ----------
-1c1
-< Error semantico (25,12): en '+', no ha sido declarado
----
-> Error semantico (25,11): en 'd', no ha sido declarado
+OK
 --------------------------
 Prueba: p04
---- Fallo en los errores ----------
-1c1
-< Error semantico (19,3): en 'fblq', tipos incompatibles entero/real
----
-> Error semantico (18,9): en ':=', tipos incompatibles entero/real
+OK
 --------------------------
 Prueba: p05
 --- Fallo en la traducción ----------
@@ -129,7 +117,7 @@ Prueba: p06
 > 
 --------------------------
 
-OJO: FALLAN 6 PRUEBAS DEL AUTOCORRECTOR
+OJO: FALLAN 3 PRUEBAS DEL AUTOCORRECTOR
 
 
 

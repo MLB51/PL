@@ -188,13 +188,13 @@ public class TraductorDR {
         if(tipoToken == Token.ID){
             reglas.append(7);
             reglas.append(' ');
-
+            Token auxToken = tokenActual;
             String id_lex = tokenActual.getLexema();
             emparejar(Token.ID);
             // una vez se comprueba que es un id, se comprueba si este ya existe en el ambito
             Simbolo simb = tsActual.buscarAmbito(id_lex);
             if(simb != null){
-                errorSemantico(ERRYADECL, tokenActual);
+                errorSemantico(ERRYADECL, auxToken);
             }
             if(id_lex == atrs_heredados.getAttr("nombre_funcion")){
                 errorSemantico(ERRNOMFUNC, tokenActual);
@@ -423,7 +423,9 @@ public class TraductorDR {
             reglas.append(23);
             reglas.append(' ');
             String id_lex = tokenActual.getLexema();
+            Token auxToken = tokenActual;
             emparejar(Token.ID);
+            Token auxToken2 = tokenActual;
             emparejar(Token.ASIG);
             Atributos e_atrs = E(atrs_heredados);
             String e_trad=e_atrs.getAttr("trad"), e_tipo=e_atrs.getAttr("tipo");
@@ -442,17 +444,17 @@ public class TraductorDR {
                 //! OJO, buscar o buscarAmbito?
                 //! yo creo que buscar tiene mas sentido 
                 if(simb == null){
-                    errorSemantico(ERRNODECL, tokenActual);
+                    errorSemantico(ERRNODECL, auxToken);
                 }else if(simb.tipo == Simbolo.ENTERO){
                     if(e_tipo == "float"){
-                        errorSemantico(ERRTIPOS, tokenActual);
+                        errorSemantico(ERRTIPOS, auxToken2);
                     }
                 }else if(simb.tipo == Simbolo.REAL){
                     if(e_tipo == "int"){
                         e_trad = "itor("+e_trad+")";
                     }
                 }else{
-                    errorSemantico(ERRNOSIMPLE, tokenActual);
+                    errorSemantico(ERRNOSIMPLE, auxToken);
                 }
                 prefijo = simb.nomtrad+" = ";
             }
@@ -814,22 +816,23 @@ public class TraductorDR {
             reglas.append(34);
             reglas.append(' ');
             String id_lex = tokenActual.getLexema();
+            Token auxToken = tokenActual;
             emparejar(Token.ID);
 
             if(id_lex==atrs_heredados.getAttr("nombre_funcion")){
-                errorSemantico(ERRNOMFUNC, tokenActual);
+                errorSemantico(ERRNOMFUNC, auxToken);
             }else{
                 Simbolo simb = tsActual.buscar(id_lex); 
                 //! OJO, buscar o buscarAmbito?
                 //! yo creo que buscar tiene mas sentido 
                 if(simb == null){
-                    errorSemantico(ERRNODECL, tokenActual);
+                    errorSemantico(ERRNODECL, auxToken);
                 }else if(simb.tipo == Simbolo.ENTERO){
                     atrs.setAttr("tipo", "int");
                 }else if(simb.tipo == Simbolo.REAL){
                     atrs.setAttr("tipo", "float");
                 }else{
-                    errorSemantico(ERRNOSIMPLE, tokenActual);
+                    errorSemantico(ERRNOSIMPLE, auxToken);
                 }
                 atrs.setAttr("trad", simb.nomtrad);
             }
