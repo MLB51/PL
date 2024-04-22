@@ -197,7 +197,7 @@ public class TraductorDR {
                 errorSemantico(ERRYADECL, auxToken);
             }
             if(id_lex == atrs_heredados.getAttr("nombre_funcion")){
-                errorSemantico(ERRNOMFUNC, tokenActual);
+                errorSemantico(ERRNOMFUNC, auxToken);
             }
 
             emparejar(Token.DOSP);
@@ -309,13 +309,14 @@ public class TraductorDR {
             Integer num1 = Integer.parseInt(aux_lex);
             emparejar(Token.PTOPTO);
             aux_lex = tokenActual.getLexema();
+            Token auxToken = tokenActual;
             emparejar(Token.NUMENTERO);
             Integer num2 = Integer.parseInt(aux_lex);
             if(num1>=num2){
-                errorSemantico(ERRRANGO, tokenActual);
+                errorSemantico(ERRRANGO, auxToken);
             }
             num2++;
-
+            num2 -= num1;
             return "["+ num2.toString() +"]";
         }else{
             errorSintaxis(Token.NUMENTERO);
@@ -366,7 +367,7 @@ public class TraductorDR {
         if(tipoToken == Token.BLQ){
             Atributos atrs_transmitidos = new Atributos();
             atrs_transmitidos.setAttr("prefijo", atrs_heredados.getAttr("prefijo"));
-            
+            atrs_transmitidos.setAttr("nombre_funcion", atrs_heredados.getAttr("nombre_funcion"));
             reglas.append(19);
             reglas.append(' ');
             emparejar(Token.BLQ);
@@ -377,7 +378,7 @@ public class TraductorDR {
             // desapila tabla al volver de SI (bloque de codigo y otros sub ambitos)
             tsActual = tsActual.getAmbitoAnterior();
             emparejar(Token.FBLQ);
-            return "{"+d_trad+" "+si_trad+"}";
+            return "{\n"+d_trad+" "+si_trad+"}";
         }else{
             errorSintaxis(Token.BLQ);
             return "";
@@ -431,7 +432,7 @@ public class TraductorDR {
             String e_trad=e_atrs.getAttr("trad"), e_tipo=e_atrs.getAttr("tipo");
 
             String prefijo = "";
-            if(id_lex==n_funcion){
+            if(id_lex.equals(n_funcion)){
                 prefijo = "return ";
                 if(e_tipo == "int"){
                     e_trad = "itor("+e_trad+")";
@@ -468,7 +469,7 @@ public class TraductorDR {
             Atributos e_atrs = E(atrs_heredados);
             emparejar(Token.PARD);
             String format_type = (e_atrs.getAttr("tipo")=="float") ? "f" : "d";
-            return "printf(\"%" + format_type + ", " + e_atrs.getAttr("trad") +");\n";
+            return "printf(\"%" + format_type + "\", " + e_atrs.getAttr("trad") +");\n";
         }else if(tipoToken == Token.BLQ){
             reglas.append(25);
             reglas.append(' ');
@@ -632,7 +633,7 @@ public class TraductorDR {
                             trad1 + " " + previous_op + " " + trad2
                         );
                     }else if(tipo1=="float"){
-                        errorSemantico(ERRNOENTEROIZQ, tokenActual);
+                        errorSemantico(ERRNOENTEROIZQ, tokenActual); //! DUDA, donde salta el err aqui??
                     }else if(tipo2=="float"){
                         errorSemantico(ERRNOENTERODER, tokenActual);
                     }

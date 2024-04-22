@@ -10,44 +10,29 @@ Autocorrector plp3
 *********************************************************
 Prueba: p01
 --- Fallo en la traducción ----------
-0a1,37
-> 
+2c2,3
+< float hija() {
+---
 > float hija()
 > {
-> float c;
-> 
->   return 7.555;
-> }
+6c8,10
+< float prueba() {
+---
 > 
 > float prueba()
 > {
-> int a;
-> float b[7][3];
-> int** c;
-> float d;
-> int* e[5][2];
+12,13c16,18
+<  d =  itor(7) %r itor(a) /r itor(2) *r 2.3;
+<  printf("%f", d +r itor(2 //i  3) -r 4.5);
+---
 > 
 >   d = itor(7 % a) /r itor(2) *r 2.3;
 >   printf("%f",d +r itor(2 /i 3) -r 4.5);
-> {
-> float _c;
+16c21,22
+<  _c = itor(256 %i 2);
+---
 > 
 >   _c = itor(256 % 2);
-> }
-> {
-> int _cc;
-> 
-> {
-> int __d;
-> float __b;
-> 
->   __b = itor(_cc);
->   printf("%d",6);
->   return itor(7 +i 5 *i 4);
-> }
-> }
-> }
-> 
 --------------------------
 Prueba: p02
 OK
@@ -60,61 +45,29 @@ OK
 --------------------------
 Prueba: p05
 --- Fallo en la traducción ----------
-1,2c1,3
+1,2c1,2
 <  
-< float p05() {float a;
+< float p05() {
 ---
 > float p05()
 > {
-> float a;
-7,9c9,12
-<  printf("%d, o);
-<  printf("%f, p);
-<  {int _olvi;
----
->   printf("%d",o);
->   printf("%f",p);
-> {
-> int _olvi;
-13,14c17,22
-<  {float _q;
-<  {int __a;
----
-> {
-> float _q;
-> 
-> {
-> int __a;
-> 
-17c25
+21c25
 <  _q = itor(1) -r itor(2) +r itor(3) -r 4.5;
 ---
 >   _q = itor(1 -i 2 +i 3) -r 4.5;
 --------------------------
 Prueba: p06
 --- Fallo en la traducción ----------
-0a1,21
+1,2c1,2
+<  
+< float p06() {
+---
 > float p06()
 > {
-> int a;
-> 
->   a = 2;
->   a = a +i 2;
-> {
-> int _b;
-> 
-> {
-> float __c;
-> 
->   _b = a +i 3;
->   a = _b;
->   __c = itor(a);
+13c16
+<  __c = itor(a /i _b);
+---
 >   __c = itor(a) /r itor(_b);
-> }
->   return itor(_b *i a);
-> }
-> }
-> 
 --------------------------
 
 OJO: FALLAN 3 PRUEBAS DEL AUTOCORRECTOR
