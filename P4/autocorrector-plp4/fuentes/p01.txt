@@ -1,0 +1,34 @@
+funcion prueba;
+
+   funcion hija;
+   blq
+       var c : real; fvar
+       hija := 7.555
+   fblq
+blq
+ var a : entero;
+     b : tabla [ 1..7, 0..2 ] de real;
+     c : puntero de puntero de entero;
+     d : real;
+     e : tabla [ 1..5 ] de tabla [ 3..4 ] de 
+           puntero de entero;
+ fvar
+
+   d := 7 % a / 2 * 2.3;
+   escribe ( d + 2 // 3 - 4.5 );
+   blq
+     var c:real; fvar
+     c := 256 % 2
+   fblq;
+   blq
+     var cc:entero; fvar
+     blq
+       var d:entero;
+           b:real;
+       fvar
+       b := cc;
+       escribe(6);
+       prueba := 7+5*4
+    fblq
+  fblq
+fblq

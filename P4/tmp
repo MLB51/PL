@@ -1,0 +1,97 @@
+
+1. LEX {
+    lex ___.l  ->   ___.yy.c
+    produce el analizador lexico
+    el .l tiene la siguiente estructura {
+        definiciones 
+            - puede haber codigo: %{ code %}
+            - puede haber definiciones con regex: D [0-9]
+        %%
+        expresiones regulares - acciones
+            - "-"                {return ret(opas);}
+            - {D}+(\.){D}+       {return ret(numreal);}
+        %%
+        código
+            - cualquier codig extra que se quiera tener
+            - por ejemplo el main o gestion de errores
+    }
+
+    si una cadena se puede reconocee por 2 regex tiene prioridad la primera
+    siempre coge la cadena mas larga que entre como token
+    la ult regex es para coger cualquier char que no sea bueno y lanza error
+    yylex()  que se genera es el analizador
+
+}
+
+2. YACC {
+    bison -d ___.y  ->  ___.tab.c
+    produce el analizador sintactico ascendente 
+    el .y tiene la siguiente struct {
+        definiciones de tokens, código auxiliar
+            - codigo igual que en .l
+            - tokens definidos como: %token coma pyc...
+        %%
+        reglas - acciones
+            - reglas de la gramatica con notacion similar a la ETDS
+            - mirar sintaxis en pdf mejor
+        %%
+        código
+            - codigo necesario como main y yyerror
+    }
+
+    yyparse es el analizador sintactico
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ERROR MESSAGES
+
+const int ERRYADECL=1,
+	ERRNOMFUNC=2,
+	ERRNOSIMPLE=3,
+	ERRNODECL=4,
+	ERRTIPOS=5,
+	ERRNOENTEROIZQ=6,
+	ERRNOENTERODER=7,
+	ERRRANGO=8;
+	
+void errorSemantico(int nerror,char *lexema,int fila,int columna)
+{
+    fprintf(stderr,"Error semantico (%d,%d): en '%s', ",fila,columna,lexema);
+    switch (nerror) {
+      case ERRYADECL: fprintf(stderr,"ya existe en este ambito\n");
+         break;
+      case ERRNOMFUNC: fprintf(stderr,"no puede llamarse igual que la funcion");
+         break;
+      case ERRNOSIMPLE: fprintf(stderr,"debe ser de tipo entero o real\n");
+         break;
+      case ERRNODECL: fprintf(stderr,"no ha sido declarado\n");
+         break;
+      case ERRTIPOS: fprintf(stderr,"tipos incompatibles entero/real\n");
+         break;
+      case ERRNOENTEROIZQ: fprintf(stderr,"el operando izquierdo debe ser entero\n");
+         break;
+      case ERRNOENTERODER: fprintf(stderr,"el operando derecho debe ser entero\n");
+         break;
+      case ERRRANGO: fprintf(stderr,"rango incorrecto\n");
+         break;
+    }
+    exit(-1);
+}
+
+
