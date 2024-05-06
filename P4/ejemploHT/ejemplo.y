@@ -39,11 +39,11 @@ string operador, s1, s2;  // string auxiliares
 %%
 
 
-S    : print SExp pyc    { /* comprobar que después del programa no hay ningún token más */
-                           int tk = yylex();
-                           if (tk != 0) yyerror("");
-			 }
-     ;
+S    : print SExp pyc    { 
+   /* comprobar que después del programa no hay ningún token más */
+   int tk = yylex();
+   if (tk != 0) yyerror("");
+};
 
 
 SExp : SExp coma Exp     { cout << $3.cod << endl; }

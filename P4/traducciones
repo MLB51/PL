@@ -1,0 +1,113 @@
+S - funcion id pyc S B 
+    trad = S1.trad float id.lex () B.trad
+    B.nombre_funcion = id.lex // para comprobar el return luego
+    // no hace falta pasar el nombre a S1
+    //      si hay un nombre_funcion := E -> error por var no definida
+    //      se puede definir una var como nombre_funcion
+S - € 
+    trad = ""
+
+---------------------------------------------------------------------------------------------
+D - var L fvar
+    trad = L.trad
+
+L - L V
+    trad = V.trad L.trad // revisar orden orignial VL
+L - V
+    trad = V.trad 
+
+V - id dosp C pyc
+    trad = C.tipo id.lex C.array ;
+    // no pueden haber dos vars en el mismo ambito con mismo nombre
+    // no puede definirse una var como nombre_funcion
+
+C - A C
+    tipo = C1.tipo
+    array = A.trad C1.array
+C - P
+    tipo = P.trad
+    array = ""
+
+A - tabla cori R cord de 
+    trad = R.trad
+R - R coma G
+    trad = G.trad R.trad // revisar orden orignial GR
+R - G
+    trad = G.trad
+
+G - ne ptopto ne
+    trad = [ne2.lex+1] // comprobar n1 < n2
+P - puntero de P 
+    trad = P1.trad * 
+P - Tipo
+    trad = Tipo.trad
+
+Tipo - entero
+    trad = int
+Tipo - real
+    trad = float
+
+---------------------------------------------------------------------------------------------
+B - blq D SI fblq
+    trad = { D.trad SI.trad } 
+    // se suma 1 _ por cada nivel de profundidad para poner frente a ids
+---------------------------------------------------------------------------------------------
+
+
+SI - SI pyc I
+    trad = SI.trad I.trad // revisar orden
+
+SI - I
+    trad = I.trad
+
+
+I - id asig E 
+    trad = id.lex = E.trad ; 
+    // si id.lex = nombre funcion entonces es return y su tipo es float
+    // si int := float -> error 
+    // si float := int -> itor(E.trad)
+    // si es tabla -> error
+I - escribe pari E pard
+    trad = printf("%_", E.trad); // el formato se decide segun el tipo de E
+I - B 
+    trad = B.trad
+
+---------------------------------------------------------------------------------------------
+// en las operaciones, si uno es real y el otro entero se debe añadir itor()
+
+
+
+E - E opas T
+    trad = T.trad opas.lex F.trad
+    tipo = ...   
+    // tras el simbolo debe ir "i" si ambos son int, sino "r"
+
+E - T 
+    trad = T.trad
+    tipo = ...
+
+T - T opmul F 
+    trad = T.trad opmul.lex F.trad
+    tipo = ...
+    // tras el simbolo debe ir "i" si ambos son int, sino "r", no aplica a %
+    // // y % necesitan 2 enteros, sino -> error
+    // / siempre da un real, aunque los operandos sean enteros
+T - F 
+    trad = F.trad
+    tipo = F.tipo
+
+F - ne
+F - nr
+F - id 
+    F.trad = lex 
+    tipo = ...
+    // si es un id, debe estar en la tabla de ambito, sino -> error
+    // si es un id, pero es una tabla o puntero -> error
+
+
+
+
+
+
+
+
