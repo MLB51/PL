@@ -24,7 +24,7 @@ extern int ncol,nlin,findefichero;
 extern int yylex();
 extern char *yytext;
 extern FILE *yyin;
-
+void errorSemantico(int nerror,char *lexema,int fila,int columna);
 
 int yyerror(char *s);
 
@@ -125,9 +125,10 @@ P   : puntero de P {
 
 Tipo: entero {
     $$.cod = "int";
-    $$.tipo = 
+    $$.tipo = ENTERO;
 } | real {
     $$.cod = "float";
+    $$.tipo = REAL;
 };
 
 
@@ -157,8 +158,14 @@ I   : id asig E {
 } | escribe pari E pard {
     /* TIPO_E es un char que depende del tipo*/
     string TIPO_E="";
-
-    $$.cod = "printf(\"%"+ TIPO_E + $3.cod + ")";
+    if($3.tipo==ENTERO){
+        TIPO_E = "d";
+    }else if($3.tipo == REAL){
+        TIPO_E = "f";
+    }else{
+        errorSemantico(ERRNOSIMPLE, $3.lexema, $3.nlin, $3.ncol);
+    }
+    $$.cod = "printf(\"%"+ TIPO_E + "\", " + $3.cod + ");\n";
 } | B {
     $$.cod = $1.cod;
 };
@@ -197,13 +204,27 @@ T   : T opas F {
 
 F   : numentero {
     $$.cod = $1.lexema;
+    $$.tipo = ENTERO;
 } | numreal {
     $$.cod = $1.lexema;
+    $$.tipo = REAL;
 } | id {
     /*
     si es un id, debe estar en la tabla de ambito, sino -> error
     si es un id, pero es una tabla o puntero -> error
     */
+    Simbolo simb = tsa->buscar($1.lexema);
+    if(simb == null){
+        errorSemantico(ERRNODECL, $1.nlin, $1.ncol, $1.lexema);
+    }
+
+    if(simb.tipo == ENTERO){
+        $$.tipo = ENTERO;
+    }else if(simb.tipo == REAL){
+        $$.tipo = REAL;
+    }else{
+        errorSemantico(ERRNOSIMPLE, $1.nlin, $1.ncol, $1.lexema);
+    }
     $$.cod = $1.lexema;
 };
 

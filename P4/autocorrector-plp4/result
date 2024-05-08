@@ -58,7 +58,10 @@ Prueba: p01
 --------------------------
 Prueba: p02
 --- Fallo en los errores ----------
-0a1
+1c1
+< Error sintactico (11,1): en 'f'
+\ No hay ningún carácter de nueva línea al final del archivo
+---
 > Error semantico (7,7): en 'a', ya existe en este ambito
 --------------------------
 Prueba: p03
@@ -66,7 +69,7 @@ Prueba: p03
 1,4d0
 < float p03()
 < {
-< ab}
+< }
 < 
 --------------------------
 Prueba: p04
@@ -74,14 +77,14 @@ Prueba: p04
 1,4d0
 < float p04()
 < {
-< a}
+< }
 < 
 --------------------------
 Prueba: p05
 --- Fallo en la traducción ----------
-3c3,28
-< aop}
----
+0a1,29
+> float p05()
+> {
 > float a;
 > int o;
 > float p;
@@ -108,6 +111,7 @@ Prueba: p05
 > }
 > }
 > }
+> 
 --------------------------
 Prueba: p06
 --- Fallo en la traducción ----------

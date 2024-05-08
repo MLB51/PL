@@ -24,7 +24,7 @@ extern int ncol,nlin,findefichero;
 extern int yylex();
 extern char *yytext;
 extern FILE *yyin;
-
+void errorSemantico(int nerror,char *lexema,int fila,int columna);
 
 int yyerror(char *s);
 
@@ -125,8 +125,10 @@ P   : puntero de P {
 
 Tipo: entero {
     $$.cod = "int";
+    $$.tipo = ENTERO;
 } | real {
     $$.cod = "float";
+    $$.tipo = REAL;
 };
 
 
@@ -156,8 +158,14 @@ I   : id asig E {
 } | escribe pari E pard {
     /* TIPO_E es un char que depende del tipo*/
     string TIPO_E="";
-
-    $$.cod = "printf(\"%"+ TIPO_E + $3.cod + ")";
+    if($3.tipo==ENTERO){
+        TIPO_E = "d";
+    }else if($3.tipo == REAL){
+        TIPO_E = "f";
+    }else{
+        errorSemantico(ERRNOSIMPLE, $3.lexema, $3.nlin, $3.ncol);
+    }
+    $$.cod = "printf(\"%"+ TIPO_E + "\", " + $3.cod + ");\n";
 } | B {
     $$.cod = $1.cod;
 };
@@ -253,14 +261,14 @@ void errorSemantico(int nerror,char *lexema,int fila,int columna)
 
 int yyerror(char *s)
 {
-    /*if (findefichero) 
+    if (findefichero) 
     {
        msgError(ERREOF,0,0,"");
     }
     else
     {  
        msgError(ERRSINT,nlin,ncol-strlen(yytext),yytext);
-    }*/
+    }
     return 0;
 }
 

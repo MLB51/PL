@@ -516,7 +516,7 @@ int findefichero = 0;
 int ret(int token);  
 // función que actualiza 'nlin' y 'ncol' y devuelve el token
 
-void msgError(string actual, int fila,int columna);
+void msgError(int nerror, int nlin,int ncol,const char *s);
 // función para producir mensajes de error
 
 #line 523 "lex.yy.c"
@@ -842,7 +842,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case YY_STATE_EOF(COMENTARIO):
 #line 52 "plp4.l"
-{printf("Error lexico: fin de fichero inesperado\n");}
+{msgError(ERRLEXEOF,-1,-1,"");}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
@@ -952,7 +952,7 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 78 "plp4.l"
-{return ret(opmul);} // line 77
+{return ret(opmul);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
@@ -1002,7 +1002,7 @@ YY_RULE_SETUP
 case 38:
 YY_RULE_SETUP
 #line 91 "plp4.l"
-{msgError(yytext, nlin,ncol);}
+{msgError(ERRLEXICO,nlin,ncol,yytext);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
@@ -2026,8 +2026,14 @@ int yywrap(void) {findefichero=1; return 1;} /* para no tener que linkar con la
                                 libreria del lex */
 
 
-void msgError(string actual, int fila, int columna){
-    fprintf(stderr, "Error lexico (%d,%d): caracter '%c' incorrecto\n", fila, columna, actual[0]); // el salto de linea puede que haya que quitarlo
+void msgError(int nerror,int nlin,int ncol,const char *s){
+    if(nerror == ERRLEXEOF){
+        fprintf(stderr, "Error lexico: fin de fichero inesperado\n"); 
+    }else if(nerror == ERRLEXICO){
+        fprintf(stderr, "Error lexico (%d,%d): caracter '%c' incorrecto\n", nlin, ncol, s[0]);
+    }else if(nerror == ERRSINT){
+        fprintf(stderr, "Error sintactico (%d,%d): en '%c'", nlin, ncol, s[0]);
+    }
 }
 
 int ret(int token)

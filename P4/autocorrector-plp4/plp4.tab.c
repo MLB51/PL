@@ -88,7 +88,7 @@ extern int ncol,nlin,findefichero;
 extern int yylex();
 extern char *yytext;
 extern FILE *yyin;
-
+void errorSemantico(int nerror,char *lexema,int fila,int columna);
 
 int yyerror(char *s);
 
@@ -560,9 +560,9 @@ static const yytype_int8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    54,    54,    64,    66,    71,    75,    77,    82,    91,
-      94,    99,   103,   105,   110,   120,   122,   126,   128,   133,
-     133,   133,   139,   141,   146,   156,   161,   166,   175,   180,
-     192,   197,   199,   201
+      94,    99,   103,   105,   110,   120,   122,   126,   129,   135,
+     135,   135,   141,   143,   148,   158,   169,   174,   183,   188,
+     200,   205,   207,   209
 };
 #endif
 
@@ -1531,57 +1531,59 @@ yyreduce:
 #line 126 "plp4.y"
              {
     yyval.cod = "int";
+    yyval.tipo = ENTERO;
 }
-#line 1536 "plp4.tab.c"
+#line 1537 "plp4.tab.c"
     break;
 
   case 18:
-#line 128 "plp4.y"
+#line 129 "plp4.y"
          {
     yyval.cod = "float";
+    yyval.tipo = REAL;
 }
-#line 1544 "plp4.tab.c"
+#line 1546 "plp4.tab.c"
     break;
 
   case 19:
-#line 133 "plp4.y"
+#line 135 "plp4.y"
           {tsa = new TablaSimbolos(tsa);}
-#line 1550 "plp4.tab.c"
+#line 1552 "plp4.tab.c"
     break;
 
   case 20:
-#line 133 "plp4.y"
+#line 135 "plp4.y"
                                                {tsa = tsa->getAmbitoAnterior();}
-#line 1556 "plp4.tab.c"
+#line 1558 "plp4.tab.c"
     break;
 
   case 21:
-#line 133 "plp4.y"
+#line 135 "plp4.y"
                                                                                       {
     /*habria que sumar un _ en el attr heredado pero no se como se hace eso*/
     yyval.cod = "{\n" + yyvsp[-4].cod + yyvsp[-3].cod + "}\n";
 }
-#line 1565 "plp4.tab.c"
+#line 1567 "plp4.tab.c"
     break;
 
   case 22:
-#line 139 "plp4.y"
+#line 141 "plp4.y"
                {
     yyval.cod = yyvsp[-2].cod + yyvsp[0].cod; /* REVISAR ORDEN*/
 }
-#line 1573 "plp4.tab.c"
+#line 1575 "plp4.tab.c"
     break;
 
   case 23:
-#line 141 "plp4.y"
+#line 143 "plp4.y"
       {
     yyval.cod = yyvsp[0].cod;
 }
-#line 1581 "plp4.tab.c"
+#line 1583 "plp4.tab.c"
     break;
 
   case 24:
-#line 146 "plp4.y"
+#line 148 "plp4.y"
                 {
     /*
     si id.lex es nom fundion -> return
@@ -1593,30 +1595,36 @@ yyreduce:
     yyval.cod += "=";
     yyval.cod += yyvsp[0].cod;
 }
-#line 1597 "plp4.tab.c"
+#line 1599 "plp4.tab.c"
     break;
 
   case 25:
-#line 156 "plp4.y"
+#line 158 "plp4.y"
                         {
     /* TIPO_E es un char que depende del tipo*/
     string TIPO_E="";
-
-    yyval.cod = "printf(\"%"+ TIPO_E + yyvsp[-1].cod + ")";
-}
-#line 1608 "plp4.tab.c"
-    break;
-
-  case 26:
-#line 161 "plp4.y"
-      {
-    yyval.cod = yyvsp[0].cod;
+    if(yyvsp[-1].tipo==ENTERO){
+        TIPO_E = "d";
+    }else if(yyvsp[-1].tipo == REAL){
+        TIPO_E = "f";
+    }else{
+        errorSemantico(ERRNOSIMPLE, yyvsp[-1].lexema, yyvsp[-1].nlin, yyvsp[-1].ncol);
+    }
+    yyval.cod = "printf(\"%"+ TIPO_E + "\", " + yyvsp[-1].cod + ");\n";
 }
 #line 1616 "plp4.tab.c"
     break;
 
+  case 26:
+#line 169 "plp4.y"
+      {
+    yyval.cod = yyvsp[0].cod;
+}
+#line 1624 "plp4.tab.c"
+    break;
+
   case 27:
-#line 166 "plp4.y"
+#line 174 "plp4.y"
                {
     /* tras el simbolo debe ir "i" si ambos son int, sino "r" */
     string op="";
@@ -1627,19 +1635,19 @@ yyreduce:
 
     yyval.tipo = 1; /* not that easy */
 }
-#line 1631 "plp4.tab.c"
-    break;
-
-  case 28:
-#line 175 "plp4.y"
-      {
-    yyval.cod = yyvsp[0].cod;
-}
 #line 1639 "plp4.tab.c"
     break;
 
+  case 28:
+#line 183 "plp4.y"
+      {
+    yyval.cod = yyvsp[0].cod;
+}
+#line 1647 "plp4.tab.c"
+    break;
+
   case 29:
-#line 180 "plp4.y"
+#line 188 "plp4.y"
                {
     /* 
     tras el simbolo debe ir "i" si ambos son int, sino "r", no aplica a %
@@ -1653,35 +1661,35 @@ yyreduce:
 
     yyval.tipo = 1; /* not that easy */
 }
-#line 1657 "plp4.tab.c"
-    break;
-
-  case 30:
-#line 192 "plp4.y"
-      {
-    yyval.cod = yyvsp[0].cod;
-}
 #line 1665 "plp4.tab.c"
     break;
 
-  case 31:
-#line 197 "plp4.y"
-                {
-    yyval.cod = yyvsp[0].lexema;
+  case 30:
+#line 200 "plp4.y"
+      {
+    yyval.cod = yyvsp[0].cod;
 }
 #line 1673 "plp4.tab.c"
     break;
 
-  case 32:
-#line 199 "plp4.y"
-            {
+  case 31:
+#line 205 "plp4.y"
+                {
     yyval.cod = yyvsp[0].lexema;
 }
 #line 1681 "plp4.tab.c"
     break;
 
+  case 32:
+#line 207 "plp4.y"
+            {
+    yyval.cod = yyvsp[0].lexema;
+}
+#line 1689 "plp4.tab.c"
+    break;
+
   case 33:
-#line 201 "plp4.y"
+#line 209 "plp4.y"
        {
     /*
     si es un id, debe estar en la tabla de ambito, sino -> error
@@ -1689,11 +1697,11 @@ yyreduce:
     */
     yyval.cod = yyvsp[0].lexema;
 }
-#line 1693 "plp4.tab.c"
+#line 1701 "plp4.tab.c"
     break;
 
 
-#line 1697 "plp4.tab.c"
+#line 1705 "plp4.tab.c"
 
       default: break;
     }
@@ -1925,7 +1933,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 220 "plp4.y"
+#line 228 "plp4.y"
 
 /* ####################################################################################################### */
 /* ####################################################################################################### */
@@ -1962,14 +1970,14 @@ void errorSemantico(int nerror,char *lexema,int fila,int columna)
 
 int yyerror(char *s)
 {
-    /*if (findefichero) 
+    if (findefichero) 
     {
        msgError(ERREOF,0,0,"");
     }
     else
     {  
        msgError(ERRSINT,nlin,ncol-strlen(yytext),yytext);
-    }*/
+    }
     return 0;
 }
 
