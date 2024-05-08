@@ -23,7 +23,7 @@ int findefichero = 0;
 int ret(int token);  
 // función que actualiza 'nlin' y 'ncol' y devuelve el token
 
-void msgError(int nerror, int nlin,int ncol,const char *s);
+void msgError(string actual, int fila,int columna);
 // función para producir mensajes de error
 
 %}
@@ -48,7 +48,7 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 "/*"                    {ncol += strlen(yytext);BEGIN(COMENTARIO);}
 <COMENTARIO>[^/*\n]+    {ncol += strlen(yytext);}
 <COMENTARIO>\n          {nlin++;ncol=1;}
-<COMENTARIO><<EOF>>     {msgError(ERRLEXEOF,-1,-1,"");}
+<COMENTARIO><<EOF>>     {printf("Error lexico: fin de fichero inesperado\n");}
 <COMENTARIO>"*/"        {ncol+=strlen(yytext); BEGIN(INITIAL);}
 <COMENTARIO>[*/]        {ncol += strlen(yytext);}
 
@@ -74,7 +74,7 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 "*"                {return ret(opmul);}
 "/"                {return ret(opmul);}
 "//"               {return ret(opmul);}
-"%"                {return ret(opmul);}
+"%"                {return ret(opmul);} // line 77
 
 "["                {return ret(cori);}
 "]"                {return ret(cord);}
@@ -87,7 +87,7 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 ":="               {return ret(asig);}
 ";"                {return ret(pyc);}
 ","                {return ret(coma);}
-.                  {msgError(ERRLEXICO,nlin,ncol,yytext);}
+.                  {msgError(yytext, nlin,ncol);}
 
 
 %%
@@ -101,14 +101,8 @@ int yywrap(void) {findefichero=1; return 1;} /* para no tener que linkar con la
                                 libreria del lex */
 
 
-void msgError(int nerror,int nlin,int ncol,const char *s){
-    if(nerror == ERRLEXEOF){
-        fprintf(stderr, "Error lexico: fin de fichero inesperado\n"); 
-    }else if(nerror == ERRLEXICO){
-        fprintf(stderr, "Error lexico (%d,%d): caracter '%c' incorrecto\n", nlin, ncol, s[0]);
-    }else if(nerror == ERRSINT){
-        fprintf(stderr, "Error sintactico (%d,%d): en '%c'", , nlin, ncol, s[0]);
-    }
+void msgError(string actual, int fila, int columna){
+    fprintf(stderr, "Error lexico (%d,%d): caracter '%c' incorrecto\n", fila, columna, actual[0]); // el salto de linea puede que haya que quitarlo
 }
 
 int ret(int token)

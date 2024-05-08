@@ -125,7 +125,6 @@ P   : puntero de P {
 
 Tipo: entero {
     $$.cod = "int";
-    $$.tipo = 
 } | real {
     $$.cod = "float";
 };
@@ -254,14 +253,14 @@ void errorSemantico(int nerror,char *lexema,int fila,int columna)
 
 int yyerror(char *s)
 {
-    if (findefichero) 
+    /*if (findefichero) 
     {
        msgError(ERREOF,0,0,"");
     }
     else
     {  
        msgError(ERRSINT,nlin,ncol-strlen(yytext),yytext);
-    }
+    }*/
     return 0;
 }
 
