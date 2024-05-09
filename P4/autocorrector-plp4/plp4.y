@@ -61,7 +61,7 @@ X   : S {
     yyerror("");
 };
 
-S   : funcion id pyc S {$5.prefijo="";} B {
+S   : funcion id pyc S  B {
     $$.cod = $4.cod + "float " + $2.lexema + "()\n" + $5.cod;
 } | { 
     /* regla epsilon */
@@ -69,34 +69,41 @@ S   : funcion id pyc S {$5.prefijo="";} B {
 };
 
 D   : var {
-    $2.prefijo = $$.prefijo;
+    $$.prefijo = $0.prefijo;
 } L fvar {
-    $$.cod = $2.cod;
+    $$.cod = $3.cod;
 };
 
-L   : {
-    $1.prefijo = $$.prefijo;
-    $2.prefijo = $$.prefijo;
-} L V {
-    $$.cod = $1.cod + $2.cod; /* REVISAR ORDEN*/
+L   : {$$.prefijo = $0.prefijo;} L {$$.prefijo = $0.prefijo;} V {
+    $$.cod = $2.cod + $4.cod; /* REVISAR ORDEN*/
 
-} | {$1.prefijo = $$.prefijo;} V {
-    $$.cod = $1.cod;
+} | {$$.prefijo = $0.prefijo;} V {
+    $$.cod = $2.cod;
 };
 
 
 V   : id {
-    /* falta ver si es nombre funcion */
+    $$.prefijo = $0.prefijo;
+    if($1.lexema == $$.nombre_funcion){
+        errorSemantico(ERRNOMFUNC, $1.nlin, $1.ncol, $1.lexema);
+    }
     if(tsa->buscarAmbito($$.prefijo + $1.lexema)==NULL){
         errorSemantico(ERRYADECL, $1.nlin, $1.ncol, $1.lexema);
     }
 } dosp C pyc {
     Simbolo s;
     s.nombre = $1.lexema;
-    s.tipo = $3.tipo;
+    if($4.array != ""){
+        s.tipo = TABLA;
+    }else if($4.cod.find('*') != std::string::npos){
+        s.tipo = PUNTERO;
+    }else {
+        s.tipo = $4.tipo;
+    }
+
     s.nomtrad = $$.prefijo + $1.lexema; /*falta añadir el _*/
     tsa->nuevoSimbolo(s);
-    $$.cod = $3.cod + $1.lexema + $3.array;
+    $$.cod = $4.cod + $1.lexema + $4.array;
 };
 
 
@@ -153,13 +160,10 @@ Tipo: entero {
 
 B   : blq {
     tsa = new TablaSimbolos(tsa);
-    $2.prefijo = $$.prefijo;
-    $3.prefijo = $$.prefijo;
-} D SI {
+    $$.prefijo = $0.prefijo;
+} D {$$.prefijo = $0.prefijo;} SI fblq {
     tsa = tsa->getAmbitoAnterior();
-} fblq {
-    /*habria que sumar un _ en el attr heredado pero no se como se hace eso*/
-    $$.cod = "{\n" + $2.cod + $3.cod + "}\n";
+    $$.cod = "{\n" + $3.cod + $5.cod + "}\n";
 };
 
 
@@ -191,7 +195,7 @@ I   : id asig E {
         errorSemantico(ERRNOSIMPLE, $3.nlin, $3.ncol, $3.lexema);
     }
     $$.cod = "printf(\"%"+ TIPO_E + "\", " + $3.cod + ");\n";
-} | {$1.prefijo = "_"+$$.prefijo} B {
+} | {/*$1.prefijo = "_"+$$.prefijo*/} B {
     $$.cod = $1.cod;
 };
 
@@ -210,7 +214,7 @@ E   : E opas T {
 };
 
 
-T   : T opas F {
+T   : T opmul F {
     /* 
     tras el simbolo debe ir "i" si ambos son int, sino "r", no aplica a %
     - // y % necesitan 2 enteros, sino -> error

@@ -107,7 +107,7 @@ void msgError(int nerror,int nlin,int ncol,const char *s){
     }else if(nerror == ERRLEXICO){
         fprintf(stderr, "Error lexico (%d,%d): caracter '%c' incorrecto\n", nlin, ncol, s[0]);
     }else if(nerror == ERRSINT){
-        fprintf(stderr, "Error sintactico (%d,%d): en '%c'", nlin, ncol, s[0]);
+        fprintf(stderr, "Error sintactico (%d,%d): en '%c'\n", nlin, ncol, s[0]);
     }
 }
 
