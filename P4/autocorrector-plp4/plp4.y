@@ -24,7 +24,7 @@ extern int ncol,nlin,findefichero;
 extern int yylex();
 extern char *yytext;
 extern FILE *yyin;
-void errorSemantico(int nerror,char *lexema,int fila,int columna);
+void errorSemantico(int nerror,int fila,int columna,char *lexema);
 
 int yyerror(char *s);
 
@@ -61,37 +61,51 @@ X   : S {
     yyerror("");
 };
 
-S   : funcion id pyc S B {
+S   : funcion id pyc S {$5.prefijo="";} B {
     $$.cod = $4.cod + "float " + $2.lexema + "()\n" + $5.cod;
 } | { 
     /* regla epsilon */
     $$.cod = "";
 };
 
-D   : var L fvar {
+D   : var {
+    $2.prefijo = $$.prefijo;
+} L fvar {
     $$.cod = $2.cod;
 };
 
-L   : L V {
+L   : {
+    $1.prefijo = $$.prefijo;
+    $2.prefijo = $$.prefijo;
+} L V {
     $$.cod = $1.cod + $2.cod; /* REVISAR ORDEN*/
-} | V {
+
+} | {$1.prefijo = $$.prefijo;} V {
     $$.cod = $1.cod;
 };
 
 
-V   : id dosp C pyc {
-    /*
-    No pueden haber 2 vars con el mismo nombre en mismo ambito
-    No puede llamarse como la funcion
-    */
-    $$.cod = $3.tipo + $1.lexema + $3.array;
+V   : id {
+    /* falta ver si es nombre funcion */
+    if(tsa->buscarAmbito($$.prefijo + $1.lexema)==NULL){
+        errorSemantico(ERRYADECL, $1.nlin, $1.ncol, $1.lexema);
+    }
+} dosp C pyc {
+    Simbolo s;
+    s.nombre = $1.lexema;
+    s.tipo = $3.tipo;
+    s.nomtrad = $$.prefijo + $1.lexema; /*falta añadir el _*/
+    tsa->nuevoSimbolo(s);
+    $$.cod = $3.cod + $1.lexema + $3.array;
 };
 
 
 C   : A C {
+    $$.cod = $2.cod;
     $$.tipo = $2.tipo;
     $$.array = $1.cod + $2.array;
 } | P {
+    $$.tipo = $1.tipo;
     $$.cod = $1.cod;
     $$.array = "";
 };
@@ -108,19 +122,24 @@ R   : R coma G {
 
 
 G   : numentero ptopto numentero {
-    /*COPIAR DE P3*/
-    int n = 1;
-    $$.cod = "";
-    $$.cod += "[";
-    $$.cod += to_string(n);/* COMPROBAR n1 < n2 */
-    $$.cod += "]";
+    int num1 = stoi($1.lexema), num2 = stoi($3.lexema);
+    if(num1>=num2){
+        errorSemantico(ERRRANGO, $3.nlin, $3.ncol, $3.lexema);
+    }
+    num2++;
+    num2 -= num1;
 
+    $$.cod = "[";
+    $$.cod += to_string(num2);
+    $$.cod += "]";
 };
 
 P   : puntero de P {
-    $$.cod = $3.cod;
+    $$.cod = $3.cod + "*";
+    $$.tipo = $3.tipo;
 } | Tipo {
     $$.cod = $1.cod;
+    $$.tipo = $1.tipo;
 };
 
 Tipo: entero {
@@ -132,7 +151,13 @@ Tipo: entero {
 };
 
 
-B   : blq {tsa = new TablaSimbolos(tsa);} D SI {tsa = tsa->getAmbitoAnterior();} fblq {
+B   : blq {
+    tsa = new TablaSimbolos(tsa);
+    $2.prefijo = $$.prefijo;
+    $3.prefijo = $$.prefijo;
+} D SI {
+    tsa = tsa->getAmbitoAnterior();
+} fblq {
     /*habria que sumar un _ en el attr heredado pero no se como se hace eso*/
     $$.cod = "{\n" + $2.cod + $3.cod + "}\n";
 };
@@ -163,10 +188,10 @@ I   : id asig E {
     }else if($3.tipo == REAL){
         TIPO_E = "f";
     }else{
-        errorSemantico(ERRNOSIMPLE, $3.lexema, $3.nlin, $3.ncol);
+        errorSemantico(ERRNOSIMPLE, $3.nlin, $3.ncol, $3.lexema);
     }
     $$.cod = "printf(\"%"+ TIPO_E + "\", " + $3.cod + ");\n";
-} | B {
+} | {$1.prefijo = "_"+$$.prefijo} B {
     $$.cod = $1.cod;
 };
 
@@ -204,13 +229,27 @@ T   : T opas F {
 
 F   : numentero {
     $$.cod = $1.lexema;
+    $$.tipo = ENTERO;
 } | numreal {
     $$.cod = $1.lexema;
+    $$.tipo = REAL;
 } | id {
     /*
     si es un id, debe estar en la tabla de ambito, sino -> error
     si es un id, pero es una tabla o puntero -> error
     */
+    Simbolo* simb = tsa->buscar($1.lexema);
+    if(simb == NULL){
+        errorSemantico(ERRNODECL, $1.nlin, $1.ncol, $1.lexema);
+    }
+
+    if(simb->tipo == ENTERO){
+        $$.tipo = ENTERO;
+    }else if(simb->tipo == REAL){
+        $$.tipo = REAL;
+    }else{
+        errorSemantico(ERRNOSIMPLE, $1.nlin, $1.ncol, $1.lexema);
+    }
     $$.cod = $1.lexema;
 };
 
@@ -233,7 +272,7 @@ F   : numentero {
 
 
 
-void errorSemantico(int nerror,char *lexema,int fila,int columna)
+void errorSemantico(int nerror,int fila,int columna,char *lexema)
 {
     fprintf(stderr,"Error semantico (%d,%d): en '%s', ",fila,columna,lexema);
     switch (nerror) {

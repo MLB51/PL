@@ -8,6 +8,8 @@ typedef struct {
    int tipo;
    string cod;
    string array;
+   string prefijo;
+   string nombre_funcion;
    
 } MITIPO;
 

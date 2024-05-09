@@ -6,141 +6,32 @@ Autocorrector plp4
 *********************************************************
 flex plp4.l
 bison -d plp4.y	
-plp4.y: aviso: 2 conflictos desplazamiento/reducción [-Wconflicts-sr]
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c lex.yy.c
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c plp4.tab.c
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c TablaSimbolos.cc
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 lex.yy.o plp4.tab.o TablaSimbolos.o -o plp4
-
-*********************************************************
- Ejecutando y comprobando salida a la vez...
-*********************************************************
-Prueba: p01
---- Fallo en la traducción ----------
-0a1,37
-> 
-> float hija()
-> {
-> float c;
-> 
->   return 7.555;
-> }
-> 
-> float prueba()
-> {
-> int a;
-> float b[7][3];
-> int** c;
-> float d;
-> int* e[5][2];
-> 
->   d = itor(7 % a) /r itor(2) *r 2.3;
->   printf("%f",d +r itor(2 /i 3) -r 4.5);
-> {
-> float _c;
-> 
->   _c = itor(256 % 2);
-> }
-> {
-> int _cc;
-> 
-> {
-> int __d;
-> float __b;
-> 
->   __b = itor(_cc);
->   printf("%d",6);
->   return itor(7 +i 5 *i 4);
-> }
-> }
-> }
-> 
---------------------------
-Prueba: p02
---- Fallo en los errores ----------
-1c1
-< Error sintactico (11,1): en 'f'
-\ No hay ningún carácter de nueva línea al final del archivo
----
-> Error semantico (7,7): en 'a', ya existe en este ambito
---------------------------
-Prueba: p03
---- Fallo en la traducción ----------
-1,4d0
-< float p03()
-< {
-< }
-< 
---------------------------
-Prueba: p04
---- Fallo en la traducción ----------
-1,4d0
-< float p04()
-< {
-< }
-< 
---------------------------
-Prueba: p05
---- Fallo en la traducción ----------
-0a1,29
-> float p05()
-> {
-> float a;
-> int o;
-> float p;
-> 
->   o = 23 -i 4 +i 5 +i 2;
->   p = itor(o) +r 3.5 -r itor(7);
->   printf("%d",o);
->   printf("%f",p);
-> {
-> int _olvi;
-> int _p;
-> 
->   _olvi = 777 -i 555;
-> }
-> {
-> float _q;
-> 
-> {
-> int __a;
-> 
->   __a = 7;
->   p = itor(__a +i 3);
->   _q = itor(1 -i 2 +i 3) -r 4.5;
-> }
-> }
-> }
-> 
---------------------------
-Prueba: p06
---- Fallo en la traducción ----------
-0a1,21
-> float p06()
-> {
-> int a;
-> 
->   a = 2;
->   a = a +i 2;
-> {
-> int _b;
-> 
-> {
-> float __c;
-> 
->   _b = a +i 3;
->   a = _b;
->   __c = itor(a);
->   __c = itor(a) /r itor(_b);
-> }
->   return itor(_b *i a);
-> }
-> }
-> 
---------------------------
-
-OJO: FALLAN 6 PRUEBAS DEL AUTOCORRECTOR
-
+plp4.y:64.25-26: error: entero fuera de rango: «$5»
+   64 | S   : funcion id pyc S {$5.prefijo="";} B {
+      |                         ^~
+plp4.y:72.5-6: error: entero fuera de rango: «$2»
+   72 |     $2.prefijo = $$.prefijo;
+      |     ^~
+plp4.y:78.5-6: error: entero fuera de rango: «$1»
+   78 |     $1.prefijo = $$.prefijo;
+      |     ^~
+plp4.y:79.5-6: error: entero fuera de rango: «$2»
+   79 |     $2.prefijo = $$.prefijo;
+      |     ^~
+plp4.y:83.6-7: error: entero fuera de rango: «$1»
+   83 | } | {$1.prefijo = $$.prefijo;} V {
+      |      ^~
+plp4.y:156.5-6: error: entero fuera de rango: «$2»
+  156 |     $2.prefijo = $$.prefijo;
+      |     ^~
+plp4.y:157.5-6: error: entero fuera de rango: «$3»
+  157 |     $3.prefijo = $$.prefijo;
+      |     ^~
+plp4.y:194.6-7: error: entero fuera de rango: «$1»
+  194 | } | {$1.prefijo = "_"+$$.prefijo} B {
+      |      ^~
+make: *** [makefile:21: plp4.tab.h] Error 1
+LA PRACTICA NO COMPILA
 
 
 AVISO IMPORTANTE: este autocorrector NO prueba todos los casos posibles
