@@ -1,0 +1,105 @@
+S - FVM
+
+FVM - DVar FVM
+
+{ 
+    /* 
+        Nada de esto haria nada ?
+        Tal vez llevar attrs heredados pero poco mas porque 100% que no genera codigo
+    */
+    FVM - int main pari pard Bloque
+    Tipo - int
+    Tipo - float
+    Bloque - llavei Bdecl SeqInstr llaved // solo se crearia nuevo ambito aqui y al quitarlo borrar todas las pos de memoria
+    BDecl - BDecl Dvar
+    BDecl - epsilon 
+    Dvar - Tipo LIdent pyc
+    LIdent - Lident coma Variable
+    Lident - Variable
+}
+Variable - id V {
+    Aqui se heredaria el tipo y se guardaria cada una de los SIMBS 
+    Also se guardarian los tipos int y float si no estuviesen
+    Hay 16k pos para vars, int y float ocupan 1, los arrays depende del tamaño
+    Si supera 15999 - ERROR
+    16k a 16383 - vars temporales, aqui tambien ERROR si se pasa
+
+    1. V vacio?
+    2.1 SI - se guarda con tipo heredado
+    2.2 NO - se guarda con el tipo definido que se devlveria desde V
+}
+V - epislon 
+V - cori nentero cord V {
+    aqui se guardaria cada uno de los tipos array
+    el num tiene que ser siempre mayor que 0
+}
+
+// HASTA AQUI no se genera codigo, todo eso es para llenar las tablas de simbolos y tipos
+// lo que si se puede generar son comentarios que vayan diciendo que pasa,empiezan por ; y acaban al final de la linea
+
+
+SeqInstr - SeqInstr Instr
+SeqInstr - epsilon
+Instr - pyc
+Instr - Bloque
+Instr - Ref asig Expr pyc
+// hacer conversiones para los formatos, also printf siempre hace wrl AL FINAL, como si tuvies un \n
+Instr - printf pari formato coma Expr pard pyc
+Instr - scanf pari formato coma referencia Ref pard pyc
+// if y while cumplen lo de if(134) -> True, if(0) -> false
+Instr - if pari Expr pard Instr
+Instr - if pari Expr pard Instr else Instr
+Instr - while pari Expr pard Instr
+/*
+    Se tiene que comprobar en el for
+    1. identificador existe
+    2. tiene que ser entero antes de asignar
+    3. lo mismo con el 2 id
+    id1 y id2 pueden ser distintos pero a nadie le importa
+*/
+Instr - for pari id asig Esimple pyc Expr pyc id incrdecr pard Instr
+
+
+
+/*
+    Aqui las expresiones son mas complejas, pueden usar arrays y ()
+    pero el principio deberia ser practicamente igual
+
+    Toda combinacion de int y float es posible, hayq ue hacer las conversiones necesarias
+    Ops relaciones devuelven siempre 0 o 1
+
+*/
+Expr - Expr oprel Esimple
+Expr - Esimple
+Esimple - Esimple opas Term // no se pueden usar arrays en ningun lado, solo si son con corchetes
+Esimple - Term
+Term - Term opmd Factor // div entre enteros -> entero, si 1 es real se convierte el otro 
+Term - Factor
+Factor - Ref
+Factor - nentero
+Factor - nreal
+Factor - pari Expr pard
+Ref - id
+Ref - Ref cori Esimple cord 
+// mismos ERRORES en arrray que en clase si sobran o fatan []
+// el indice debe ser siempre un int, sino ERROR en ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
