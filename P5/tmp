@@ -1,0 +1,60 @@
+const int ERRYADECL=10,
+	ERRNODECL=11,
+	ERRDIM=12,
+	ERRFALTAN=13,
+	ERRSOBRAN=14,
+	ERR_NOENTERO=15,
+	ERR_NOCABE=100,
+	ERR_MAXTMP=101;
+	
+void errorSemantico(int nerror,char *lexema,int fila,int columna)
+{
+    fprintf(stderr,"Error semantico (%d,%d): en '%s', ",fila,columna,lexema);
+    switch (nerror) {
+             case ERRYADECL: fprintf(stderr,"simbolo ya declarado\n");
+               break;
+             case ERRNODECL: fprintf(stderr,"identificador no declarado\n");
+               break;
+             case ERRDIM: fprintf(stderr,"la dimension debe ser mayor que cero\n");
+               break;
+             case ERRFALTAN: fprintf(stderr,"faltan indices\n");
+               break;
+             case ERRSOBRAN: fprintf(stderr,"sobran indices\n");
+               break;
+             case ERR_NOENTERO: fprintf(stderr,"debe ser de tipo entero\n");
+               break;
+
+             case ERR_NOCABE:fprintf(stderr,"la variable ya no cabe en memoria\n");
+               break;
+             case ERR_MAXTMP:fprintf(stderr,"no hay espacio para variables temporales\n");
+               break;
+    }
+    exit(-1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

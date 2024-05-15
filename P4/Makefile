@@ -21,6 +21,9 @@ plp4.tab.c plp4.tab.h: plp4.y lex.yy.c comun.h TablaSimbolos.h
 	bison -d plp4.y	
 
 
+tgz:
+	tar -czf plp4.tgz *.c *.cc *.h *.l *.y Makefile
+
 clean:
 	rm -f $(OBJS)
 	rm -f plp4
