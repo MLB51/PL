@@ -27,8 +27,11 @@ Variable - id V {
     1. V vacio?
     2.1 SI - se guarda con tipo heredado
     2.2 NO - se guarda con el tipo definido que se devlveria desde V
+    En cualquier caso seria V.tipo
 }
-V - epislon 
+V - epislon {
+    V.tipo = V.tipoh
+}
 V - cori nentero cord V {
     aqui se guardaria cada uno de los tipos array
     el num tiene que ser siempre mayor que 0

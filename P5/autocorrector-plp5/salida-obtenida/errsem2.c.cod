@@ -1,0 +1,13 @@
+; START
+; VARS
+; Tipo: int
+; i
+; j
+; k
+; VARS
+; Tipo: int
+; a[100][200][300]
+; MAIN
+; {
+; }
+halt

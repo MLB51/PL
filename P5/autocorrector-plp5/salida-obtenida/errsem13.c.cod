@@ -1,0 +1,8 @@
+; START
+; VARS
+; Tipo: float
+; a[10][5][2]
+; MAIN
+; {
+; }
+halt

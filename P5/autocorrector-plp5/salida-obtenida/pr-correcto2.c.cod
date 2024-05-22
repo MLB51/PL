@@ -1,0 +1,19 @@
+; START
+; MAIN
+; {
+; Tipo: int
+; i
+; j
+; n
+; Tipo: int
+; laberinto[5][5]
+; Tipo: int
+; lon
+; error
+; salir
+; Tipo: int
+; lon
+; error
+; salir
+; }
+halt

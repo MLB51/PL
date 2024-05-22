@@ -1,0 +1,19 @@
+; START
+; VARS
+; Tipo: int
+; a
+; b
+; c
+; VARS
+; Tipo: float
+; p[4][4]
+; MAIN
+; {
+; Tipo: int
+; i
+; j
+; Tipo: int
+; i
+; j
+; }
+halt
