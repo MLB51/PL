@@ -110,7 +110,15 @@ LIdent  : LIdent coma Variable {
 };
 
 
-Variable : id V {
+Variable : id {
+    $$.prefijo = $0.prefijo;
+    if($1.lexema == $$.nombre_funcion){
+        errorSemantico(ERRNOMFUNC, $1.nlin, $1.ncol, $1.lexema);
+    }
+    if(tsa->buscarAmbito($$.prefijo + $1.lexema)==NULL){
+        errorSemantico(ERRYADECL, $1.nlin, $1.ncol, $1.lexema);
+    }
+} V {
     /*Aqui se heredaria el tipo y se guardaria cada una de los SIMBS 
     Also se guardarian los tipos int y float si no estuviesen
     Hay 16k pos para vars, int y float ocupan 1, los arrays depende del tamaño
@@ -123,7 +131,7 @@ Variable : id V {
     En cualquier caso seria V.tipo
     */
     $$.cod = "; ";
-    $$.cod += $1.lexema + $2.cod;
+    $$.cod += $1.lexema + $3.cod;
     $$.cod += "\n";
 
 };

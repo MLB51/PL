@@ -17,92 +17,69 @@ g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++1
  Ejecutando y comprobando salida a la vez...
 *********************************************************
 Prueba: errsem1-1.c
-Fichero salida-obtenida/errsem1-1.c.sal o salida-esperada/errsem1-1.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem1-1.c.sal: No existe el archivo o el directorio
+--- Fallo en la salida de error ----------
+1c1
+< Error semantico (2,5): en 'a', ya existe en este ambito
+---
+> Error semantico (2,19): en 'a', simbolo ya declarado
 --------------------------
 Prueba: errsem1-2.c
-Fichero salida-obtenida/errsem1-2.c.sal o salida-esperada/errsem1-2.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem1-2.c.sal: No existe el archivo o el directorio
+--- Fallo en la salida de error ----------
+1c1
+< Error semantico (2,5): en 'a', ya existe en este ambito
+---
+> Error semantico (7,2): en 'c', identificador no declarado
 --------------------------
 Prueba: errsem12.c
-Fichero salida-obtenida/errsem12.c.sal o salida-esperada/errsem12.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem12.c.sal: No existe el archivo o el directorio
+--- Fallo en la salida de error ----------
+1c1
+< Error semantico (2,5): en 'a', ya existe en este ambito
+---
+> Error semantico (2,22): en '0', la dimension debe ser mayor que cero
 --------------------------
 Prueba: errsem13.c
-Fichero salida-obtenida/errsem13.c.sal o salida-esperada/errsem13.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem13.c.sal: No existe el archivo o el directorio
+--- Fallo en la salida de error ----------
+1c1
+< Error semantico (3,7): en 'a', ya existe en este ambito
+---
+> Error semantico (7,19): en ']', debe ser de tipo entero
 --------------------------
 Prueba: errsem2.c
-Fichero salida-obtenida/errsem2.c.sal o salida-esperada/errsem2.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem2.c.sal: No existe el archivo o el directorio
+--- Fallo en la salida de error ----------
+1c1
+< Error semantico (2,5): en 'i', ya existe en este ambito
+---
+> Error semantico (3,5): en 'a', la variable ya no cabe en memoria
 --------------------------
 Prueba: errsem9-2.c
-Fichero salida-obtenida/errsem9-2.c.sal o salida-esperada/errsem9-2.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem9-2.c.sal: No existe el archivo o el directorio
+--- Fallo en la salida de error ----------
+1c1
+< Error semantico (4,7): en 'a', ya existe en este ambito
+---
+> Error semantico (6,19): en ']', faltan indices
 --------------------------
 Prueba: errsem9-4.c
-Fichero salida-obtenida/errsem9-4.c.sal o salida-esperada/errsem9-4.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem9-4.c.sal: No existe el archivo o el directorio
+--- Fallo en la salida de error ----------
+1c1
+< Error semantico (4,9): en 'f', ya existe en este ambito
+---
+> Error semantico (6,10): en '[', sobran indices
 --------------------------
 Prueba: pr-correcto1.c
---- Fallo en la traducción ----------
-0a1,2
->    7.500
-> 7
+--- Da error, y no debería
+Error semantico (2,5): en 'a', ya existe en este ambito
 --------------------------
 Prueba: pr-correcto2.c
---- Fallo en la traducción ----------
-0a1,28
-> 0
-> 0
-> 1
-> 1
-> 2
-> 2
-> 3
-> 3
-> 4
-> 4
-> 5
-> 0
-> 0
-> 1
-> 0
-> 2
-> 0
-> 3
-> 0
-> 4
-> 1
-> 4
-> 2
-> 4
-> 3
-> 4
-> 4
-> 8
+--- Da error, y no debería
+Error semantico (4,7): en 'i', ya existe en este ambito
 --------------------------
 Prueba: pr-correcto3.c
---- Fallo en la traducción ----------
-0a1,5
->    5.000
->    9.000
->   13.000
->   17.000
-> 6
+--- Da error, y no debería
+Error semantico (2,5): en 'a', ya existe en este ambito
 --------------------------
 Prueba: pr-correcto4.c
---- Fallo en la traducción ----------
-0a1,2
-> 0
-> 6
+--- Da error, y no debería
+Error semantico (2,5): en 'a', ya existe en este ambito
 --------------------------
 
 OJO: FALLAN 11 PRUEBAS DEL AUTOCORRECTOR
