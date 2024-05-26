@@ -1,0 +1,10 @@
+; START
+; VARS
+; Tipo: int
+; a[1][2][1][1][2][1]
+; MAIN
+; {
+[2][1][1][2][1]; Tipo: int
+; b
+; }
+halt

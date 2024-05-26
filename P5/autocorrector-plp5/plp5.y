@@ -87,7 +87,11 @@ Tipo    : entero {
     $$.tipo = REAL;
 };
 
-Bloque  : llavei BDecl SeqInstr llaved  {
+Bloque  : llavei {
+    tsa = new TablaSimbolos(tsa);
+} BDecl SeqInstr {
+    tsa = tsa->getAmbitoAnterior();
+} llaved  {
     // se crearia nuevo ambito aqui y al quitarlo borrar todas las pos de memoria
     $$.cod = "; {\n"+ $2.cod + $3.cod +"; }\n";
 };
@@ -111,11 +115,10 @@ LIdent  : LIdent coma Variable {
 
 
 Variable : id {
-    // $$.prefijo = $0.prefijo;
     if($1.lexema == $$.nombre_funcion){
         errorSemantico(ERRNOMFUNC, $1.nlin, $1.ncol, $1.lexema);
     }
-    if(tsa->buscarAmbito($$.prefijo + $1.lexema)==NULL){
+    if(tsa->buscarAmbito($1.lexema)!=NULL){
         errorSemantico(ERRYADECL, $1.nlin, $1.ncol, $1.lexema);
     }
 } V {
@@ -130,6 +133,22 @@ Variable : id {
     2.2 NO - se guarda con el tipo definido que se devlveria desde V
     En cualquier caso seria V.tipo
     */
+
+    Simbolo s;
+    s.nombre = $1.lexema;
+    s.tipo = $3.tipo;
+    
+    /*if($4.array != ""){
+        s.tipo = TABLA;
+    }else if($4.cod.find('*') != std::string::npos){
+        s.tipo = PUNTERO;
+    }else {
+        s.tipo = $4.tipo;
+    }*/
+
+    tsa->nuevoSimbolo(s);
+
+
     $$.cod = "; ";
     $$.cod += $1.lexema + $3.cod;
     $$.cod += "\n";
