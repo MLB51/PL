@@ -17,11 +17,7 @@ g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++1
  Ejecutando y comprobando salida a la vez...
 *********************************************************
 Prueba: errsem1-1.c
---- Fallo en la salida de error ----------
-1c1
-< Error semantico (2,19): en 'a', ya existe en este ambito
----
-> Error semantico (2,19): en 'a', simbolo ya declarado
+OK
 --------------------------
 Prueba: errsem1-2.c
 Fichero salida-obtenida/errsem1-2.c.sal o salida-esperada/errsem1-2.c.sal no encontrado
@@ -29,9 +25,7 @@ Fichero salida-obtenida/errsem1-2.c.sal o salida-esperada/errsem1-2.c.sal no enc
 diff: salida-esperada/errsem1-2.c.sal: No existe el archivo o el directorio
 --------------------------
 Prueba: errsem12.c
-Fichero salida-obtenida/errsem12.c.sal o salida-esperada/errsem12.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem12.c.sal: No existe el archivo o el directorio
+OK
 --------------------------
 Prueba: errsem13.c
 Fichero salida-obtenida/errsem13.c.sal o salida-esperada/errsem13.c.sal no encontrado
@@ -39,9 +33,7 @@ Fichero salida-obtenida/errsem13.c.sal o salida-esperada/errsem13.c.sal no encon
 diff: salida-esperada/errsem13.c.sal: No existe el archivo o el directorio
 --------------------------
 Prueba: errsem2.c
-Fichero salida-obtenida/errsem2.c.sal o salida-esperada/errsem2.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem2.c.sal: No existe el archivo o el directorio
+OK
 --------------------------
 Prueba: errsem9-2.c
 Fichero salida-obtenida/errsem9-2.c.sal o salida-esperada/errsem9-2.c.sal no encontrado
@@ -55,13 +47,21 @@ diff: salida-esperada/errsem9-4.c.sal: No existe el archivo o el directorio
 --------------------------
 Prueba: pr-correcto1.c
 --- Fallo en la traducción ----------
-0a1,2
+1,3c1,2
+< ERROR(m2r) en linea 1: nombre de instruccion incorrecto (a)
+< Línea 1: a d:0 tp:0 tm:1 
+< 
+---
 >    7.500
 > 7
 --------------------------
 Prueba: pr-correcto2.c
 --- Fallo en la traducción ----------
-0a1,28
+1,3c1,28
+< ERROR(m2r) en linea 1: nombre de instruccion incorrecto (i)
+< Línea 1: i d:0 tp:0 tm:1 
+< 
+---
 > 0
 > 0
 > 1
@@ -94,8 +94,8 @@ Prueba: pr-correcto2.c
 Prueba: pr-correcto3.c
 --- Fallo en la traducción ----------
 1,3c1,5
-< ERROR(m2r) en línea 12: la instruccion no comienza por letra (empieza por <[>)
-< Línea 12: [4]; Tipo: int
+< ERROR(m2r) en linea 1: nombre de instruccion incorrecto (a)
+< Línea 1: a d:0 tp:0 tm:1 
 < 
 ---
 >    5.000
@@ -107,15 +107,15 @@ Prueba: pr-correcto3.c
 Prueba: pr-correcto4.c
 --- Fallo en la traducción ----------
 1,3c1,2
-< ERROR(m2r) en línea 7: la instruccion no comienza por letra (empieza por <[>)
-< Línea 7: [2][1][1][2][1]; Tipo: int
+< ERROR(m2r) en linea 1: nombre de instruccion incorrecto (a)
+< Línea 1: a d:0 tp:7 tm:1 
 < 
 ---
 > 0
 > 6
 --------------------------
 
-OJO: FALLAN 11 PRUEBAS DEL AUTOCORRECTOR
+OJO: FALLAN 8 PRUEBAS DEL AUTOCORRECTOR
 
 
 

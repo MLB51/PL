@@ -1,8 +1,10 @@
+f d:0 tp:1 tm:1 
+g d:1 tp:3 tm:10 
 ; START
 ; MAIN
 ; {
 ; Tipo: float
 ; f
-; g[10][4]
+; g[10]
 ; }
 halt

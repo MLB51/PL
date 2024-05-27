@@ -30,7 +30,6 @@ extern int ncol,nlin,findefichero;
 extern int yylex();
 extern char *yytext;
 extern FILE *yyin;
-void errorSemantico(int nerror,int fila,int columna,char *lexema);
 
 int yyerror(char *s);
 
@@ -39,17 +38,26 @@ TablaTipos *tt=new TablaTipos();
 
 string operador, s1, s2;  // string auxiliares
 
-const int ERRYADECL=1,
-	ERRNOMFUNC=2,
-	ERRNOSIMPLE=3,
-	ERRNODECL=4,
-	ERRTIPOS=5,
-	ERRNOENTEROIZQ=6,
-	ERRNOENTERODER=7,
-	ERRRANGO=8;
+const int ERRYADECL=10,
+	ERRNODECL=11,
+	ERRDIM=12,
+	ERRFALTAN=13,
+	ERRSOBRAN=14,
+	ERR_NOENTERO=15,
+	ERR_NOCABE=100,
+	ERR_MAXTMP=101;
+	
+void errorSemantico(int nerror,char *lexema,int fila,int columna);
+
+int MAX_VAR_DIR = 16000;
+int MAX_TMP_DIR = 16383; 
+
+int newVarDir = 0;
+int newTempDir = 16000;
+
+
 
 %}
-
 %%
 
 /* ####################################################################################################### */
@@ -102,24 +110,25 @@ BDecl   : BDecl DVar {
     $$.cod = "";
 };
 
-DVar    : Tipo LIdent pyc {
-    $$.cod = "; Tipo: " + $1.cod + "\n" + $2.cod;
+DVar    : Tipo {
+    $$.tipo = $1.tipo;
+} LIdent pyc {
+    $$.cod = "; Tipo: " + $1.cod + "\n" + $3.cod;
     // hay que mandar el tipo como tipoh
 };
 
-LIdent  : LIdent coma Variable {
-    $$.cod = $1.cod + $3.cod;
+LIdent  : LIdent coma {$$.tipo = $0.tipo;} Variable {
+    $$.cod = $1.cod + $4.cod;
 } | Variable {
     $$.cod = $1.cod;
 };
 
 
+
 Variable : id {
-    if($1.lexema == $$.nombre_funcion){
-        errorSemantico(ERRNOMFUNC, $1.nlin, $1.ncol, $1.lexema);
-    }
+    $$.tipo = $0.tipo;
     if(tsa->buscarAmbito($1.lexema)!=NULL){
-        errorSemantico(ERRYADECL, $1.nlin, $1.ncol, $1.lexema);
+        errorSemantico(ERRYADECL, $1.lexema, $1.nlin, $1.ncol);
     }
 } V {
     /*Aqui se heredaria el tipo y se guardaria cada una de los SIMBS 
@@ -133,22 +142,19 @@ Variable : id {
     2.2 NO - se guarda con el tipo definido que se devlveria desde V
     En cualquier caso seria V.tipo
     */
+    int fullTam = tt->getTamanyoRecursivo($3.tipo); //! OJO: sumar tamaño recursivo!!
+    if(newVarDir + fullTam >= MAX_VAR_DIR) 
+        errorSemantico(ERR_NOCABE, $1.lexema, $1.nlin, $1.ncol);
 
     Simbolo s;
     s.nombre = $1.lexema;
     s.tipo = $3.tipo;
-    s.tam = tt.tipos[$3.tipo].tamanyo;
-    s.dir = NuevaVar();
-    /*if($4.array != ""){
-        s.tipo = TABLA;
-    }else if($4.cod.find('*') != std::string::npos){
-        s.tipo = PUNTERO;
-    }else {
-        s.tipo = $4.tipo;
-    }*/
+    s.tam = tt->tipos[$3.tipo].tamanyo; //* este no es tam recursivo
+    s.dir = newVarDir;
+    newVarDir += fullTam;
+    tsa->nuevoSimbolo(s); //! cuidao, parecde que sigue haciendo la duplicacion de dfincions WTF
 
-    tsa->nuevoSimbolo(s);
-
+    std::cout << s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
 
     $$.cod = "; ";
     $$.cod += $1.lexema + $3.cod;
@@ -158,24 +164,31 @@ Variable : id {
 
 
 V   :  {
-    //$$.tipo = $0.tipoh; // empezamos a jgar con fuego, esto seria asi?
+    $$.tipo = $0.tipo;
 
-} | cori nentero cord V {
-    /*aqui se guardaria cada uno de los tipos array
-    el num tiene que ser siempre mayor que 0*/
+} | cori nentero cord {$$.tipo = $0.tipo;} V {
+    int tam = std::stoi($2.lexema);
+    if(tam<=0) errorSemantico(ERRDIM, $2.lexema, $2.nlin, $2.ncol);
+
+    $$.tipo = tt->nuevoTipoArray(
+        tam, // tamaño
+        $5.tipo// tipo base
+    );
+
+    //std::cout << "- tipo: " << $$.tipo  << "- tam: " << tt->tipos[$$.tipo].tamanyo << " - base: " << tt->tipos[$$.tipo].tipoBase << std::endl;
     $$.cod = "[";
     $$.cod += $2.lexema;
     $$.cod += "]";
     $$.cod += $4.cod;
-    $$.tipo = 23; // aqui iria el tipo del array en cuestion
 };
+
 
 /************************************************************************************************************************************/
 
 SeqInstr : SeqInstr Instr {} | {};
 Instr : pyc {};
 Instr : Bloque {
-    $$.cod = S1.cod;
+    $$.cod = $1.cod;
 };
 Instr : Ref asig Expr pyc {};
 // hacer conversiones para los formatos, also escribe siempre hace wrl AL FINAL, como si tuvies un \n
@@ -234,31 +247,32 @@ Ref :  Ref cori Esimple cord {};
 /* ####################################################################################################### */
 /* CODIGO */
 
-
-
-void errorSemantico(int nerror,int fila,int columna,char *lexema)
+	
+void errorSemantico(int nerror,char *lexema,int fila,int columna)
 {
     fprintf(stderr,"Error semantico (%d,%d): en '%s', ",fila,columna,lexema);
     switch (nerror) {
-      case ERRYADECL: fprintf(stderr,"ya existe en este ambito\n");
-         break;
-      case ERRNOMFUNC: fprintf(stderr,"no puede llamarse igual que la funcion");
-         break;
-      case ERRNOSIMPLE: fprintf(stderr,"debe ser de tipo entero o real\n");
-         break;
-      case ERRNODECL: fprintf(stderr,"no ha sido declarado\n");
-         break;
-      case ERRTIPOS: fprintf(stderr,"tipos incompatibles entero/real\n");
-         break;
-      case ERRNOENTEROIZQ: fprintf(stderr,"el operando izquierdo debe ser entero\n");
-         break;
-      case ERRNOENTERODER: fprintf(stderr,"el operando derecho debe ser entero\n");
-         break;
-      case ERRRANGO: fprintf(stderr,"rango incorrecto\n");
-         break;
+             case ERRYADECL: fprintf(stderr,"simbolo ya declarado\n");
+               break;
+             case ERRNODECL: fprintf(stderr,"identificador no declarado\n");
+               break;
+             case ERRDIM: fprintf(stderr,"la dimension debe ser mayor que cero\n");
+               break;
+             case ERRFALTAN: fprintf(stderr,"faltan indices\n");
+               break;
+             case ERRSOBRAN: fprintf(stderr,"sobran indices\n");
+               break;
+             case ERR_NOENTERO: fprintf(stderr,"debe ser de tipo entero\n");
+               break;
+
+             case ERR_NOCABE:fprintf(stderr,"la variable ya no cabe en memoria\n");
+               break;
+             case ERR_MAXTMP:fprintf(stderr,"no hay espacio para variables temporales\n");
+               break;
     }
     exit(-1);
 }
+
 
 
 

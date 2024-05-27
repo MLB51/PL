@@ -1,8 +1,10 @@
+a d:0 tp:8 tm:1 
+b d:144 tp:0 tm:1 
 ; START
 ; MAIN
 ; {
 ; Tipo: int
-; a[1][2][3][4][3][2][1]
+; a[1]
 ; b
 ; }
 halt

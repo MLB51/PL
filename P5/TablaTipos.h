@@ -29,11 +29,11 @@ class TablaTipos {
 
   public:
   
-     vector<unTipo> tipos;
-     
-     TablaTipos();
-     unsigned nuevoTipoArray(unsigned tam,unsigned tbase);
+    vector<unTipo> tipos;
     
+    TablaTipos();
+    unsigned nuevoTipoArray(unsigned tam,unsigned tbase);
+    unsigned getTamanyoRecursivo(unsigned tipo);
 };
 
 #endif

@@ -1,3 +1,12 @@
+i d:0 tp:0 tm:1 
+j d:1 tp:0 tm:1 
+n d:2 tp:0 tm:1 
+laberinto d:3 tp:3 tm:5 
+lon d:28 tp:0 tm:1 
+error d:29 tp:0 tm:1 
+salir d:30 tp:0 tm:1 
+mov d:31 tp:0 tm:1 
+mov d:32 tp:0 tm:1 
 ; START
 ; MAIN
 ; {
@@ -6,9 +15,9 @@
 ; j
 ; n
 ; Tipo: int
-; laberinto[5][5]
+; laberinto[5]
 ; Tipo: int
-; lon[5][5]
+; lon[5]
 ; error
 ; salir
 ; }

@@ -8,7 +8,8 @@ TablaTipos::TablaTipos()
   unTipo b;
   
   b.clase = TIPOBASICO;
-  b.tipoBase = ENTERO;  
+  b.tipoBase = ENTERO;
+  b.tamanyo = 1;
   tipos.push_back(b);
   
   b.tipoBase = REAL;    
@@ -27,3 +28,12 @@ unsigned TablaTipos::nuevoTipoArray(unsigned tam,unsigned tbase)
   return tipos.size()-1;
 }
 
+unsigned TablaTipos::getTamanyoRecursivo(unsigned tipo){
+  unsigned aux_t = tipo, tam=1;
+  while(! ES_TIPO_BASICO(aux_t)){
+    unTipo t = tipos[aux_t];
+    tam *= t.tamanyo;
+    aux_t = t.tipoBase;
+  }
+  return tam;
+}
