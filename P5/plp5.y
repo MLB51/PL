@@ -98,7 +98,15 @@ Tipo    : entero {
 Bloque  : llavei {
     tsa = new TablaSimbolos(tsa);
 } BDecl SeqInstr {
+    std::cout << newVarDir << std::endl;
+    int tam_tsa = 0;
+    for(Simbolo s: tsa->simbolos){
+        tam_tsa += tt->getTamanyoRecursivo(s.tipo);
+    }
     tsa = tsa->getAmbitoAnterior();
+    newVarDir -= tam_tsa; // se vacian las pos de memoria
+    std::cout << newVarDir << std::endl;
+    
 } llaved  {
     // se crearia nuevo ambito aqui y al quitarlo borrar todas las pos de memoria
     $$.cod = "; {\n"+ $2.cod + $3.cod +"; }\n";
@@ -184,29 +192,71 @@ V   :  {
 
 
 /************************************************************************************************************************************/
+/************************************************************************************************************************************/
 
-SeqInstr : SeqInstr Instr {} | {};
-Instr : pyc {};
-Instr : Bloque {
-    $$.cod = $1.cod;
+SeqInstr : SeqInstr Instr {
+
+} | {
+
 };
-Instr : Ref asig Expr pyc {};
-// hacer conversiones para los formatos, also escribe siempre hace wrl AL FINAL, como si tuvies un \n
-Instr : escribe pari formato coma Expr pard pyc {};
-Instr : lee pari formato coma referencia Ref pard pyc {};
-// if y while cumplen lo de if(134) -> True, if(0) -> false
-Instr : si pari Expr pard Instr {};
-Instr : si pari Expr pard Instr sino Instr {};
-Instr : mientras pari Expr pard Instr {};
-/*
-    Se tiene que comprobar en el for
-    1. identificador existe
-    2. tiene que ser entero antes de asignar
-    3. lo mismo con el 2 id
-    id1 y id2 pueden ser distintos pero a nadie le importa
-*/
-Instr : para pari id asig Esimple pyc Expr pyc id incrdecr pard Instr {};
 
+
+Instr : pyc {
+    //! nada?
+
+} | Bloque {
+    $$.cod = $1.cod;
+
+} | Ref asig Expr pyc {
+    // id = E ;
+    // comprobar tipos? creo que no, vale todo con todo mientras se cumpla que no implqieu arrays
+    //
+    $$.cod = $1.cod + 
+} | escribe pari formato coma Expr pard pyc {
+    // hacer conversiones para los formatos, also escribe siempre hace wrl AL FINAL, como si tuvies un \n
+    //     - wri fuente Imprime el valor (entero) de fuente.
+    //     - wrr fuente Imprime el valor (real) de fuente.
+    //     - wrc fuente Imprime el carácter representado por los 8 bits más bajos del valor entero 
+    //     - wrl Imprime un salto de LInea
+    $$.cod = "wr";
+    $$.cod += formato;
+    $$.cod += " ";
+    $$.cod += $6.dir; // direccion que devuelve la expresion
+    $$.cod += "\n";
+    $$.cod += "wrl\n";
+
+} | lee pari formato coma referencia Ref pard pyc {
+    //     - rdi destino Lee un entero de la consola y lo carga en destino.
+    //     - rdr destino Lee un real de la consola y lo carga en destino.
+    //     - rdc destino Lee un carácter de la consola y carga su código ASCII en destino.
+
+    $$.cod = "rd";
+    $$.cod += formato;
+    $$.cod += " ";
+    $$.cod += $6.dir; // direccion que devuelve la expresion
+    $$.cod += "\n";
+
+} | si pari Expr pard Instr {
+    // if y while cumplen lo de if(134) -> True, if(0) -> false
+
+
+} | si pari Expr pard Instr sino Instr {
+
+
+} | mientras pari Expr pard Instr {
+
+
+} | para pari id asig Esimple pyc Expr pyc id incrdecr pard Instr {
+    /*
+        Se tiene que comprobar en el for
+        1. identificador existe
+        2. tiene que ser entero antes de asignar
+        3. lo mismo con el 2 id
+        id1 y id2 pueden ser distintos pero a nadie le importa
+    */
+
+
+};
 
 
 /************************************************************************************************************************************/

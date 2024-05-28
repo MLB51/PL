@@ -98,7 +98,15 @@ Tipo    : entero {
 Bloque  : llavei {
     tsa = new TablaSimbolos(tsa);
 } BDecl SeqInstr {
+    std::cout << newVarDir << std::endl;
+    int tam_tsa = 0;
+    for(Simbolo s: tsa->simbolos){
+        tam_tsa += tt->getTamanyoRecursivo(s.tipo);
+    }
     tsa = tsa->getAmbitoAnterior();
+    newVarDir -= tam_tsa; // se vacian las pos de memoria
+    std::cout << newVarDir << std::endl;
+    
 } llaved  {
     // se crearia nuevo ambito aqui y al quitarlo borrar todas las pos de memoria
     $$.cod = "; {\n"+ $2.cod + $3.cod +"; }\n";

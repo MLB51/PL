@@ -83,10 +83,11 @@ L   : {$$.prefijo = $0.prefijo;} L {$$.prefijo = $0.prefijo;} V {
 
 
 V   : id {
+    $$.prefijo = $0.prefijo;
     if($1.lexema == $$.nombre_funcion){
         errorSemantico(ERRNOMFUNC, $1.nlin, $1.ncol, $1.lexema);
     }
-    if(tsa->buscarAmbito($1.lexema)!=NULL){
+    if(tsa->buscarAmbito($$.prefijo + $1.lexema)==NULL){
         errorSemantico(ERRYADECL, $1.nlin, $1.ncol, $1.lexema);
     }
 } dosp C pyc {

@@ -573,10 +573,10 @@ static const yytype_int8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    68,    68,    79,    83,    86,    90,    93,    98,   100,
-      98,   107,   109,   113,   113,   120,   120,   122,   128,   128,
-     166,   169,   169,   188,   188,   189,   190,   193,   195,   196,
-     198,   199,   200,   208,   222,   223,   224,   225,   226,   227,
-     228,   229,   230,   231,   232,   233
+      98,   115,   117,   121,   121,   128,   128,   130,   136,   136,
+     174,   177,   177,   196,   196,   197,   198,   201,   203,   204,
+     206,   207,   208,   216,   230,   231,   232,   233,   234,   235,
+     236,   237,   238,   239,   240,   241
 };
 #endif
 
@@ -1495,88 +1495,96 @@ yyreduce:
   case 9:
 #line 100 "plp5.y"
                  {
+    std::cout << newVarDir << std::endl;
+    int tam_tsa = 0;
+    for(Simbolo s: tsa->simbolos){
+        tam_tsa += tt->getTamanyoRecursivo(s.tipo);
+    }
     tsa = tsa->getAmbitoAnterior();
+    newVarDir -= tam_tsa; // se vacian las pos de memoria
+    std::cout << newVarDir << std::endl;
+    
 }
-#line 1501 "plp5.tab.c"
+#line 1509 "plp5.tab.c"
     break;
 
   case 10:
-#line 102 "plp5.y"
+#line 110 "plp5.y"
           {
     // se crearia nuevo ambito aqui y al quitarlo borrar todas las pos de memoria
     yyval.cod = "; {\n"+ yyvsp[-4].cod + yyvsp[-3].cod +"; }\n";
 }
-#line 1510 "plp5.tab.c"
-    break;
-
-  case 11:
-#line 107 "plp5.y"
-                     {
-    yyval.cod = yyvsp[-1].cod + yyvsp[0].cod;
-}
 #line 1518 "plp5.tab.c"
     break;
 
-  case 12:
-#line 109 "plp5.y"
-    {
-    yyval.cod = "";
+  case 11:
+#line 115 "plp5.y"
+                     {
+    yyval.cod = yyvsp[-1].cod + yyvsp[0].cod;
 }
 #line 1526 "plp5.tab.c"
     break;
 
-  case 13:
-#line 113 "plp5.y"
-               {
-    yyval.tipo = yyvsp[0].tipo;
+  case 12:
+#line 117 "plp5.y"
+    {
+    yyval.cod = "";
 }
 #line 1534 "plp5.tab.c"
     break;
 
+  case 13:
+#line 121 "plp5.y"
+               {
+    yyval.tipo = yyvsp[0].tipo;
+}
+#line 1542 "plp5.tab.c"
+    break;
+
   case 14:
-#line 115 "plp5.y"
+#line 123 "plp5.y"
              {
     yyval.cod = "; Tipo: " + yyvsp[-3].cod + "\n" + yyvsp[-1].cod;
     // hay que mandar el tipo como tipoh
 }
-#line 1543 "plp5.tab.c"
+#line 1551 "plp5.tab.c"
     break;
 
   case 15:
-#line 120 "plp5.y"
+#line 128 "plp5.y"
                       {yyval.tipo = yyvsp[-2].tipo;}
-#line 1549 "plp5.tab.c"
-    break;
-
-  case 16:
-#line 120 "plp5.y"
-                                                    {
-    yyval.cod = yyvsp[-3].cod + yyvsp[0].cod;
-}
 #line 1557 "plp5.tab.c"
     break;
 
-  case 17:
-#line 122 "plp5.y"
-             {
-    yyval.cod = yyvsp[0].cod;
+  case 16:
+#line 128 "plp5.y"
+                                                    {
+    yyval.cod = yyvsp[-3].cod + yyvsp[0].cod;
 }
 #line 1565 "plp5.tab.c"
     break;
 
+  case 17:
+#line 130 "plp5.y"
+             {
+    yyval.cod = yyvsp[0].cod;
+}
+#line 1573 "plp5.tab.c"
+    break;
+
   case 18:
-#line 128 "plp5.y"
+#line 136 "plp5.y"
               {
     yyval.tipo = yyvsp[-1].tipo;
     if(tsa->buscarAmbito(yyvsp[0].lexema)!=NULL){
         errorSemantico(ERRYADECL, yyvsp[0].lexema, yyvsp[0].nlin, yyvsp[0].ncol);
     }
 }
-#line 1576 "plp5.tab.c"
+#line 1584 "plp5.tab.c"
     break;
 
   case 19:
-#line 133 "plp5.y"
+#line 141 "plp5.y"
     {
     /*Aqui se heredaria el tipo y se guardaria cada una de los SIMBS 
     Also se guardarian los tipos int y float si no estuviesen
@@ -1608,26 +1616,26 @@ yyreduce:
     yyval.cod += "\n";
 
 }
-#line 1612 "plp5.tab.c"
+#line 1620 "plp5.tab.c"
     break;
 
   case 20:
-#line 166 "plp5.y"
+#line 174 "plp5.y"
        {
     yyval.tipo = yyvsp[0].tipo;
 
 }
-#line 1621 "plp5.tab.c"
+#line 1629 "plp5.tab.c"
     break;
 
   case 21:
-#line 169 "plp5.y"
+#line 177 "plp5.y"
                       {yyval.tipo = yyvsp[-3].tipo;}
-#line 1627 "plp5.tab.c"
+#line 1635 "plp5.tab.c"
     break;
 
   case 22:
-#line 169 "plp5.y"
+#line 177 "plp5.y"
                                              {
     int tam = std::stoi(yyvsp[-3].lexema);
     if(tam<=0) errorSemantico(ERRDIM, yyvsp[-3].lexema, yyvsp[-3].nlin, yyvsp[-3].ncol);
@@ -1643,151 +1651,151 @@ yyreduce:
     yyval.cod += "]";
     yyval.cod += yyvsp[-1].cod;
 }
-#line 1647 "plp5.tab.c"
+#line 1655 "plp5.tab.c"
     break;
 
   case 23:
-#line 188 "plp5.y"
+#line 196 "plp5.y"
                           {}
-#line 1653 "plp5.tab.c"
+#line 1661 "plp5.tab.c"
     break;
 
   case 24:
-#line 188 "plp5.y"
+#line 196 "plp5.y"
                                {}
-#line 1659 "plp5.tab.c"
+#line 1667 "plp5.tab.c"
     break;
 
   case 25:
-#line 189 "plp5.y"
+#line 197 "plp5.y"
             {}
-#line 1665 "plp5.tab.c"
-    break;
-
-  case 26:
-#line 190 "plp5.y"
-               {
-    yyval.cod = yyvsp[0].cod;
-}
 #line 1673 "plp5.tab.c"
     break;
 
+  case 26:
+#line 198 "plp5.y"
+               {
+    yyval.cod = yyvsp[0].cod;
+}
+#line 1681 "plp5.tab.c"
+    break;
+
   case 27:
-#line 193 "plp5.y"
+#line 201 "plp5.y"
                           {}
-#line 1679 "plp5.tab.c"
+#line 1687 "plp5.tab.c"
     break;
 
   case 28:
-#line 195 "plp5.y"
+#line 203 "plp5.y"
                                                 {}
-#line 1685 "plp5.tab.c"
+#line 1693 "plp5.tab.c"
     break;
 
   case 29:
-#line 196 "plp5.y"
+#line 204 "plp5.y"
                                                       {}
-#line 1691 "plp5.tab.c"
+#line 1699 "plp5.tab.c"
     break;
 
   case 30:
-#line 198 "plp5.y"
+#line 206 "plp5.y"
                                 {}
-#line 1697 "plp5.tab.c"
+#line 1705 "plp5.tab.c"
     break;
 
   case 31:
-#line 199 "plp5.y"
+#line 207 "plp5.y"
                                            {}
-#line 1703 "plp5.tab.c"
+#line 1711 "plp5.tab.c"
     break;
 
   case 32:
-#line 200 "plp5.y"
+#line 208 "plp5.y"
                                       {}
-#line 1709 "plp5.tab.c"
+#line 1717 "plp5.tab.c"
     break;
 
   case 33:
-#line 208 "plp5.y"
+#line 216 "plp5.y"
                                                                       {}
-#line 1715 "plp5.tab.c"
+#line 1723 "plp5.tab.c"
     break;
 
   case 34:
-#line 222 "plp5.y"
+#line 230 "plp5.y"
                            {}
-#line 1721 "plp5.tab.c"
+#line 1729 "plp5.tab.c"
     break;
 
   case 35:
-#line 223 "plp5.y"
+#line 231 "plp5.y"
                 {}
-#line 1727 "plp5.tab.c"
+#line 1735 "plp5.tab.c"
     break;
 
   case 36:
-#line 224 "plp5.y"
+#line 232 "plp5.y"
                               {}
-#line 1733 "plp5.tab.c"
+#line 1741 "plp5.tab.c"
     break;
 
   case 37:
-#line 225 "plp5.y"
+#line 233 "plp5.y"
                 {}
-#line 1739 "plp5.tab.c"
+#line 1747 "plp5.tab.c"
     break;
 
   case 38:
-#line 226 "plp5.y"
+#line 234 "plp5.y"
                          {}
-#line 1745 "plp5.tab.c"
+#line 1753 "plp5.tab.c"
     break;
 
   case 39:
-#line 227 "plp5.y"
+#line 235 "plp5.y"
                {}
-#line 1751 "plp5.tab.c"
+#line 1759 "plp5.tab.c"
     break;
 
   case 40:
-#line 228 "plp5.y"
+#line 236 "plp5.y"
               {}
-#line 1757 "plp5.tab.c"
+#line 1765 "plp5.tab.c"
     break;
 
   case 41:
-#line 229 "plp5.y"
+#line 237 "plp5.y"
                   {}
-#line 1763 "plp5.tab.c"
+#line 1771 "plp5.tab.c"
     break;
 
   case 42:
-#line 230 "plp5.y"
+#line 238 "plp5.y"
                 {}
-#line 1769 "plp5.tab.c"
+#line 1777 "plp5.tab.c"
     break;
 
   case 43:
-#line 231 "plp5.y"
+#line 239 "plp5.y"
                          {}
-#line 1775 "plp5.tab.c"
+#line 1783 "plp5.tab.c"
     break;
 
   case 44:
-#line 232 "plp5.y"
+#line 240 "plp5.y"
           {}
-#line 1781 "plp5.tab.c"
+#line 1789 "plp5.tab.c"
     break;
 
   case 45:
-#line 233 "plp5.y"
+#line 241 "plp5.y"
                              {}
-#line 1787 "plp5.tab.c"
+#line 1795 "plp5.tab.c"
     break;
 
 
-#line 1791 "plp5.tab.c"
+#line 1799 "plp5.tab.c"
 
       default: break;
     }
@@ -2019,7 +2027,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 244 "plp5.y"
+#line 252 "plp5.y"
 
 /* ####################################################################################################### */
 /* ####################################################################################################### */
