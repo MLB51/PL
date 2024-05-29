@@ -574,9 +574,9 @@ static const yytype_int16 yyrline[] =
 {
        0,    68,    68,    79,    83,    86,    90,    93,    98,   100,
       98,   115,   117,   121,   121,   128,   128,   130,   136,   136,
-     175,   178,   178,   198,   200,   205,   209,   212,   218,   249,
-     261,   269,   277,   283,   310,   313,   321,   356,   364,   401,
-     409,   424,   434,   444,   452,   467,   467
+     174,   177,   177,   197,   199,   204,   208,   211,   249,   280,
+     292,   300,   308,   314,   341,   391,   399,   434,   442,   479,
+     487,   502,   512,   522,   530,   545,   545
 };
 #endif
 
@@ -1614,29 +1614,28 @@ yyreduce:
     yyval.cod = "; ";
     yyval.cod += yyvsp[-2].lexema + yyvsp[0].cod + " => \n";
     yyval.cod += ";  dir:" + std::to_string(s.dir) + " tp:" + std::to_string(s.tipo) + " tm:" + std::to_string(s.tam) + " \n" ;
-    yyval.cod += "\n";
 
 }
-#line 1621 "plp5.tab.c"
+#line 1620 "plp5.tab.c"
     break;
 
   case 20:
-#line 175 "plp5.y"
+#line 174 "plp5.y"
        {
     yyval.tipo = yyvsp[0].tipo;
 
 }
-#line 1630 "plp5.tab.c"
+#line 1629 "plp5.tab.c"
     break;
 
   case 21:
-#line 178 "plp5.y"
+#line 177 "plp5.y"
                       {yyval.tipo = yyvsp[-3].tipo;}
-#line 1636 "plp5.tab.c"
+#line 1635 "plp5.tab.c"
     break;
 
   case 22:
-#line 178 "plp5.y"
+#line 177 "plp5.y"
                                              {
     int tam = std::stoi(yyvsp[-3].lexema);
     if(tam<=0) errorSemantico(ERRDIM, yyvsp[-3].lexema, yyvsp[-3].nlin, yyvsp[-3].ncol);
@@ -1652,58 +1651,90 @@ yyreduce:
     yyval.cod += "]";
     yyval.cod += yyvsp[0].cod;
 }
-#line 1656 "plp5.tab.c"
+#line 1655 "plp5.tab.c"
     break;
 
   case 23:
-#line 198 "plp5.y"
+#line 197 "plp5.y"
                           {
     yyval.cod = yyvsp[-1].cod + yyvsp[0].cod;
 }
-#line 1664 "plp5.tab.c"
+#line 1663 "plp5.tab.c"
     break;
 
   case 24:
-#line 200 "plp5.y"
+#line 199 "plp5.y"
     {
     yyval.cod = "\n";
 }
-#line 1672 "plp5.tab.c"
+#line 1671 "plp5.tab.c"
     break;
 
   case 25:
-#line 205 "plp5.y"
+#line 204 "plp5.y"
             {
     //! nada?
     yyval.cod = ";pyc\n";
 
 }
-#line 1682 "plp5.tab.c"
+#line 1681 "plp5.tab.c"
     break;
 
   case 26:
-#line 209 "plp5.y"
+#line 208 "plp5.y"
            {
     yyval.cod = yyvsp[0].cod;
 
 }
-#line 1691 "plp5.tab.c"
+#line 1690 "plp5.tab.c"
     break;
 
   case 27:
-#line 212 "plp5.y"
+#line 211 "plp5.y"
                       {
     // id = E ;
     // comprobar tipos? creo que no, vale todo con todo mientras se cumpla que no implqieu arrays
     //
     yyval.cod = yyvsp[-3].cod + yyvsp[-1].cod;
-    // faltaria añadir cod expr y mov Expr Ref
+    
+    Simbolo* s = tsa->buscar(yyvsp[-3].simb);
+    yyval.cod += "; Se calcula la pos total para la Ref de la asignacion\n";
+    yyval.cod += "mov " + std::to_string(yyvsp[-3].dir) + " A \n";
+    yyval.cod += "addi #"+ std::to_string(s->dir) + " \n"; // suma dirbase a la pos en el array
+    //std::cout << ";var " << $1.simb << s->dir << std::endl;
+    yyval.cod += "; Asignacion para "+ yyvsp[-3].simb +"\n";
+    yyval.cod += "mov " + std::to_string(yyvsp[-1].dir) + " @A \n";
+
+    // mov fuente -> destino
+
+    // necesito mover
+    // de: posicion memoria $3.dir (almacena el resultado de Expr) 
+    // a: posicion guardada en A (dirbase + pos_array)
+
+    yyval.cod += "wri " + std::to_string(yyvsp[-3].dir) + "  \n";
+    yyval.cod += "wri A \n";
+    yyval.cod += "wrl \n";
+    if(yyvsp[-3].tipo==ENTERO){
+        yyval.cod += "wri @A \n";
+        yyval.cod += "wrr 3 \n";
+    }else{
+        yyval.cod += "wrr @A \n";
+    }
+    yyval.cod += "wrl \n";
+    if(yyvsp[-1].tipo==ENTERO){
+        yyval.cod += "wri "+std::to_string(yyvsp[-1].dir) +"\n";
+    }else{
+        yyval.cod += "wrr "+std::to_string(yyvsp[-1].dir) +"\n";
+    }
+    yyval.cod += "wrl \n";
+    yyval.cod += "wrl \n";
+
 }
-#line 1703 "plp5.tab.c"
+#line 1734 "plp5.tab.c"
     break;
 
   case 28:
-#line 218 "plp5.y"
+#line 249 "plp5.y"
                                             {
     // hacer conversiones para los formatos, also escribe siempre hace wrl AL FINAL, como si tuvies un \n
     //     - wri fuente Imprime el valor (entero) de fuente.
@@ -1736,11 +1767,11 @@ yyreduce:
     yyval.cod += "wrl\n";
 
 }
-#line 1740 "plp5.tab.c"
+#line 1771 "plp5.tab.c"
     break;
 
   case 29:
-#line 249 "plp5.y"
+#line 280 "plp5.y"
                                                   {
     //     - rdi destino Lee un entero de la consola y lo carga en destino.
     //     - rdr destino Lee un real de la consola y lo carga en destino.
@@ -1754,11 +1785,11 @@ yyreduce:
     yyval.cod += "\n";
 
 }
-#line 1758 "plp5.tab.c"
+#line 1789 "plp5.tab.c"
     break;
 
   case 30:
-#line 261 "plp5.y"
+#line 292 "plp5.y"
                             {
     // if y while cumplen lo de if(134) -> True, if(0) -> false
 
@@ -1768,11 +1799,11 @@ yyreduce:
     yyval.cod += yyvsp[0].cod;
 
 }
-#line 1772 "plp5.tab.c"
+#line 1803 "plp5.tab.c"
     break;
 
   case 31:
-#line 269 "plp5.y"
+#line 300 "plp5.y"
                                        {
 
     yyval.cod = yyvsp[-4].cod;
@@ -1782,11 +1813,11 @@ yyreduce:
     yyval.cod += yyvsp[0].cod;
 
 }
-#line 1786 "plp5.tab.c"
+#line 1817 "plp5.tab.c"
     break;
 
   case 32:
-#line 277 "plp5.y"
+#line 308 "plp5.y"
                                   {
 
     yyval.cod = yyvsp[-2].cod;
@@ -1794,11 +1825,11 @@ yyreduce:
     yyval.cod += yyvsp[0].cod;
 
 }
-#line 1798 "plp5.tab.c"
+#line 1829 "plp5.tab.c"
     break;
 
   case 33:
-#line 283 "plp5.y"
+#line 314 "plp5.y"
                                                                   {
     /*
         Se tiene que comprobar en el for
@@ -1814,44 +1845,40 @@ yyreduce:
 
 
 }
-#line 1818 "plp5.tab.c"
+#line 1849 "plp5.tab.c"
     break;
 
   case 34:
-#line 310 "plp5.y"
+#line 341 "plp5.y"
                            {
-    yyval.cod = yyvsp[-2].cod + yyvsp[0].cod;
-
-}
-#line 1827 "plp5.tab.c"
-    break;
-
-  case 35:
-#line 313 "plp5.y"
-            {
-    yyval.cod = yyvsp[0].cod;
-    yyval.tipo = yyvsp[0].tipo;
-    yyval.dir = yyvsp[0].dir;
-
-}
-#line 1838 "plp5.tab.c"
-    break;
-
-  case 36:
-#line 321 "plp5.y"
-                              {
     yyval.cod = yyvsp[-2].cod + yyvsp[0].cod; 
-    string operacion = (strcmp(yyvsp[-1].lexema, "+")==0)? "add": "sub";
 
-    yyval.cod += "; OPAS\n";
+    string operacion = "";
 
-    if(yyvsp[-2].tipo != yyvsp[-1].tipo){
+    if(strcmp(yyvsp[-1].lexema, "==")==0){
+        operacion = "eql";
+    } else if(strcmp(yyvsp[-1].lexema, "!=")==0){
+        operacion = "neq";
+    } else if(strcmp(yyvsp[-1].lexema, "<")==0){
+        operacion = "lss";
+    } else if(strcmp(yyvsp[-1].lexema, "<=")==0){
+        operacion = "eql";
+    } else if(strcmp(yyvsp[-1].lexema, ">")==0){
+        operacion = "gtr";
+    } else if(strcmp(yyvsp[-1].lexema, ">=")==0){
+        operacion = "geq";
+    } 
+
+ 
+    yyval.cod += "; OPREL\n";
+
+    if(yyvsp[-2].tipo != yyvsp[0].tipo){
         if(yyvsp[-2].tipo == ENTERO){ // si son distintos cambia solo el entero
             yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
             yyval.cod += "itor\n";
-            yyval.cod += operacion + "r " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[0].dir) + "\n";
         }else {
-            yyval.cod += "mov " + std::to_string(yyvsp[-1].dir) + " A\n";
+            yyval.cod += "mov " + std::to_string(yyvsp[0].dir) + " A\n";
             yyval.cod += "itor\n";
             yyval.cod += operacion + "r " + std::to_string(yyvsp[-2].dir) + "\n";
         }
@@ -1860,11 +1887,62 @@ yyreduce:
     }else{ // si son iguales no se requiere cambio de tipo
         if(yyvsp[-2].tipo == ENTERO){
             yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
-            yyval.cod += operacion + "i " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.cod += operacion + "i " + std::to_string(yyvsp[0].dir) + "\n";
             yyval.tipo = ENTERO;
         }else {
             yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
-            yyval.cod += operacion + "r " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[0].dir) + "\n";
+            yyval.tipo = REAL;
+        }
+    }
+
+    int tmp = newTempDir++;
+    yyval.dir = tmp,
+    yyval.cod += "mov A " + std::to_string(tmp) + " \n";
+
+}
+#line 1905 "plp5.tab.c"
+    break;
+
+  case 35:
+#line 391 "plp5.y"
+            {
+    yyval.cod = yyvsp[0].cod;
+    yyval.tipo = yyvsp[0].tipo;
+    yyval.dir = yyvsp[0].dir;
+
+}
+#line 1916 "plp5.tab.c"
+    break;
+
+  case 36:
+#line 399 "plp5.y"
+                              {
+    yyval.cod = yyvsp[-2].cod + yyvsp[0].cod; 
+    string operacion = (strcmp(yyvsp[-1].lexema, "+")==0)? "add": "sub";
+
+    yyval.cod += "; OPAS\n";
+
+    if(yyvsp[-2].tipo != yyvsp[0].tipo){
+        if(yyvsp[-2].tipo == ENTERO){ // si son distintos cambia solo el entero
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += "itor\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[0].dir) + "\n";
+        }else {
+            yyval.cod += "mov " + std::to_string(yyvsp[0].dir) + " A\n";
+            yyval.cod += "itor\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[-2].dir) + "\n";
+        }
+        yyval.tipo = REAL;
+
+    }else{ // si son iguales no se requiere cambio de tipo
+        if(yyvsp[-2].tipo == ENTERO){
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += operacion + "i " + std::to_string(yyvsp[0].dir) + "\n";
+            yyval.tipo = ENTERO;
+        }else {
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[0].dir) + "\n";
             yyval.tipo = REAL;
         }
     }
@@ -1875,22 +1953,22 @@ yyreduce:
     yyval.cod += "mov A " + std::to_string(tmp) + " \n";
 
 }
-#line 1879 "plp5.tab.c"
+#line 1957 "plp5.tab.c"
     break;
 
   case 37:
-#line 356 "plp5.y"
+#line 434 "plp5.y"
          {
     yyval.cod = yyvsp[0].cod;
     yyval.tipo = yyvsp[0].tipo;
     yyval.dir = yyvsp[0].dir;
 
 }
-#line 1890 "plp5.tab.c"
+#line 1968 "plp5.tab.c"
     break;
 
   case 38:
-#line 364 "plp5.y"
+#line 442 "plp5.y"
                          {
 // div entre enteros : > entero, si 1 es real se convierte el otro
     yyval.cod = yyvsp[-2].cod + yyvsp[0].cod; 
@@ -1898,13 +1976,13 @@ yyreduce:
 
     yyval.cod += "; OPMD\n";
 
-    if(yyvsp[-2].tipo != yyvsp[-1].tipo){
+    if(yyvsp[-2].tipo != yyvsp[0].tipo){
         if(yyvsp[-2].tipo == ENTERO){ // si son distintos cambia solo el entero
             yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
             yyval.cod += "itor\n";
-            yyval.cod += operacion + "r " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[0].dir) + "\n";
         }else {
-            yyval.cod += "mov " + std::to_string(yyvsp[-1].dir) + " A\n";
+            yyval.cod += "mov " + std::to_string(yyvsp[0].dir) + " A\n";
             yyval.cod += "itor\n";
             yyval.cod += operacion + "r " + std::to_string(yyvsp[-2].dir) + "\n";
         }
@@ -1913,11 +1991,11 @@ yyreduce:
     }else{ // si son iguales no se requiere cambio de tipo
         if(yyvsp[-2].tipo == ENTERO){
             yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
-            yyval.cod += operacion + "i " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.cod += operacion + "i " + std::to_string(yyvsp[0].dir) + "\n";
             yyval.tipo = ENTERO;
         }else {
             yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
-            yyval.cod += operacion + "r " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[0].dir) + "\n";
             yyval.tipo = REAL;
         }
     }
@@ -1929,22 +2007,22 @@ yyreduce:
     
 
 }
-#line 1933 "plp5.tab.c"
+#line 2011 "plp5.tab.c"
     break;
 
   case 39:
-#line 401 "plp5.y"
+#line 479 "plp5.y"
            {
     yyval.cod = yyvsp[0].cod;
     yyval.tipo = yyvsp[0].tipo;
     yyval.dir = yyvsp[0].dir;
 
 }
-#line 1944 "plp5.tab.c"
+#line 2022 "plp5.tab.c"
     break;
 
   case 40:
-#line 409 "plp5.y"
+#line 487 "plp5.y"
               {
     if(!ES_TIPO_BASICO(yyvsp[0].tipo)){
         errorSemantico(ERRFALTAN, yyval.lexema, yyval.nlin, yyval.ncol); //! aqui habria que marcar en id o en ], osea, en -1?
@@ -1961,11 +2039,11 @@ yyreduce:
     yyval.tipo = yyvsp[0].tipo;
 
 }
-#line 1965 "plp5.tab.c"
+#line 2043 "plp5.tab.c"
     break;
 
   case 41:
-#line 424 "plp5.y"
+#line 502 "plp5.y"
             {
     int tmp = newTempDir++;
     yyval.dir = tmp;
@@ -1977,11 +2055,11 @@ yyreduce:
     yyval.cod += "\n";
 
 }
-#line 1981 "plp5.tab.c"
+#line 2059 "plp5.tab.c"
     break;
 
   case 42:
-#line 434 "plp5.y"
+#line 512 "plp5.y"
           {
     int tmp = newTempDir++;
     yyval.dir = tmp;
@@ -1993,22 +2071,22 @@ yyreduce:
     yyval.cod += "\n";
 
 }
-#line 1997 "plp5.tab.c"
+#line 2075 "plp5.tab.c"
     break;
 
   case 43:
-#line 444 "plp5.y"
+#line 522 "plp5.y"
                    {
     yyval.cod = yyvsp[-1].cod;
     yyval.tipo = yyvsp[-1].tipo;
     yyval.dir = yyvsp[-1].dir;
     //* algo mas?
 }
-#line 2008 "plp5.tab.c"
+#line 2086 "plp5.tab.c"
     break;
 
   case 44:
-#line 452 "plp5.y"
+#line 530 "plp5.y"
           {
     Simbolo* s = tsa->buscar(yyvsp[0].lexema);
     if(s == NULL){
@@ -2025,11 +2103,11 @@ yyreduce:
     yyval.simb = yyvsp[0].lexema;
 
 }
-#line 2029 "plp5.tab.c"
+#line 2107 "plp5.tab.c"
     break;
 
   case 45:
-#line 467 "plp5.y"
+#line 545 "plp5.y"
              {
     if(ES_TIPO_BASICO(yyvsp[-1].tipo)){
         errorSemantico(ERRSOBRAN, yyvsp[0].lexema, yyvsp[0].nlin, yyvsp[0].ncol);
@@ -2038,11 +2116,11 @@ yyreduce:
     yyval.simb = yyvsp[-1].simb;
 
 }
-#line 2042 "plp5.tab.c"
+#line 2120 "plp5.tab.c"
     break;
 
   case 46:
-#line 474 "plp5.y"
+#line 552 "plp5.y"
                 {
     /*
         mismos ERRORES en arrray que en clase si sobran o fatan []
@@ -2068,11 +2146,11 @@ yyreduce:
 
     yyval.tipo = tt->tipos[yyvsp[-4].tipo].tipoBase; // coge el nuevo tipo
 }
-#line 2072 "plp5.tab.c"
+#line 2150 "plp5.tab.c"
     break;
 
 
-#line 2076 "plp5.tab.c"
+#line 2154 "plp5.tab.c"
 
       default: break;
     }
@@ -2304,7 +2382,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 505 "plp5.y"
+#line 583 "plp5.y"
 
 /* ####################################################################################################### */
 /* ####################################################################################################### */

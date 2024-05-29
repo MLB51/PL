@@ -4,7 +4,14 @@ Autocorrector plp5
 *********************************************************
  Compilando...
 *********************************************************
-make: 'plp5' está actualizado.
+flex plp5.l
+bison -d plp5.y	
+plp5.y: aviso: 1 conflicto desplazamiento/reducción [-Wconflicts-sr]
+g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c lex.yy.c
+g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c plp5.tab.c
+g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c TablaSimbolos.cc
+g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c TablaTipos.cc
+g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 lex.yy.o plp5.tab.o TablaSimbolos.o TablaTipos.o -o plp5
 
 *********************************************************
  Ejecutando y comprobando salida a la vez...
@@ -36,24 +43,21 @@ OK
 --------------------------
 Prueba: pr-correcto1.c
 --- Fallo en la traducción ----------
-1,5c1,2
+1d0
+< 03
+3,7c2
+<    7.500
 < 
-< ERROR(m2r) al leer un valor de la posicion de memoria 0 sin haberlo
-< inicializado, en la instrucción 58
-< Línea 58: divi 0
-< 
+< 02
+< 3   7.500
+< ERROR(m2r) en línea 50: el primer operando de 'wrr' debe ser real.
 ---
->    7.500
 > 7
 --------------------------
 Prueba: pr-correcto2.c
 --- Fallo en la traducción ----------
-1,5c1,28
-< 
-< ERROR(m2r) al leer un valor de la posicion de memoria 0 sin haberlo
-< inicializado, en la instrucción 94
-< Línea 94: addi 0
-< 
+1c1,10
+< 02
 ---
 > 0
 > 0
@@ -65,7 +69,12 @@ Prueba: pr-correcto2.c
 > 3
 > 4
 > 4
-> 5
+3,6c12,28
+< ERROR(m2r) al leer un valor de la posicion de memoria 3 sin haberlo
+< inicializado, en la instrucción 33
+< Línea 33: wrr 3 
+< 
+---
 > 0
 > 0
 > 1
@@ -87,8 +96,8 @@ Prueba: pr-correcto2.c
 Prueba: pr-correcto3.c
 --- Fallo en la traducción ----------
 1,3c1,5
-< ERROR(m2r) en línea 92: la instruccion no comienza por letra (empieza por <=>)
-< Línea 92:  => 
+< ERROR(m2r) en línea 90: la instruccion no comienza por letra (empieza por <=>)
+< Línea 90:  => 
 < 
 ---
 >    5.000
@@ -99,14 +108,14 @@ Prueba: pr-correcto3.c
 --------------------------
 Prueba: pr-correcto4.c
 --- Fallo en la traducción ----------
-1,5c1,2
-< 
-< ERROR(m2r) al leer un valor de la posicion de memoria 0 sin haberlo
-< inicializado, en la instrucción 19
-< Línea 19: subi 0
+1d0
+< 04
+3,6c2
+< ERROR(m2r) al leer un valor de la posicion de memoria 3 sin haberlo
+< inicializado, en la instrucción 43
+< Línea 43: wrr 3 
 < 
 ---
-> 0
 > 6
 --------------------------
 

@@ -3,259 +3,368 @@
 ; Tipo: int
 ; a => 
 ;  dir:0 tp:0 tm:1 
-
 ; b => 
 ;  dir:1 tp:0 tm:1 
-
 ; c => 
 ;  dir:2 tp:0 tm:1 
-
 ; VARS
 ; Tipo: float
 ; p[4][4] => 
 ;  dir:3 tp:3 tm:4 
-
 ; MAIN
 ; {
 ; Tipo: int
 ; i => 
 ;  dir:19 tp:0 tm:1 
-
 ; j => 
 ;  dir:20 tp:0 tm:1 
 
-
 ; FOR
 ; FOR
-mov #0 16006; t0 para: p
+mov #0 16008; t0 para: p
 ; Calcula n para array
-mov #0 16007; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16007 A 
-addi #19 
-mov A 16007 
-; Calcula Ti
-mov 16006 A
-muli #4
-addi 16007
-mov A 16008
-; Calcula n para array
-mov #0 16009; t0 para: j
+mov #0 16009; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16009 A 
-addi #20 
+addi #19 
 mov A 16009 
 ; Calcula Ti
 mov 16008 A
 muli #4
 addi 16009
 mov A 16010
-rdr 16010
-mov #0 16011; t0 para: i
+; Calcula n para array
+mov #0 16011; t0 para: j
 ; Se calcula la pos total para la Ref
 mov 16011 A 
-addi #19 
-mov A 16011 
-mov #0 16012; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16012 A 
 addi #20 
-mov A 16012 
+mov A 16011 
+; Calcula Ti
+mov 16010 A
+muli #4
+addi 16011
+mov A 16012
+rdr 16012
+mov #0 16013; t0 para: i
+; Se calcula la pos total para la Ref
+mov 16013 A 
+addi #19 
+mov A 16013 
+mov #0 16014; t0 para: j
+; Se calcula la pos total para la Ref
+mov 16014 A 
+addi #20 
+mov A 16014 
+; OPREL
+mov 16013 A
+eqli 16014
+mov A 16015 
 ; IF
 ; {
 ; Tipo: float
 ; sumafila; FOR
-mov #0 16006; t0 para: p
+mov #0 16008; t0 para: p
 ; Calcula n para array
-mov #0 16007; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16007 A 
-addi #19 
-mov A 16007 
-; Calcula Ti
-mov 16006 A
-muli #4
-addi 16007
-mov A 16008
-; Calcula n para array
-mov #0 16009; t0 para: j
+mov #0 16009; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16009 A 
-addi #20 
+addi #19 
 mov A 16009 
 ; Calcula Ti
 mov 16008 A
 muli #4
 addi 16009
 mov A 16010
-rdr 16010
+; Calcula n para array
+mov #0 16011; t0 para: j
+; Se calcula la pos total para la Ref
+mov 16011 A 
+addi #20 
+mov A 16011 
+; Calcula Ti
+mov 16010 A
+muli #4
+addi 16011
+mov A 16012
+rdr 16012
  => 
 ;  dir:21 tp:1 tm:1 
-
 ; sumatotal => 
 ;  dir:22 tp:1 tm:1 
-
 ; Tipo: int
 ; div; FOR
-mov #0 16006; t0 para: p
+mov #0 16008; t0 para: p
 ; Calcula n para array
-mov #0 16007; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16007 A 
-addi #19 
-mov A 16007 
-; Calcula Ti
-mov 16006 A
-muli #4
-addi 16007
-mov A 16008
-; Calcula n para array
-mov #0 16009; t0 para: j
+mov #0 16009; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16009 A 
-addi #20 
+addi #19 
 mov A 16009 
 ; Calcula Ti
 mov 16008 A
 muli #4
 addi 16009
 mov A 16010
-rdr 16010
+; Calcula n para array
+mov #0 16011; t0 para: j
+; Se calcula la pos total para la Ref
+mov 16011 A 
+addi #20 
+mov A 16011 
+; Calcula Ti
+mov 16010 A
+muli #4
+addi 16011
+mov A 16012
+rdr 16012
  => 
 ;  dir:23 tp:0 tm:1 
 
-
-mov #0 16013; t0 para: div
-rdi 16013
-mov #0 16014; t0 para: i
-mov #0 16015
-mov #0 16016; t0 para: sumatotal
-mov #0 16017
-mov #0 16018; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16018 A 
+mov #0 16016; t0 para: div
+rdi 16016
+mov #0 16017; t0 para: i
+mov #0 16018
+; Se calcula la pos total para la Ref de la asignacion
+mov 16017 A 
 addi #19 
-mov A 16018 
-mov #4 16019
+; Asignacion para i
+mov 16018 @A 
+wri 16017  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16018
+wrl 
+wrl 
+mov #0 16019; t0 para: sumatotal
+mov #0 16020
+; Se calcula la pos total para la Ref de la asignacion
+mov 16019 A 
+addi #22 
+; Asignacion para sumatotal
+mov 16020 @A 
+wri 16019  
+wri A 
+wrl 
+wrr @A 
+wrl 
+wri 16020
+wrl 
+wrl 
+mov #0 16021; t0 para: i
+; Se calcula la pos total para la Ref
+mov 16021 A 
+addi #19 
+mov A 16021 
+mov #4 16022
+; OPREL
+mov 16021 A
+lssi 16022
+mov A 16023 
 ; WHILE
 ; {
 
-mov #0 16020; t0 para: j
-mov #0 16021
-mov #0 16022; t0 para: sumafila
-mov #0 16023
 mov #0 16024; t0 para: j
-; Se calcula la pos total para la Ref
+mov #0 16025
+; Se calcula la pos total para la Ref de la asignacion
 mov 16024 A 
 addi #20 
-mov A 16024 
-mov #4 16025
+; Asignacion para j
+mov 16025 @A 
+wri 16024  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16025
+wrl 
+wrl 
+mov #0 16026; t0 para: sumafila
+mov #0 16027
+; Se calcula la pos total para la Ref de la asignacion
+mov 16026 A 
+addi #21 
+; Asignacion para sumafila
+mov 16027 @A 
+wri 16026  
+wri A 
+wrl 
+wrr @A 
+wrl 
+wri 16027
+wrl 
+wrl 
+mov #0 16028; t0 para: j
+; Se calcula la pos total para la Ref
+mov 16028 A 
+addi #20 
+mov A 16028 
+mov #4 16029
+; OPREL
+mov 16028 A
+lssi 16029
+mov A 16030 
 ; WHILE
 ; {
 
-mov #0 16026; t0 para: sumafila
-mov #0 16027; t0 para: sumafila
-; Se calcula la pos total para la Ref
-mov 16027 A 
-addi #21 
-mov A 16027 
-mov #0 16028; t0 para: p
-; Calcula n para array
-mov #0 16029; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16029 A 
-addi #19 
-mov A 16029 
-; Calcula Ti
-mov 16028 A
-muli #4
-addi 16029
-mov A 16030
-; Calcula n para array
-mov #0 16031; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16031 A 
-addi #20 
-mov A 16031 
-; Calcula Ti
-mov 16030 A
-muli #4
-addi 16031
-mov A 16032
+mov #0 16031; t0 para: sumafila
+mov #0 16032; t0 para: sumafila
 ; Se calcula la pos total para la Ref
 mov 16032 A 
-addi #3 
-mov A 16032 
-; OPAS
-mov 0 A
-itor
-addr 16027
-mov A 16033 
-mov #0 16034; t0 para: j
-mov #0 16035; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16035 A 
-addi #20 
-mov A 16035 
-mov #1 16036
-; OPAS
-mov 16035 A
-addi 0
-mov A 16037 
-; }
-mov #0 16038; t0 para: sumafila
-; Se calcula la pos total para la Ref
-mov 16038 A 
 addi #21 
+mov A 16032 
+mov #0 16033; t0 para: p
+; Calcula n para array
+mov #0 16034; t0 para: i
+; Se calcula la pos total para la Ref
+mov 16034 A 
+addi #19 
+mov A 16034 
+; Calcula Ti
+mov 16033 A
+muli #4
+addi 16034
+mov A 16035
+; Calcula n para array
+mov #0 16036; t0 para: j
+; Se calcula la pos total para la Ref
+mov 16036 A 
+addi #20 
+mov A 16036 
+; Calcula Ti
+mov 16035 A
+muli #4
+addi 16036
+mov A 16037
+; Se calcula la pos total para la Ref
+mov 16037 A 
+addi #3 
+mov A 16037 
+; OPAS
+mov 16032 A
+addr 16037
 mov A 16038 
-mov 16038 A
-itor
-wrr A
-wrl
-mov #0 16039; t0 para: i
-mov #0 16040; t0 para: i
+; Se calcula la pos total para la Ref de la asignacion
+mov 16031 A 
+addi #21 
+; Asignacion para sumafila
+mov 16038 @A 
+wri 16031  
+wri A 
+wrl 
+wrr @A 
+wrl 
+wrr 16038
+wrl 
+wrl 
+mov #0 16039; t0 para: j
+mov #0 16040; t0 para: j
 ; Se calcula la pos total para la Ref
 mov 16040 A 
-addi #19 
+addi #20 
 mov A 16040 
 mov #1 16041
 ; OPAS
 mov 16040 A
-addi 0
+addi 16041
 mov A 16042 
-mov #0 16043; t0 para: sumatotal
-mov #0 16044; t0 para: sumatotal
+; Se calcula la pos total para la Ref de la asignacion
+mov 16039 A 
+addi #20 
+; Asignacion para j
+mov 16042 @A 
+wri 16039  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16042
+wrl 
+wrl 
+; }
+mov #0 16043; t0 para: sumafila
 ; Se calcula la pos total para la Ref
-mov 16044 A 
-addi #22 
-mov A 16044 
-mov #0 16045; t0 para: sumafila
+mov 16043 A 
+addi #21 
+mov A 16043 
+mov 16043 A
+itor
+wrr A
+wrl
+mov #0 16044; t0 para: i
+mov #0 16045; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16045 A 
-addi #21 
+addi #19 
 mov A 16045 
+mov #1 16046
 ; OPAS
-mov 0 A
-itor
-addr 16044
-mov A 16046 
-; }
-mov #0 16047; t0 para: sumatotal
-; Se calcula la pos total para la Ref
-mov 16047 A 
-addi #22 
+mov 16045 A
+addi 16046
 mov A 16047 
-mov #0 16048; t0 para: div
+; Se calcula la pos total para la Ref de la asignacion
+mov 16044 A 
+addi #19 
+; Asignacion para i
+mov 16047 @A 
+wri 16044  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16047
+wrl 
+wrl 
+mov #0 16048; t0 para: sumatotal
+mov #0 16049; t0 para: sumatotal
 ; Se calcula la pos total para la Ref
-mov 16048 A 
-addi #23 
-mov A 16048 
-; OPMD
-mov 0 A
-itor
-divr 16047
+mov 16049 A 
+addi #22 
 mov A 16049 
+mov #0 16050; t0 para: sumafila
+; Se calcula la pos total para la Ref
+mov 16050 A 
+addi #21 
+mov A 16050 
+; OPAS
 mov 16049 A
+addr 16050
+mov A 16051 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16048 A 
+addi #22 
+; Asignacion para sumatotal
+mov 16051 @A 
+wri 16048  
+wri A 
+wrl 
+wrr @A 
+wrl 
+wrr 16051
+wrl 
+wrl 
+; }
+mov #0 16052; t0 para: sumatotal
+; Se calcula la pos total para la Ref
+mov 16052 A 
+addi #22 
+mov A 16052 
+mov #0 16053; t0 para: div
+; Se calcula la pos total para la Ref
+mov 16053 A 
+addi #23 
+mov A 16053 
+; OPMD
+mov 16053 A
+itor
+divr 16052
+mov A 16054 
+mov 16054 A
 rtoi
 wri A
 wrl

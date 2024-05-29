@@ -3,36 +3,48 @@
 ; Tipo: int
 ; a[1][2][1][1][2][1] => 
 ;  dir:0 tp:7 tm:1 
-
 ; MAIN
 ; {
 ; Tipo: int
 ; b[1][1][2][1] => 
 ;  dir:4 tp:0 tm:1 
 
-
 mov #0 16000; t0 para: b
 mov #1 16001
 mov #3 16002
 ; OPAS
 mov 16001 A
-subi 0
+subi 16002
 mov A 16003 
 mov #2 16004
 mov #5 16005
 ; OPMD
 mov 16004 A
-muli 0
+muli 16005
 mov A 16006 
 mov #4 16007
 ; OPMD
 mov 16006 A
-divi 0
+divi 16007
 mov A 16008 
 ; OPAS
 mov 16003 A
-addi 0
+addi 16008
 mov A 16009 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16000 A 
+addi #4 
+; Asignacion para b
+mov 16009 @A 
+wri 16000  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16009
+wrl 
+wrl 
 mov #0 16010; t0 para: a
 ; Calcula n para array
 mov #0 16011
@@ -81,6 +93,20 @@ mov #0 16023; t0 para: b
 mov 16023 A 
 addi #4 
 mov A 16023 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16022 A 
+addi #0 
+; Asignacion para a
+mov 16023 @A 
+wri 16022  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16023
+wrl 
+wrl 
 mov #0 16024; t0 para: a
 ; Calcula n para array
 mov #0 16025
@@ -132,8 +158,22 @@ mov A 16037
 mov #1 16038
 ; OPAS
 mov 16037 A
-addi 0
+addi 16038
 mov A 16039 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16036 A 
+addi #0 
+; Asignacion para a
+mov 16039 @A 
+wri 16036  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16039
+wrl 
+wrl 
 mov #0 16040; t0 para: a
 ; Calcula n para array
 mov #0 16041
@@ -185,8 +225,22 @@ mov A 16053
 mov #2 16054
 ; OPAS
 mov 16053 A
-addi 0
+addi 16054
 mov A 16055 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16052 A 
+addi #0 
+; Asignacion para a
+mov 16055 @A 
+wri 16052  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16055
+wrl 
+wrl 
 mov #0 16056; t0 para: a
 ; Calcula n para array
 mov #0 16057
@@ -238,8 +292,22 @@ mov A 16069
 mov #3 16070
 ; OPAS
 mov 16069 A
-addi 0
+addi 16070
 mov A 16071 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16068 A 
+addi #0 
+; Asignacion para a
+mov 16071 @A 
+wri 16068  
+wri A 
+wrl 
+wri @A 
+wrr 3 
+wrl 
+wri 16071
+wrl 
+wrl 
 mov #0 16072; t0 para: b
 ; Se calcula la pos total para la Ref
 mov 16072 A 
@@ -344,7 +412,7 @@ addi #0
 mov A 16098 
 ; OPAS
 mov 16085 A
-addi 0
+addi 16098
 mov A 16099 
 mov #0 16100; t0 para: a
 ; Calcula n para array
@@ -395,7 +463,7 @@ addi #0
 mov A 16112 
 ; OPAS
 mov 16099 A
-addi 0
+addi 16112
 mov A 16113 
 mov #0 16114; t0 para: a
 ; Calcula n para array
@@ -446,7 +514,7 @@ addi #0
 mov A 16126 
 ; OPAS
 mov 16113 A
-addi 0
+addi 16126
 mov A 16127 
 mov 16127 A
 wri A
