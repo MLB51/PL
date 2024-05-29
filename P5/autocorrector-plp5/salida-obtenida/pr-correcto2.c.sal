@@ -1,10 +1,5 @@
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
+
+ERROR(m2r) al leer un valor de la posicion de memoria 0 sin haberlo
+inicializado, en la instrucción 94
+Línea 94: addi 0
+

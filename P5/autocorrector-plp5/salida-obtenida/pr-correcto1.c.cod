@@ -1,52 +1,111 @@
-; a d:0 tp:0 tm:1 
-; b d:1 tp:0 tm:1 
-; c d:2 tp:0 tm:1 
-; a d:3 tp:1 tm:1 
-; b d:4 tp:1 tm:1 
-; a d:5 tp:0 tm:1 
-; b d:6 tp:0 tm:1 
 ; START
 ; VARS
 ; Tipo: int
-; a
-; b
-; c
+; a => 
+;  dir:0 tp:0 tm:1 
+
+; b => 
+;  dir:1 tp:0 tm:1 
+
+; c => 
+;  dir:2 tp:0 tm:1 
+
 ; MAIN
 ; {
 ; Tipo: float
-; a
-; b
+; a => 
+;  dir:3 tp:1 tm:1 
+
+; b => 
+;  dir:4 tp:1 tm:1 
+
 
 mov #0 16000; t0 para: a
 mov $7.5 16001
 mov #0 16002; t0 para: c
 mov #0 16003; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16003 A 
+addi #3 
+mov A 16003 
 mov #0 16004; t0 para: c
+; Se calcula la pos total para la Ref
+mov 16004 A 
+addi #2 
+mov A 16004 
 mov $7.1 16005
 ; IF
 ; {
 ; Tipo: int
-; a
-; b
+; a => 
+;  dir:5 tp:0 tm:1 
+
+; b => 
+;  dir:6 tp:0 tm:1 
+
 
 mov #0 16006; t0 para: a
 mov #0 16007; t0 para: c
+; Se calcula la pos total para la Ref
+mov 16007 A 
+addi #2 
+mov A 16007 
 mov #3 16008
 mov #10 16009
 mov #9 16010
-mov #0 16011; t0 para: b
-mov #0 16012; t0 para: a
-mov #2 16013
-mov #2 16014
-mov #0 16015; t0 para: b
-wri 16015
+; OPMD
+mov 16009 A
+divi 0
+mov A 16011 
+; OPMD
+mov 16008 A
+muli 0
+mov A 16012 
+; OPAS
+mov 16007 A
+addi 0
+mov A 16013 
+mov #0 16014; t0 para: b
+mov #0 16015; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16015 A 
+addi #5 
+mov A 16015 
+mov #2 16016
+; OPMD
+mov 16015 A
+divi 0
+mov A 16017 
+mov #2 16018
+; OPMD
+mov 16017 A
+divi 0
+mov A 16019 
+mov #0 16020; t0 para: b
+; Se calcula la pos total para la Ref
+mov 16020 A 
+addi #6 
+mov A 16020 
+mov 16020 A
+wri A
 wrl
 ; }
-mov #0 16016; t0 para: a
-wrr 16016
+mov #0 16021; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16021 A 
+addi #3 
+mov A 16021 
+mov 16021 A
+itor
+wrr A
 wrl
-mov #0 16017; t0 para: c
-wri 16017
+mov #0 16022; t0 para: c
+; Se calcula la pos total para la Ref
+mov 16022 A 
+addi #2 
+mov A 16022 
+mov 16022 A
+wri A
 wrl
 ; }
 halt

@@ -4,14 +4,7 @@ Autocorrector plp5
 *********************************************************
  Compilando...
 *********************************************************
-flex plp5.l
-bison -d plp5.y	
-plp5.y: aviso: 1 conflicto desplazamiento/reducción [-Wconflicts-sr]
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c lex.yy.c
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c plp5.tab.c
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c TablaSimbolos.cc
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 -c TablaTipos.cc
-g++ -Wall -g -Wno-write-strings -Wno-unused-function -Wno-sign-compare -std=c++11 lex.yy.o plp5.tab.o TablaSimbolos.o TablaTipos.o -o plp5
+make: 'plp5' está actualizado.
 
 *********************************************************
  Ejecutando y comprobando salida a la vez...
@@ -43,25 +36,27 @@ OK
 --------------------------
 Prueba: pr-correcto1.c
 --- Fallo en la traducción ----------
-1,2c1,2
-< 0
-< ERROR(m2r) en línea 46: el primer operando de 'wrr' debe ser real.
+1,5c1,2
+< 
+< ERROR(m2r) al leer un valor de la posicion de memoria 0 sin haberlo
+< inicializado, en la instrucción 58
+< Línea 58: divi 0
+< 
 ---
 >    7.500
 > 7
 --------------------------
 Prueba: pr-correcto2.c
 --- Fallo en la traducción ----------
-3,10c3,28
-< 0
-< 0
-< 0
-< 0
-< 0
-< 0
-< 0
-< 0
+1,5c1,28
+< 
+< ERROR(m2r) al leer un valor de la posicion de memoria 0 sin haberlo
+< inicializado, en la instrucción 94
+< Línea 94: addi 0
+< 
 ---
+> 0
+> 0
 > 1
 > 1
 > 2
@@ -91,8 +86,10 @@ Prueba: pr-correcto2.c
 --------------------------
 Prueba: pr-correcto3.c
 --- Fallo en la traducción ----------
-1c1,5
-< ERROR(m2r) en línea 129: el primer operando de 'wrr' debe ser real.
+1,3c1,5
+< ERROR(m2r) en línea 92: la instruccion no comienza por letra (empieza por <=>)
+< Línea 92:  => 
+< 
 ---
 >    5.000
 >    9.000
@@ -102,9 +99,14 @@ Prueba: pr-correcto3.c
 --------------------------
 Prueba: pr-correcto4.c
 --- Fallo en la traducción ----------
-2c2
-< 3
+1,5c1,2
+< 
+< ERROR(m2r) al leer un valor de la posicion de memoria 0 sin haberlo
+< inicializado, en la instrucción 19
+< Línea 19: subi 0
+< 
 ---
+> 0
 > 6
 --------------------------
 

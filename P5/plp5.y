@@ -150,7 +150,7 @@ Variable : id {
     2.2 NO - se guarda con el tipo definido que se devlveria desde V
     En cualquier caso seria V.tipo
     */
-    int fullTam = tt->getTamanyoRecursivo($3.tipo); //! OJO: sumar tamaño recursivo!!
+    int fullTam = tt->getTamanyoRecursivo($3.tipo);
     if(newVarDir + fullTam >= MAX_VAR_DIR) 
         errorSemantico(ERR_NOCABE, $1.lexema, $1.nlin, $1.ncol);
 
@@ -162,11 +162,11 @@ Variable : id {
     newVarDir += fullTam;
     tsa->nuevoSimbolo(s); //! cuidao, parecde que sigue haciendo la duplicacion de dfincions WTF
 
-    std::cout << "; "<< s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
+    //std::cout << "; "<< s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
 
     $$.cod = "; ";
-    $$.cod += $1.lexema + $3.cod;
-    $$.cod += "\n";
+    $$.cod += $1.lexema + $3.cod + " => \n";
+    $$.cod += ";  dir:" + std::to_string(s.dir) + " tp:" + std::to_string(s.tipo) + " tm:" + std::to_string(s.tam) + " \n" ;
 
 };
 
@@ -187,7 +187,7 @@ V   :  {
     $$.cod = "[";
     $$.cod += $2.lexema;
     $$.cod += "]";
-    $$.cod += $4.cod;
+    $$.cod += $5.cod;
 };
 
 
@@ -220,13 +220,29 @@ Instr : pyc {
     //     - wrr fuente Imprime el valor (real) de fuente.
     //     - wrc fuente Imprime el carácter representado por los 8 bits más bajos del valor entero 
     //     - wrl Imprime un salto de LInea
-    string f = $5.tipo==ENTERO ? "i" : "r";
+
     $$.cod = $5.cod;
+    string f = "i";
+    $$.cod += "mov " + std::to_string($5.dir) + " A\n";
+    if(std::string($3.lexema).find("d") != std::string::npos){
+        if($5.tipo == REAL){
+            $$.cod += "rtoi\n";
+        }
+    }else if(std::string($3.lexema).find("g") != std::string::npos){
+        f = "r";
+        if($5.tipo == REAL){
+            $$.cod += "itor\n";
+        }
+    }  if(std::string($3.lexema).find("c") != std::string::npos){
+        f = "c";
+        if($5.tipo == REAL){
+            $$.cod += "itor\n";
+        }
+    } 
+
     $$.cod += "wr";
     $$.cod += f;
-    $$.cod += " ";
-    $$.cod += std::to_string($5.dir); // direccion que devuelve la expresion
-    $$.cod += "\n";
+    $$.cod += " A\n";
     $$.cod += "wrl\n";
 
 } | lee pari formato coma referencia Ref pard pyc {
@@ -295,16 +311,51 @@ Expr :  Expr oprel Esimple {
 
 } | Esimple {
     $$.cod = $1.cod;
+    $$.tipo = $1.tipo;
+    $$.dir = $1.dir;
 
 };
 
 
 Esimple :  Esimple opas Term  {
-// no se pueden usar arrays en ningun lado, solo si son con corchetes
+    $$.cod = $1.cod + $3.cod; 
+    string operacion = (strcmp($2.lexema, "+")==0)? "add": "sub";
 
-    $$.cod = $1.cod + $3.cod;
+    $$.cod += "; OPAS\n";
+
+    if($1.tipo != $2.tipo){
+        if($1.tipo == ENTERO){ // si son distintos cambia solo el entero
+            $$.cod += "mov " + std::to_string($1.dir) + " A\n";
+            $$.cod += "itor\n";
+            $$.cod += operacion + "r " + std::to_string($2.dir) + "\n";
+        }else {
+            $$.cod += "mov " + std::to_string($2.dir) + " A\n";
+            $$.cod += "itor\n";
+            $$.cod += operacion + "r " + std::to_string($1.dir) + "\n";
+        }
+        $$.tipo = REAL;
+
+    }else{ // si son iguales no se requiere cambio de tipo
+        if($1.tipo == ENTERO){
+            $$.cod += "mov " + std::to_string($1.dir) + " A\n";
+            $$.cod += operacion + "i " + std::to_string($2.dir) + "\n";
+            $$.tipo = ENTERO;
+        }else {
+            $$.cod += "mov " + std::to_string($1.dir) + " A\n";
+            $$.cod += operacion + "r " + std::to_string($2.dir) + "\n";
+            $$.tipo = REAL;
+        }
+    }
+
+
+    int tmp = newTempDir++;
+    $$.dir = tmp,
+    $$.cod += "mov A " + std::to_string(tmp) + " \n";
+
 } | Term {
     $$.cod = $1.cod;
+    $$.tipo = $1.tipo;
+    $$.dir = $1.dir;
 
 };
 
@@ -312,9 +363,44 @@ Esimple :  Esimple opas Term  {
 Term :  Term opmd Factor {
 // div entre enteros : > entero, si 1 es real se convierte el otro
     $$.cod = $1.cod + $3.cod; 
+    string operacion = (strcmp($2.lexema, "*")==0)? "mul": "div";
+
+    $$.cod += "; OPMD\n";
+
+    if($1.tipo != $2.tipo){
+        if($1.tipo == ENTERO){ // si son distintos cambia solo el entero
+            $$.cod += "mov " + std::to_string($1.dir) + " A\n";
+            $$.cod += "itor\n";
+            $$.cod += operacion + "r " + std::to_string($2.dir) + "\n";
+        }else {
+            $$.cod += "mov " + std::to_string($2.dir) + " A\n";
+            $$.cod += "itor\n";
+            $$.cod += operacion + "r " + std::to_string($1.dir) + "\n";
+        }
+        $$.tipo = REAL;
+
+    }else{ // si son iguales no se requiere cambio de tipo
+        if($1.tipo == ENTERO){
+            $$.cod += "mov " + std::to_string($1.dir) + " A\n";
+            $$.cod += operacion + "i " + std::to_string($2.dir) + "\n";
+            $$.tipo = ENTERO;
+        }else {
+            $$.cod += "mov " + std::to_string($1.dir) + " A\n";
+            $$.cod += operacion + "r " + std::to_string($2.dir) + "\n";
+            $$.tipo = REAL;
+        }
+    }
+
+
+    int tmp = newTempDir++;
+    $$.dir = tmp,
+    $$.cod += "mov A " + std::to_string(tmp) + " \n";
+    
 
 } | Factor {
     $$.cod = $1.cod;
+    $$.tipo = $1.tipo;
+    $$.dir = $1.dir;
 
 };
 
@@ -325,8 +411,15 @@ Factor :  Ref {
     }
     // aqui se devolveria una dir tmp con la DIR de la pos del array
     // sumar a simb.dir y ya estaria?
-
+    Simbolo* s = tsa->buscar($1.simb);
     $$.cod = $1.cod;
+    $$.cod += "; Se calcula la pos total para la Ref\n";
+    $$.cod += "mov " + std::to_string($1.dir) + " A \n";
+    $$.cod += "addi #"+ std::to_string(s->dir) + " \n"; // suma dirbase a la pos en el array
+    $$.cod += "mov A " + std::to_string($1.dir) + " \n";
+    $$.dir = $1.dir;
+    $$.tipo = $1.tipo;
+
 } | nentero {
     int tmp = newTempDir++;
     $$.dir = tmp;

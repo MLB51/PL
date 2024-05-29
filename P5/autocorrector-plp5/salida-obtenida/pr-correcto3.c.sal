@@ -1,1 +1,3 @@
-ERROR(m2r) en línea 129: el primer operando de 'wrr' debe ser real.
+ERROR(m2r) en línea 92: la instruccion no comienza por letra (empieza por <=>)
+Línea 92:  => 
+

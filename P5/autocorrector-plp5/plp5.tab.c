@@ -574,9 +574,9 @@ static const yytype_int16 yyrline[] =
 {
        0,    68,    68,    79,    83,    86,    90,    93,    98,   100,
       98,   115,   117,   121,   121,   128,   128,   130,   136,   136,
-     174,   177,   177,   197,   199,   204,   208,   211,   217,   232,
-     244,   252,   260,   266,   293,   296,   302,   306,   312,   316,
-     322,   330,   340,   350,   358,   373,   373
+     175,   178,   178,   198,   200,   205,   209,   212,   218,   249,
+     261,   269,   277,   283,   310,   313,   321,   356,   364,   401,
+     409,   424,   434,   444,   452,   467,   467
 };
 #endif
 
@@ -1597,7 +1597,7 @@ yyreduce:
     2.2 NO - se guarda con el tipo definido que se devlveria desde V
     En cualquier caso seria V.tipo
     */
-    int fullTam = tt->getTamanyoRecursivo(yyvsp[0].tipo); //! OJO: sumar tamaño recursivo!!
+    int fullTam = tt->getTamanyoRecursivo(yyvsp[0].tipo);
     if(newVarDir + fullTam >= MAX_VAR_DIR) 
         errorSemantico(ERR_NOCABE, yyvsp[-2].lexema, yyvsp[-2].nlin, yyvsp[-2].ncol);
 
@@ -1609,33 +1609,34 @@ yyreduce:
     newVarDir += fullTam;
     tsa->nuevoSimbolo(s); //! cuidao, parecde que sigue haciendo la duplicacion de dfincions WTF
 
-    std::cout << "; "<< s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
+    //std::cout << "; "<< s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
 
     yyval.cod = "; ";
-    yyval.cod += yyvsp[-2].lexema + yyvsp[0].cod;
+    yyval.cod += yyvsp[-2].lexema + yyvsp[0].cod + " => \n";
+    yyval.cod += ";  dir:" + std::to_string(s.dir) + " tp:" + std::to_string(s.tipo) + " tm:" + std::to_string(s.tam) + " \n" ;
     yyval.cod += "\n";
 
 }
-#line 1620 "plp5.tab.c"
+#line 1621 "plp5.tab.c"
     break;
 
   case 20:
-#line 174 "plp5.y"
+#line 175 "plp5.y"
        {
     yyval.tipo = yyvsp[0].tipo;
 
 }
-#line 1629 "plp5.tab.c"
+#line 1630 "plp5.tab.c"
     break;
 
   case 21:
-#line 177 "plp5.y"
+#line 178 "plp5.y"
                       {yyval.tipo = yyvsp[-3].tipo;}
-#line 1635 "plp5.tab.c"
+#line 1636 "plp5.tab.c"
     break;
 
   case 22:
-#line 177 "plp5.y"
+#line 178 "plp5.y"
                                              {
     int tam = std::stoi(yyvsp[-3].lexema);
     if(tam<=0) errorSemantico(ERRDIM, yyvsp[-3].lexema, yyvsp[-3].nlin, yyvsp[-3].ncol);
@@ -1649,48 +1650,48 @@ yyreduce:
     yyval.cod = "[";
     yyval.cod += yyvsp[-3].lexema;
     yyval.cod += "]";
-    yyval.cod += yyvsp[-1].cod;
+    yyval.cod += yyvsp[0].cod;
 }
-#line 1655 "plp5.tab.c"
+#line 1656 "plp5.tab.c"
     break;
 
   case 23:
-#line 197 "plp5.y"
+#line 198 "plp5.y"
                           {
     yyval.cod = yyvsp[-1].cod + yyvsp[0].cod;
 }
-#line 1663 "plp5.tab.c"
+#line 1664 "plp5.tab.c"
     break;
 
   case 24:
-#line 199 "plp5.y"
+#line 200 "plp5.y"
     {
     yyval.cod = "\n";
 }
-#line 1671 "plp5.tab.c"
+#line 1672 "plp5.tab.c"
     break;
 
   case 25:
-#line 204 "plp5.y"
+#line 205 "plp5.y"
             {
     //! nada?
     yyval.cod = ";pyc\n";
 
 }
-#line 1681 "plp5.tab.c"
+#line 1682 "plp5.tab.c"
     break;
 
   case 26:
-#line 208 "plp5.y"
+#line 209 "plp5.y"
            {
     yyval.cod = yyvsp[0].cod;
 
 }
-#line 1690 "plp5.tab.c"
+#line 1691 "plp5.tab.c"
     break;
 
   case 27:
-#line 211 "plp5.y"
+#line 212 "plp5.y"
                       {
     // id = E ;
     // comprobar tipos? creo que no, vale todo con todo mientras se cumpla que no implqieu arrays
@@ -1698,32 +1699,48 @@ yyreduce:
     yyval.cod = yyvsp[-3].cod + yyvsp[-1].cod;
     // faltaria añadir cod expr y mov Expr Ref
 }
-#line 1702 "plp5.tab.c"
+#line 1703 "plp5.tab.c"
     break;
 
   case 28:
-#line 217 "plp5.y"
+#line 218 "plp5.y"
                                             {
     // hacer conversiones para los formatos, also escribe siempre hace wrl AL FINAL, como si tuvies un \n
     //     - wri fuente Imprime el valor (entero) de fuente.
     //     - wrr fuente Imprime el valor (real) de fuente.
     //     - wrc fuente Imprime el carácter representado por los 8 bits más bajos del valor entero 
     //     - wrl Imprime un salto de LInea
-    string f = yyvsp[-2].tipo==ENTERO ? "i" : "r";
+
     yyval.cod = yyvsp[-2].cod;
+    string f = "i";
+    yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+    if(std::string(yyvsp[-4].lexema).find("d") != std::string::npos){
+        if(yyvsp[-2].tipo == REAL){
+            yyval.cod += "rtoi\n";
+        }
+    }else if(std::string(yyvsp[-4].lexema).find("g") != std::string::npos){
+        f = "r";
+        if(yyvsp[-2].tipo == REAL){
+            yyval.cod += "itor\n";
+        }
+    }  if(std::string(yyvsp[-4].lexema).find("c") != std::string::npos){
+        f = "c";
+        if(yyvsp[-2].tipo == REAL){
+            yyval.cod += "itor\n";
+        }
+    } 
+
     yyval.cod += "wr";
     yyval.cod += f;
-    yyval.cod += " ";
-    yyval.cod += std::to_string(yyvsp[-2].dir); // direccion que devuelve la expresion
-    yyval.cod += "\n";
+    yyval.cod += " A\n";
     yyval.cod += "wrl\n";
 
 }
-#line 1723 "plp5.tab.c"
+#line 1740 "plp5.tab.c"
     break;
 
   case 29:
-#line 232 "plp5.y"
+#line 249 "plp5.y"
                                                   {
     //     - rdi destino Lee un entero de la consola y lo carga en destino.
     //     - rdr destino Lee un real de la consola y lo carga en destino.
@@ -1737,11 +1754,11 @@ yyreduce:
     yyval.cod += "\n";
 
 }
-#line 1741 "plp5.tab.c"
+#line 1758 "plp5.tab.c"
     break;
 
   case 30:
-#line 244 "plp5.y"
+#line 261 "plp5.y"
                             {
     // if y while cumplen lo de if(134) -> True, if(0) -> false
 
@@ -1751,11 +1768,11 @@ yyreduce:
     yyval.cod += yyvsp[0].cod;
 
 }
-#line 1755 "plp5.tab.c"
+#line 1772 "plp5.tab.c"
     break;
 
   case 31:
-#line 252 "plp5.y"
+#line 269 "plp5.y"
                                        {
 
     yyval.cod = yyvsp[-4].cod;
@@ -1765,11 +1782,11 @@ yyreduce:
     yyval.cod += yyvsp[0].cod;
 
 }
-#line 1769 "plp5.tab.c"
+#line 1786 "plp5.tab.c"
     break;
 
   case 32:
-#line 260 "plp5.y"
+#line 277 "plp5.y"
                                   {
 
     yyval.cod = yyvsp[-2].cod;
@@ -1777,11 +1794,11 @@ yyreduce:
     yyval.cod += yyvsp[0].cod;
 
 }
-#line 1781 "plp5.tab.c"
+#line 1798 "plp5.tab.c"
     break;
 
   case 33:
-#line 266 "plp5.y"
+#line 283 "plp5.y"
                                                                   {
     /*
         Se tiene que comprobar en el for
@@ -1797,81 +1814,158 @@ yyreduce:
 
 
 }
-#line 1801 "plp5.tab.c"
+#line 1818 "plp5.tab.c"
     break;
 
   case 34:
-#line 293 "plp5.y"
+#line 310 "plp5.y"
                            {
     yyval.cod = yyvsp[-2].cod + yyvsp[0].cod;
 
 }
-#line 1810 "plp5.tab.c"
+#line 1827 "plp5.tab.c"
     break;
 
   case 35:
-#line 296 "plp5.y"
+#line 313 "plp5.y"
             {
     yyval.cod = yyvsp[0].cod;
-
-}
-#line 1819 "plp5.tab.c"
-    break;
-
-  case 36:
-#line 302 "plp5.y"
-                              {
-// no se pueden usar arrays en ningun lado, solo si son con corchetes
-
-    yyval.cod = yyvsp[-2].cod + yyvsp[0].cod;
-}
-#line 1829 "plp5.tab.c"
-    break;
-
-  case 37:
-#line 306 "plp5.y"
-         {
-    yyval.cod = yyvsp[0].cod;
+    yyval.tipo = yyvsp[0].tipo;
+    yyval.dir = yyvsp[0].dir;
 
 }
 #line 1838 "plp5.tab.c"
     break;
 
+  case 36:
+#line 321 "plp5.y"
+                              {
+    yyval.cod = yyvsp[-2].cod + yyvsp[0].cod; 
+    string operacion = (strcmp(yyvsp[-1].lexema, "+")==0)? "add": "sub";
+
+    yyval.cod += "; OPAS\n";
+
+    if(yyvsp[-2].tipo != yyvsp[-1].tipo){
+        if(yyvsp[-2].tipo == ENTERO){ // si son distintos cambia solo el entero
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += "itor\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[-1].dir) + "\n";
+        }else {
+            yyval.cod += "mov " + std::to_string(yyvsp[-1].dir) + " A\n";
+            yyval.cod += "itor\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[-2].dir) + "\n";
+        }
+        yyval.tipo = REAL;
+
+    }else{ // si son iguales no se requiere cambio de tipo
+        if(yyvsp[-2].tipo == ENTERO){
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += operacion + "i " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.tipo = ENTERO;
+        }else {
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.tipo = REAL;
+        }
+    }
+
+
+    int tmp = newTempDir++;
+    yyval.dir = tmp,
+    yyval.cod += "mov A " + std::to_string(tmp) + " \n";
+
+}
+#line 1879 "plp5.tab.c"
+    break;
+
+  case 37:
+#line 356 "plp5.y"
+         {
+    yyval.cod = yyvsp[0].cod;
+    yyval.tipo = yyvsp[0].tipo;
+    yyval.dir = yyvsp[0].dir;
+
+}
+#line 1890 "plp5.tab.c"
+    break;
+
   case 38:
-#line 312 "plp5.y"
+#line 364 "plp5.y"
                          {
 // div entre enteros : > entero, si 1 es real se convierte el otro
     yyval.cod = yyvsp[-2].cod + yyvsp[0].cod; 
+    string operacion = (strcmp(yyvsp[-1].lexema, "*")==0)? "mul": "div";
+
+    yyval.cod += "; OPMD\n";
+
+    if(yyvsp[-2].tipo != yyvsp[-1].tipo){
+        if(yyvsp[-2].tipo == ENTERO){ // si son distintos cambia solo el entero
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += "itor\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[-1].dir) + "\n";
+        }else {
+            yyval.cod += "mov " + std::to_string(yyvsp[-1].dir) + " A\n";
+            yyval.cod += "itor\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[-2].dir) + "\n";
+        }
+        yyval.tipo = REAL;
+
+    }else{ // si son iguales no se requiere cambio de tipo
+        if(yyvsp[-2].tipo == ENTERO){
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += operacion + "i " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.tipo = ENTERO;
+        }else {
+            yyval.cod += "mov " + std::to_string(yyvsp[-2].dir) + " A\n";
+            yyval.cod += operacion + "r " + std::to_string(yyvsp[-1].dir) + "\n";
+            yyval.tipo = REAL;
+        }
+    }
+
+
+    int tmp = newTempDir++;
+    yyval.dir = tmp,
+    yyval.cod += "mov A " + std::to_string(tmp) + " \n";
+    
 
 }
-#line 1848 "plp5.tab.c"
+#line 1933 "plp5.tab.c"
     break;
 
   case 39:
-#line 316 "plp5.y"
+#line 401 "plp5.y"
            {
     yyval.cod = yyvsp[0].cod;
+    yyval.tipo = yyvsp[0].tipo;
+    yyval.dir = yyvsp[0].dir;
 
 }
-#line 1857 "plp5.tab.c"
+#line 1944 "plp5.tab.c"
     break;
 
   case 40:
-#line 322 "plp5.y"
+#line 409 "plp5.y"
               {
     if(!ES_TIPO_BASICO(yyvsp[0].tipo)){
         errorSemantico(ERRFALTAN, yyval.lexema, yyval.nlin, yyval.ncol); //! aqui habria que marcar en id o en ], osea, en -1?
     }
     // aqui se devolveria una dir tmp con la DIR de la pos del array
     // sumar a simb.dir y ya estaria?
-
+    Simbolo* s = tsa->buscar(yyvsp[0].simb);
     yyval.cod = yyvsp[0].cod;
+    yyval.cod += "; Se calcula la pos total para la Ref\n";
+    yyval.cod += "mov " + std::to_string(yyvsp[0].dir) + " A \n";
+    yyval.cod += "addi #"+ std::to_string(s->dir) + " \n"; // suma dirbase a la pos en el array
+    yyval.cod += "mov A " + std::to_string(yyvsp[0].dir) + " \n";
+    yyval.dir = yyvsp[0].dir;
+    yyval.tipo = yyvsp[0].tipo;
+
 }
-#line 1871 "plp5.tab.c"
+#line 1965 "plp5.tab.c"
     break;
 
   case 41:
-#line 330 "plp5.y"
+#line 424 "plp5.y"
             {
     int tmp = newTempDir++;
     yyval.dir = tmp;
@@ -1883,11 +1977,11 @@ yyreduce:
     yyval.cod += "\n";
 
 }
-#line 1887 "plp5.tab.c"
+#line 1981 "plp5.tab.c"
     break;
 
   case 42:
-#line 340 "plp5.y"
+#line 434 "plp5.y"
           {
     int tmp = newTempDir++;
     yyval.dir = tmp;
@@ -1899,22 +1993,22 @@ yyreduce:
     yyval.cod += "\n";
 
 }
-#line 1903 "plp5.tab.c"
+#line 1997 "plp5.tab.c"
     break;
 
   case 43:
-#line 350 "plp5.y"
+#line 444 "plp5.y"
                    {
     yyval.cod = yyvsp[-1].cod;
     yyval.tipo = yyvsp[-1].tipo;
     yyval.dir = yyvsp[-1].dir;
     //* algo mas?
 }
-#line 1914 "plp5.tab.c"
+#line 2008 "plp5.tab.c"
     break;
 
   case 44:
-#line 358 "plp5.y"
+#line 452 "plp5.y"
           {
     Simbolo* s = tsa->buscar(yyvsp[0].lexema);
     if(s == NULL){
@@ -1931,11 +2025,11 @@ yyreduce:
     yyval.simb = yyvsp[0].lexema;
 
 }
-#line 1935 "plp5.tab.c"
+#line 2029 "plp5.tab.c"
     break;
 
   case 45:
-#line 373 "plp5.y"
+#line 467 "plp5.y"
              {
     if(ES_TIPO_BASICO(yyvsp[-1].tipo)){
         errorSemantico(ERRSOBRAN, yyvsp[0].lexema, yyvsp[0].nlin, yyvsp[0].ncol);
@@ -1944,11 +2038,11 @@ yyreduce:
     yyval.simb = yyvsp[-1].simb;
 
 }
-#line 1948 "plp5.tab.c"
+#line 2042 "plp5.tab.c"
     break;
 
   case 46:
-#line 380 "plp5.y"
+#line 474 "plp5.y"
                 {
     /*
         mismos ERRORES en arrray que en clase si sobran o fatan []
@@ -1974,11 +2068,11 @@ yyreduce:
 
     yyval.tipo = tt->tipos[yyvsp[-4].tipo].tipoBase; // coge el nuevo tipo
 }
-#line 1978 "plp5.tab.c"
+#line 2072 "plp5.tab.c"
     break;
 
 
-#line 1982 "plp5.tab.c"
+#line 2076 "plp5.tab.c"
 
       default: break;
     }
@@ -2210,7 +2304,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 411 "plp5.y"
+#line 505 "plp5.y"
 
 /* ####################################################################################################### */
 /* ####################################################################################################### */

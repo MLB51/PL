@@ -1,35 +1,39 @@
-; a d:0 tp:7 tm:1 
-; b d:4 tp:0 tm:1 
 ; START
 ; VARS
 ; Tipo: int
-; a[1]
+; a[1][2][1][1][2][1] => 
+;  dir:0 tp:7 tm:1 
+
 ; MAIN
 ; {
 ; Tipo: int
-; b[1]
+; b[1][1][2][1] => 
+;  dir:4 tp:0 tm:1 
+
 
 mov #0 16000; t0 para: b
 mov #1 16001
 mov #3 16002
-mov #2 16003
-mov #5 16004
-mov #4 16005
-mov #0 16006; t0 para: a
-; Calcula n para array
-mov #0 16007
-; Calcula Ti
+; OPAS
+mov 16001 A
+subi 0
+mov A 16003 
+mov #2 16004
+mov #5 16005
+; OPMD
+mov 16004 A
+muli 0
+mov A 16006 
+mov #4 16007
+; OPMD
 mov 16006 A
-muli #1
-addi 16007
-mov A 16008
-; Calcula n para array
-mov #1 16009
-; Calcula Ti
-mov 16008 A
-muli #2
-addi 16009
-mov A 16010
+divi 0
+mov A 16008 
+; OPAS
+mov 16003 A
+addi 0
+mov A 16009 
+mov #0 16010; t0 para: a
 ; Calcula n para array
 mov #0 16011
 ; Calcula Ti
@@ -38,17 +42,17 @@ muli #1
 addi 16011
 mov A 16012
 ; Calcula n para array
-mov #0 16013
+mov #1 16013
 ; Calcula Ti
 mov 16012 A
-muli #1
+muli #2
 addi 16013
 mov A 16014
 ; Calcula n para array
-mov #1 16015
+mov #0 16015
 ; Calcula Ti
 mov 16014 A
-muli #2
+muli #1
 addi 16015
 mov A 16016
 ; Calcula n para array
@@ -58,8 +62,13 @@ mov 16016 A
 muli #1
 addi 16017
 mov A 16018
-mov #0 16019; t0 para: b
-mov #0 16020; t0 para: a
+; Calcula n para array
+mov #1 16019
+; Calcula Ti
+mov 16018 A
+muli #2
+addi 16019
+mov A 16020
 ; Calcula n para array
 mov #0 16021
 ; Calcula Ti
@@ -67,13 +76,12 @@ mov 16020 A
 muli #1
 addi 16021
 mov A 16022
-; Calcula n para array
-mov #0 16023
-; Calcula Ti
-mov 16022 A
-muli #2
-addi 16023
-mov A 16024
+mov #0 16023; t0 para: b
+; Se calcula la pos total para la Ref
+mov 16023 A 
+addi #4 
+mov A 16023 
+mov #0 16024; t0 para: a
 ; Calcula n para array
 mov #0 16025
 ; Calcula Ti
@@ -85,14 +93,14 @@ mov A 16026
 mov #0 16027
 ; Calcula Ti
 mov 16026 A
-muli #1
+muli #2
 addi 16027
 mov A 16028
 ; Calcula n para array
 mov #0 16029
 ; Calcula Ti
 mov 16028 A
-muli #2
+muli #1
 addi 16029
 mov A 16030
 ; Calcula n para array
@@ -102,54 +110,66 @@ mov 16030 A
 muli #1
 addi 16031
 mov A 16032
-mov #0 16033; t0 para: b
-mov #1 16034
-mov #0 16035; t0 para: a
 ; Calcula n para array
-mov #0 16036
+mov #0 16033
 ; Calcula Ti
-mov 16035 A
-muli #1
-addi 16036
-mov A 16037
+mov 16032 A
+muli #2
+addi 16033
+mov A 16034
 ; Calcula n para array
+mov #0 16035
+; Calcula Ti
+mov 16034 A
+muli #1
+addi 16035
+mov A 16036
+mov #0 16037; t0 para: b
+; Se calcula la pos total para la Ref
+mov 16037 A 
+addi #4 
+mov A 16037 
 mov #1 16038
-; Calcula Ti
+; OPAS
 mov 16037 A
+addi 0
+mov A 16039 
+mov #0 16040; t0 para: a
+; Calcula n para array
+mov #0 16041
+; Calcula Ti
+mov 16040 A
+muli #1
+addi 16041
+mov A 16042
+; Calcula n para array
+mov #1 16043
+; Calcula Ti
+mov 16042 A
 muli #2
-addi 16038
-mov A 16039
+addi 16043
+mov A 16044
 ; Calcula n para array
-mov #0 16040
+mov #0 16045
 ; Calcula Ti
-mov 16039 A
+mov 16044 A
 muli #1
-addi 16040
-mov A 16041
+addi 16045
+mov A 16046
 ; Calcula n para array
-mov #0 16042
+mov #0 16047
 ; Calcula Ti
-mov 16041 A
+mov 16046 A
 muli #1
-addi 16042
-mov A 16043
+addi 16047
+mov A 16048
 ; Calcula n para array
-mov #0 16044
+mov #0 16049
 ; Calcula Ti
-mov 16043 A
+mov 16048 A
 muli #2
-addi 16044
-mov A 16045
-; Calcula n para array
-mov #0 16046
-; Calcula Ti
-mov 16045 A
-muli #1
-addi 16046
-mov A 16047
-mov #0 16048; t0 para: b
-mov #2 16049
-mov #0 16050; t0 para: a
+addi 16049
+mov A 16050
 ; Calcula n para array
 mov #0 16051
 ; Calcula Ti
@@ -157,20 +177,17 @@ mov 16050 A
 muli #1
 addi 16051
 mov A 16052
-; Calcula n para array
-mov #0 16053
-; Calcula Ti
-mov 16052 A
-muli #2
-addi 16053
-mov A 16054
-; Calcula n para array
-mov #0 16055
-; Calcula Ti
-mov 16054 A
-muli #1
-addi 16055
-mov A 16056
+mov #0 16053; t0 para: b
+; Se calcula la pos total para la Ref
+mov 16053 A 
+addi #4 
+mov A 16053 
+mov #2 16054
+; OPAS
+mov 16053 A
+addi 0
+mov A 16055 
+mov #0 16056; t0 para: a
 ; Calcula n para array
 mov #0 16057
 ; Calcula Ti
@@ -179,7 +196,7 @@ muli #1
 addi 16057
 mov A 16058
 ; Calcula n para array
-mov #1 16059
+mov #0 16059
 ; Calcula Ti
 mov 16058 A
 muli #2
@@ -192,12 +209,20 @@ mov 16060 A
 muli #1
 addi 16061
 mov A 16062
-mov #0 16063; t0 para: b
-mov #3 16064
-mov #0 16065; t0 para: b
-wri 16065
-wrl
-mov #0 16066; t0 para: a
+; Calcula n para array
+mov #0 16063
+; Calcula Ti
+mov 16062 A
+muli #1
+addi 16063
+mov A 16064
+; Calcula n para array
+mov #1 16065
+; Calcula Ti
+mov 16064 A
+muli #2
+addi 16065
+mov A 16066
 ; Calcula n para array
 mov #0 16067
 ; Calcula Ti
@@ -205,42 +230,46 @@ mov 16066 A
 muli #1
 addi 16067
 mov A 16068
-; Calcula n para array
-mov #1 16069
-; Calcula Ti
-mov 16068 A
-muli #2
-addi 16069
-mov A 16070
-; Calcula n para array
-mov #0 16071
-; Calcula Ti
-mov 16070 A
-muli #1
-addi 16071
-mov A 16072
-; Calcula n para array
-mov #0 16073
-; Calcula Ti
+mov #0 16069; t0 para: b
+; Se calcula la pos total para la Ref
+mov 16069 A 
+addi #4 
+mov A 16069 
+mov #3 16070
+; OPAS
+mov 16069 A
+addi 0
+mov A 16071 
+mov #0 16072; t0 para: b
+; Se calcula la pos total para la Ref
+mov 16072 A 
+addi #4 
+mov A 16072 
 mov 16072 A
-muli #1
-addi 16073
-mov A 16074
+wri A
+wrl
+mov #0 16073; t0 para: a
 ; Calcula n para array
-mov #1 16075
+mov #0 16074
 ; Calcula Ti
-mov 16074 A
+mov 16073 A
+muli #1
+addi 16074
+mov A 16075
+; Calcula n para array
+mov #1 16076
+; Calcula Ti
+mov 16075 A
 muli #2
-addi 16075
-mov A 16076
+addi 16076
+mov A 16077
 ; Calcula n para array
-mov #0 16077
+mov #0 16078
 ; Calcula Ti
-mov 16076 A
+mov 16077 A
 muli #1
-addi 16077
-mov A 16078
-mov #0 16079; t0 para: a
+addi 16078
+mov A 16079
 ; Calcula n para array
 mov #0 16080
 ; Calcula Ti
@@ -249,7 +278,7 @@ muli #1
 addi 16080
 mov A 16081
 ; Calcula n para array
-mov #0 16082
+mov #1 16082
 ; Calcula Ti
 mov 16081 A
 muli #2
@@ -262,28 +291,32 @@ mov 16083 A
 muli #1
 addi 16084
 mov A 16085
+; Se calcula la pos total para la Ref
+mov 16085 A 
+addi #0 
+mov A 16085 
+mov #0 16086; t0 para: a
 ; Calcula n para array
-mov #0 16086
+mov #0 16087
 ; Calcula Ti
-mov 16085 A
+mov 16086 A
 muli #1
-addi 16086
-mov A 16087
+addi 16087
+mov A 16088
 ; Calcula n para array
-mov #0 16088
+mov #0 16089
 ; Calcula Ti
-mov 16087 A
+mov 16088 A
 muli #2
-addi 16088
-mov A 16089
+addi 16089
+mov A 16090
 ; Calcula n para array
-mov #0 16090
+mov #0 16091
 ; Calcula Ti
-mov 16089 A
+mov 16090 A
 muli #1
-addi 16090
-mov A 16091
-mov #0 16092; t0 para: a
+addi 16091
+mov A 16092
 ; Calcula n para array
 mov #0 16093
 ; Calcula Ti
@@ -292,7 +325,7 @@ muli #1
 addi 16093
 mov A 16094
 ; Calcula n para array
-mov #1 16095
+mov #0 16095
 ; Calcula Ti
 mov 16094 A
 muli #2
@@ -305,71 +338,118 @@ mov 16096 A
 muli #1
 addi 16097
 mov A 16098
-; Calcula n para array
-mov #0 16099
-; Calcula Ti
-mov 16098 A
-muli #1
-addi 16099
-mov A 16100
+; Se calcula la pos total para la Ref
+mov 16098 A 
+addi #0 
+mov A 16098 
+; OPAS
+mov 16085 A
+addi 0
+mov A 16099 
+mov #0 16100; t0 para: a
 ; Calcula n para array
 mov #0 16101
 ; Calcula Ti
 mov 16100 A
-muli #2
+muli #1
 addi 16101
 mov A 16102
 ; Calcula n para array
-mov #0 16103
+mov #1 16103
 ; Calcula Ti
 mov 16102 A
-muli #1
+muli #2
 addi 16103
 mov A 16104
-mov #0 16105; t0 para: a
 ; Calcula n para array
-mov #0 16106
+mov #0 16105
 ; Calcula Ti
-mov 16105 A
+mov 16104 A
 muli #1
-addi 16106
-mov A 16107
+addi 16105
+mov A 16106
 ; Calcula n para array
-mov #0 16108
+mov #0 16107
 ; Calcula Ti
-mov 16107 A
+mov 16106 A
+muli #1
+addi 16107
+mov A 16108
+; Calcula n para array
+mov #0 16109
+; Calcula Ti
+mov 16108 A
 muli #2
-addi 16108
-mov A 16109
+addi 16109
+mov A 16110
 ; Calcula n para array
-mov #0 16110
+mov #0 16111
 ; Calcula Ti
-mov 16109 A
+mov 16110 A
 muli #1
-addi 16110
-mov A 16111
+addi 16111
+mov A 16112
+; Se calcula la pos total para la Ref
+mov 16112 A 
+addi #0 
+mov A 16112 
+; OPAS
+mov 16099 A
+addi 0
+mov A 16113 
+mov #0 16114; t0 para: a
 ; Calcula n para array
-mov #0 16112
+mov #0 16115
 ; Calcula Ti
-mov 16111 A
+mov 16114 A
 muli #1
-addi 16112
-mov A 16113
+addi 16115
+mov A 16116
 ; Calcula n para array
-mov #1 16114
+mov #0 16117
 ; Calcula Ti
+mov 16116 A
+muli #2
+addi 16117
+mov A 16118
+; Calcula n para array
+mov #0 16119
+; Calcula Ti
+mov 16118 A
+muli #1
+addi 16119
+mov A 16120
+; Calcula n para array
+mov #0 16121
+; Calcula Ti
+mov 16120 A
+muli #1
+addi 16121
+mov A 16122
+; Calcula n para array
+mov #1 16123
+; Calcula Ti
+mov 16122 A
+muli #2
+addi 16123
+mov A 16124
+; Calcula n para array
+mov #0 16125
+; Calcula Ti
+mov 16124 A
+muli #1
+addi 16125
+mov A 16126
+; Se calcula la pos total para la Ref
+mov 16126 A 
+addi #0 
+mov A 16126 
+; OPAS
 mov 16113 A
-muli #2
-addi 16114
-mov A 16115
-; Calcula n para array
-mov #0 16116
-; Calcula Ti
-mov 16115 A
-muli #1
-addi 16116
-mov A 16117
-wri 16078
+addi 0
+mov A 16127 
+mov 16127 A
+wri A
 wrl
 ; }
 halt
