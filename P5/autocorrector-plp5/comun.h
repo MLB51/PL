@@ -7,10 +7,9 @@ typedef struct {
    int nlin,ncol;
    int tipo;
    int tipoh;
+   int dir;
+   string simb;
    string cod;
-   string array;
-   string prefijo;
-   string nombre_funcion;
    
 } MITIPO;
 

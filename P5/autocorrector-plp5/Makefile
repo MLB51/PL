@@ -23,6 +23,8 @@ lex.yy.c : plp5.l comun.h
 plp5.tab.c plp5.tab.h: plp5.y lex.yy.c comun.h TablaSimbolos.h TablaTipos.h
 	bison -d plp5.y	
 
+tgz:
+	tar -czf plp5.tgz  *.cc *.h *.l *.y Makefile
 
 clean:
 	rm -f $(OBJS)

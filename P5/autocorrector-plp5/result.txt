@@ -20,30 +20,26 @@ Prueba: errsem1-1.c
 OK
 --------------------------
 Prueba: errsem1-2.c
-Fichero salida-obtenida/errsem1-2.c.sal o salida-esperada/errsem1-2.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem1-2.c.sal: No existe el archivo o el directorio
+OK
 --------------------------
 Prueba: errsem12.c
 OK
 --------------------------
 Prueba: errsem13.c
-Fichero salida-obtenida/errsem13.c.sal o salida-esperada/errsem13.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem13.c.sal: No existe el archivo o el directorio
+OK
 --------------------------
 Prueba: errsem2.c
 OK
 --------------------------
 Prueba: errsem9-2.c
-Fichero salida-obtenida/errsem9-2.c.sal o salida-esperada/errsem9-2.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem9-2.c.sal: No existe el archivo o el directorio
+--- Fallo en la salida de error ----------
+1c1
+< Error semantico (6,7): en 'a', faltan indices
+---
+> Error semantico (6,19): en ']', faltan indices
 --------------------------
 Prueba: errsem9-4.c
-Fichero salida-obtenida/errsem9-4.c.sal o salida-esperada/errsem9-4.c.sal no encontrado
---- Fallo en la traducción ----------
-diff: salida-esperada/errsem9-4.c.sal: No existe el archivo o el directorio
+OK
 --------------------------
 Prueba: pr-correcto1.c
 --- Fallo en la traducción ----------
@@ -115,7 +111,7 @@ Prueba: pr-correcto4.c
 > 6
 --------------------------
 
-OJO: FALLAN 8 PRUEBAS DEL AUTOCORRECTOR
+OJO: FALLAN 5 PRUEBAS DEL AUTOCORRECTOR
 
 
 

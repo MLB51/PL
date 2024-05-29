@@ -513,16 +513,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  9
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   99
+#define YYLAST   97
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  30
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  24
+#define YYNNTS  25
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  45
+#define YYNRULES  46
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  102
+#define YYNSTATES  103
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   284
@@ -570,13 +570,13 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int16 yyrline[] =
 {
        0,    68,    68,    79,    83,    86,    90,    93,    98,   100,
       98,   115,   117,   121,   121,   128,   128,   130,   136,   136,
-     174,   177,   177,   196,   196,   197,   198,   201,   203,   204,
-     206,   207,   208,   216,   230,   231,   232,   233,   234,   235,
-     236,   237,   238,   239,   240,   241
+     174,   177,   177,   197,   199,   204,   208,   211,   217,   232,
+     244,   252,   260,   266,   293,   296,   302,   306,   312,   316,
+     322,   330,   340,   350,   358,   373,   373
 };
 #endif
 
@@ -589,9 +589,9 @@ static const char *const yytname[] =
   "lee", "si", "sino", "mientras", "para", "id", "nentero", "nreal",
   "coma", "pyc", "pari", "pard", "oprel", "opas", "opmd", "asig",
   "referencia", "cori", "cord", "llavei", "llaved", "formato", "incrdecr",
-  "$accept", "X", "S", "FVM", "Tipo", "Bloque", "@1", "$@2", "BDecl",
+  "$accept", "X", "S", "FVM", "Tipo", "Bloque", "$@1", "$@2", "BDecl",
   "DVar", "@3", "LIdent", "@4", "Variable", "@5", "V", "@6", "SeqInstr",
-  "Instr", "Expr", "Esimple", "Term", "Factor", "Ref", YY_NULLPTR
+  "Instr", "Expr", "Esimple", "Term", "Factor", "Ref", "@7", YY_NULLPTR
 };
 #endif
 
@@ -606,7 +606,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-69)
+#define YYPACT_NINF (-70)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -620,17 +620,17 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      33,    12,   -69,    42,   -69,   -69,   -69,    33,    30,   -69,
-      39,   -69,    43,   -69,    25,   -69,    37,    35,   -69,   -69,
-     -69,   -69,    47,   -69,    39,   -69,    40,   -69,    41,   -69,
-     -69,   -69,     2,    35,    45,    49,    50,    52,    53,   -69,
-     -69,   -69,    44,   -69,   -18,   -69,    46,    48,    13,    13,
-      60,   -69,    13,    13,    58,    62,   -69,   -69,    13,    31,
-      55,    57,   -69,    56,    34,    59,     0,     9,    13,    61,
-      36,     2,    13,    13,    13,     2,    13,   -69,   -69,    38,
-      67,   -69,    73,    55,    57,   -69,   -69,    15,    69,    -1,
-       2,    13,   -69,    70,   -69,    17,   -69,    71,    63,    72,
-       2,   -69
+      37,    13,   -70,    18,   -70,   -70,   -70,    37,    41,   -70,
+      24,   -70,    29,   -70,    30,   -70,     5,    31,   -70,   -70,
+     -70,   -70,    49,   -70,    24,   -70,    39,   -70,    45,   -70,
+     -70,   -70,     1,    31,    46,    48,    50,    51,    53,   -70,
+     -70,   -70,    44,   -70,   -19,   -70,    47,    52,    12,    12,
+      54,   -70,    12,   -70,    57,    58,   -70,   -70,    12,    33,
+      56,    60,   -70,    55,    35,    61,    19,    12,    12,    59,
+      38,     1,    12,    12,    12,     1,    12,   -70,     8,    42,
+      62,   -70,    68,    56,    60,   -70,   -70,    14,   -70,    69,
+      -3,     1,    12,   -70,    70,   -70,    21,   -70,    66,    63,
+      71,     1,   -70
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -643,20 +643,20 @@ static const yytype_int8 yydefact[] =
        8,     5,     0,    19,     0,    12,     0,    16,    24,    21,
        6,    11,     9,    20,     0,     0,     0,     0,     0,    44,
       25,    26,     0,    23,     0,    22,     0,     0,     0,     0,
-       0,    10,     0,     0,     0,     0,    41,    42,     0,     0,
+       0,    10,     0,    45,     0,     0,    41,    42,     0,     0,
       35,    37,    39,    40,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    27,    45,     0,
-       0,    43,    30,    34,    36,    38,    32,     0,     0,     0,
-       0,     0,    28,     0,    31,     0,    29,     0,     0,     0,
-       0,    33
+       0,     0,     0,     0,     0,     0,     0,    27,     0,     0,
+       0,    43,    30,    34,    36,    38,    32,     0,    46,     0,
+       0,     0,     0,    28,     0,    31,     0,    29,     0,     0,
+       0,     0,    33
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -69,   -69,   -69,    80,   -69,    75,   -69,   -69,   -69,    65,
-     -69,   -69,   -69,    64,   -69,    66,   -69,   -69,   -68,   -47,
-     -52,    -9,    20,   -32
+     -70,   -70,   -70,    77,   -70,    72,   -70,   -70,   -70,    65,
+     -70,   -70,   -70,    67,   -70,    64,   -70,   -70,   -69,   -48,
+     -53,    17,    20,   -32,   -70
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -664,7 +664,7 @@ static const yytype_int8 yydefgoto[] =
 {
       -1,     3,     4,     5,     6,    41,    25,    42,    28,     7,
       10,    14,    24,    15,    17,    23,    33,    32,    43,    59,
-      60,    61,    62,    63
+      60,    61,    62,    63,    67
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -672,30 +672,30 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      44,    67,    64,    82,    52,    66,    53,    86,    34,    35,
-      36,    70,    37,    38,    39,     8,    77,    93,    40,    72,
-      83,    79,    94,    53,    87,    39,    56,    57,    20,    73,
-      58,    91,   101,    97,    78,    73,    72,     1,     2,    44,
-      18,    19,     9,    44,    95,    30,     2,    12,    89,    71,
-      72,    13,    75,    72,    81,    72,    88,    72,    44,    22,
-      26,    16,    46,    20,    84,    29,    47,    48,    44,    49,
-      50,    51,    65,    68,    54,    73,    55,    69,    74,    39,
-      53,    76,    90,    98,    80,    92,    96,    11,    27,     0,
-     100,    21,    99,    31,    85,     0,     0,     0,     0,    45
+      44,    64,    82,    52,    66,    53,    86,    34,    35,    36,
+      70,    37,    38,    39,    78,    94,     8,    40,     9,    83,
+      79,    53,    95,    87,    39,    56,    57,    20,    73,    58,
+      92,    20,   102,    88,    73,    77,    13,    98,    72,    44,
+      72,     1,     2,    44,    96,    18,    19,    16,    90,    30,
+       2,    71,    72,    75,    72,    22,    81,    72,    12,    44,
+      89,    72,    26,    46,    29,    47,    65,    48,    49,    44,
+      50,    51,    68,    69,    39,    54,    73,    91,    99,    53,
+      55,    74,    80,    76,    11,    93,    97,     0,    21,   101,
+      84,    27,   100,    31,    85,     0,     0,    45
 };
 
 static const yytype_int8 yycheck[] =
 {
-      32,    53,    49,    71,    22,    52,    24,    75,     6,     7,
-       8,    58,    10,    11,    12,     3,    16,    18,    16,    19,
-      72,    68,    90,    24,    76,    12,    13,    14,    26,    20,
-      17,    16,   100,    16,    25,    20,    19,     4,     5,    71,
-      15,    16,     0,    75,    91,     4,     5,    17,    80,    18,
-      19,    12,    18,    19,    18,    19,    18,    19,    90,    24,
-      13,    18,    17,    26,    73,    25,    17,    17,   100,    17,
-      17,    27,    12,    15,    28,    20,    28,    15,    21,    12,
-      24,    22,     9,    12,    23,    16,    16,     7,    24,    -1,
-      18,    16,    29,    28,    74,    -1,    -1,    -1,    -1,    33
+      32,    49,    71,    22,    52,    24,    75,     6,     7,     8,
+      58,    10,    11,    12,    67,    18,     3,    16,     0,    72,
+      68,    24,    91,    76,    12,    13,    14,    26,    20,    17,
+      16,    26,   101,    25,    20,    16,    12,    16,    19,    71,
+      19,     4,     5,    75,    92,    15,    16,    18,    80,     4,
+       5,    18,    19,    18,    19,    24,    18,    19,    17,    91,
+      18,    19,    13,    17,    25,    17,    12,    17,    17,   101,
+      17,    27,    15,    15,    12,    28,    20,     9,    12,    24,
+      28,    21,    23,    22,     7,    16,    16,    -1,    16,    18,
+      73,    24,    29,    28,    74,    -1,    -1,    33
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -708,11 +708,11 @@ static const yytype_int8 yystos[] =
        4,    39,    47,    46,     6,     7,     8,    10,    11,    12,
       16,    35,    37,    48,    53,    45,    17,    17,    17,    17,
       17,    27,    22,    24,    28,    28,    13,    14,    17,    49,
-      50,    51,    52,    53,    49,    12,    49,    50,    15,    15,
-      49,    18,    19,    20,    21,    18,    22,    16,    25,    49,
-      23,    18,    48,    50,    51,    52,    48,    50,    18,    53,
-       9,    16,    16,    18,    48,    49,    16,    16,    12,    29,
-      18,    48
+      50,    51,    52,    53,    49,    12,    49,    54,    15,    15,
+      49,    18,    19,    20,    21,    18,    22,    16,    50,    49,
+      23,    18,    48,    50,    51,    52,    48,    50,    25,    18,
+      53,     9,    16,    16,    18,    48,    49,    16,    16,    12,
+      29,    18,    48
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -722,7 +722,7 @@ static const yytype_int8 yyr1[] =
       35,    38,    38,    40,    39,    42,    41,    41,    44,    43,
       45,    46,    45,    47,    47,    48,    48,    48,    48,    48,
       48,    48,    48,    48,    49,    49,    50,    50,    51,    51,
-      52,    52,    52,    52,    53,    53
+      52,    52,    52,    52,    53,    54,    53
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -732,7 +732,7 @@ static const yytype_int8 yyr2[] =
        6,     2,     0,     0,     4,     0,     4,     1,     0,     3,
        0,     0,     5,     2,     0,     1,     1,     4,     7,     8,
        5,     7,     5,    12,     3,     1,     3,     1,     3,     1,
-       1,     1,     1,     3,     1,     4
+       1,     1,     1,     3,     1,     0,     5
 };
 
 
@@ -1495,14 +1495,14 @@ yyreduce:
   case 9:
 #line 100 "plp5.y"
                  {
-    std::cout << newVarDir << std::endl;
+    //std::cout << newVarDir << std::endl;
     int tam_tsa = 0;
     for(Simbolo s: tsa->simbolos){
         tam_tsa += tt->getTamanyoRecursivo(s.tipo);
     }
     tsa = tsa->getAmbitoAnterior();
     newVarDir -= tam_tsa; // se vacian las pos de memoria
-    std::cout << newVarDir << std::endl;
+    //std::cout << newVarDir << std::endl;
     
 }
 #line 1509 "plp5.tab.c"
@@ -1512,7 +1512,7 @@ yyreduce:
 #line 110 "plp5.y"
           {
     // se crearia nuevo ambito aqui y al quitarlo borrar todas las pos de memoria
-    yyval.cod = "; {\n"+ yyvsp[-4].cod + yyvsp[-3].cod +"; }\n";
+    yyval.cod = "; {\n"+ yyvsp[-3].cod + yyvsp[-2].cod +"; }\n";
 }
 #line 1518 "plp5.tab.c"
     break;
@@ -1655,147 +1655,330 @@ yyreduce:
     break;
 
   case 23:
-#line 196 "plp5.y"
-                          {}
-#line 1661 "plp5.tab.c"
+#line 197 "plp5.y"
+                          {
+    yyval.cod = yyvsp[-1].cod + yyvsp[0].cod;
+}
+#line 1663 "plp5.tab.c"
     break;
 
   case 24:
-#line 196 "plp5.y"
-                               {}
-#line 1667 "plp5.tab.c"
+#line 199 "plp5.y"
+    {
+    yyval.cod = "\n";
+}
+#line 1671 "plp5.tab.c"
     break;
 
   case 25:
-#line 197 "plp5.y"
-            {}
-#line 1673 "plp5.tab.c"
-    break;
+#line 204 "plp5.y"
+            {
+    //! nada?
+    yyval.cod = ";pyc\n";
 
-  case 26:
-#line 198 "plp5.y"
-               {
-    yyval.cod = yyvsp[0].cod;
 }
 #line 1681 "plp5.tab.c"
     break;
 
+  case 26:
+#line 208 "plp5.y"
+           {
+    yyval.cod = yyvsp[0].cod;
+
+}
+#line 1690 "plp5.tab.c"
+    break;
+
   case 27:
-#line 201 "plp5.y"
-                          {}
-#line 1687 "plp5.tab.c"
+#line 211 "plp5.y"
+                      {
+    // id = E ;
+    // comprobar tipos? creo que no, vale todo con todo mientras se cumpla que no implqieu arrays
+    //
+    yyval.cod = yyvsp[-3].cod + yyvsp[-1].cod;
+    // faltaria añadir cod expr y mov Expr Ref
+}
+#line 1702 "plp5.tab.c"
     break;
 
   case 28:
-#line 203 "plp5.y"
-                                                {}
-#line 1693 "plp5.tab.c"
-    break;
+#line 217 "plp5.y"
+                                            {
+    // hacer conversiones para los formatos, also escribe siempre hace wrl AL FINAL, como si tuvies un \n
+    //     - wri fuente Imprime el valor (entero) de fuente.
+    //     - wrr fuente Imprime el valor (real) de fuente.
+    //     - wrc fuente Imprime el carácter representado por los 8 bits más bajos del valor entero 
+    //     - wrl Imprime un salto de LInea
+    string formato = "";
+    yyval.cod = yyvsp[-2].cod;
+    yyval.cod += "wr";
+    yyval.cod += formato;
+    yyval.cod += " ";
+    yyval.cod += std::to_string(yyvsp[-2].dir); // direccion que devuelve la expresion
+    yyval.cod += "\n";
+    yyval.cod += "wrl\n";
 
-  case 29:
-#line 204 "plp5.y"
-                                                      {}
-#line 1699 "plp5.tab.c"
-    break;
-
-  case 30:
-#line 206 "plp5.y"
-                                {}
-#line 1705 "plp5.tab.c"
-    break;
-
-  case 31:
-#line 207 "plp5.y"
-                                           {}
-#line 1711 "plp5.tab.c"
-    break;
-
-  case 32:
-#line 208 "plp5.y"
-                                      {}
-#line 1717 "plp5.tab.c"
-    break;
-
-  case 33:
-#line 216 "plp5.y"
-                                                                      {}
+}
 #line 1723 "plp5.tab.c"
     break;
 
-  case 34:
-#line 230 "plp5.y"
-                           {}
-#line 1729 "plp5.tab.c"
-    break;
-
-  case 35:
-#line 231 "plp5.y"
-                {}
-#line 1735 "plp5.tab.c"
-    break;
-
-  case 36:
+  case 29:
 #line 232 "plp5.y"
-                              {}
+                                                  {
+    //     - rdi destino Lee un entero de la consola y lo carga en destino.
+    //     - rdr destino Lee un real de la consola y lo carga en destino.
+    //     - rdc destino Lee un carácter de la consola y carga su código ASCII en destino.
+    string formato = "";
+    yyval.cod = yyvsp[-2].cod;
+    yyval.cod += "rd";
+    yyval.cod += formato;
+    yyval.cod += " ";
+    yyval.cod += std::to_string(yyvsp[-2].dir); // direccion que devuelve la expresion
+    yyval.cod += "\n";
+
+}
 #line 1741 "plp5.tab.c"
     break;
 
+  case 30:
+#line 244 "plp5.y"
+                            {
+    // if y while cumplen lo de if(134) -> True, if(0) -> false
+
+
+    yyval.cod = yyvsp[-2].cod;
+    yyval.cod += "; IF\n";
+    yyval.cod += yyvsp[0].cod;
+
+}
+#line 1755 "plp5.tab.c"
+    break;
+
+  case 31:
+#line 252 "plp5.y"
+                                       {
+
+    yyval.cod = yyvsp[-4].cod;
+    yyval.cod += "; IF\n";
+    yyval.cod += yyvsp[-2].cod;
+    yyval.cod += "; ELSE\n";
+    yyval.cod += yyvsp[0].cod;
+
+}
+#line 1769 "plp5.tab.c"
+    break;
+
+  case 32:
+#line 260 "plp5.y"
+                                  {
+
+    yyval.cod = yyvsp[-2].cod;
+    yyval.cod += "; WHILE\n";
+    yyval.cod += yyvsp[0].cod;
+
+}
+#line 1781 "plp5.tab.c"
+    break;
+
+  case 33:
+#line 266 "plp5.y"
+                                                                  {
+    /*
+        Se tiene que comprobar en el for
+        1. identificador existe
+        2. tiene que ser entero antes de asignar
+        3. lo mismo con el 2 id
+        id1 y id2 pueden ser distintos pero a nadie le importa
+    */
+    yyval.cod = yyvsp[-7].cod;
+    yyval.cod = yyvsp[-5].cod;
+    yyval.cod = "; FOR\n";
+    yyval.cod += yyvsp[0].cod;
+
+
+}
+#line 1801 "plp5.tab.c"
+    break;
+
+  case 34:
+#line 293 "plp5.y"
+                           {
+    yyval.cod = yyvsp[-2].cod + yyvsp[0].cod;
+
+}
+#line 1810 "plp5.tab.c"
+    break;
+
+  case 35:
+#line 296 "plp5.y"
+            {
+    yyval.cod = yyvsp[0].cod;
+
+}
+#line 1819 "plp5.tab.c"
+    break;
+
+  case 36:
+#line 302 "plp5.y"
+                              {
+// no se pueden usar arrays en ningun lado, solo si son con corchetes
+
+    yyval.cod = yyvsp[-2].cod + yyvsp[0].cod;
+}
+#line 1829 "plp5.tab.c"
+    break;
+
   case 37:
-#line 233 "plp5.y"
-                {}
-#line 1747 "plp5.tab.c"
+#line 306 "plp5.y"
+         {
+    yyval.cod = yyvsp[0].cod;
+
+}
+#line 1838 "plp5.tab.c"
     break;
 
   case 38:
-#line 234 "plp5.y"
-                         {}
-#line 1753 "plp5.tab.c"
+#line 312 "plp5.y"
+                         {
+// div entre enteros : > entero, si 1 es real se convierte el otro
+    yyval.cod = yyvsp[-2].cod + yyvsp[0].cod; 
+
+}
+#line 1848 "plp5.tab.c"
     break;
 
   case 39:
-#line 235 "plp5.y"
-               {}
-#line 1759 "plp5.tab.c"
+#line 316 "plp5.y"
+           {
+    yyval.cod = yyvsp[0].cod;
+
+}
+#line 1857 "plp5.tab.c"
     break;
 
   case 40:
-#line 236 "plp5.y"
-              {}
-#line 1765 "plp5.tab.c"
+#line 322 "plp5.y"
+              {
+    if(!ES_TIPO_BASICO(yyvsp[0].tipo)){
+        errorSemantico(ERRFALTAN, yyval.lexema, yyval.nlin, yyval.ncol); //! aqui habria que marcar en id o en ], osea, en -1?
+    }
+    // aqui se devolveria una dir tmp con la DIR de la pos del array
+    // sumar a simb.dir y ya estaria?
+
+    yyval.cod = yyvsp[0].cod;
+}
+#line 1871 "plp5.tab.c"
     break;
 
   case 41:
-#line 237 "plp5.y"
-                  {}
-#line 1771 "plp5.tab.c"
+#line 330 "plp5.y"
+            {
+    int tmp = newTempDir++;
+    yyval.dir = tmp;
+    yyval.tipo = ENTERO;
+    yyval.cod = "mov #";
+    yyval.cod += yyvsp[0].lexema;
+    yyval.cod += " ";
+    yyval.cod += std::to_string(tmp);
+    yyval.cod += "\n";
+
+}
+#line 1887 "plp5.tab.c"
     break;
 
   case 42:
-#line 238 "plp5.y"
-                {}
-#line 1777 "plp5.tab.c"
+#line 340 "plp5.y"
+          {
+    int tmp = newTempDir++;
+    yyval.dir = tmp;
+    yyval.tipo = REAL;
+    yyval.cod = "mov #";
+    yyval.cod += yyvsp[0].lexema;
+    yyval.cod += " ";
+    yyval.cod += std::to_string(tmp);
+    yyval.cod += "\n";
+
+}
+#line 1903 "plp5.tab.c"
     break;
 
   case 43:
-#line 239 "plp5.y"
-                         {}
-#line 1783 "plp5.tab.c"
+#line 350 "plp5.y"
+                   {
+    yyval.cod = yyvsp[-1].cod;
+    yyval.tipo = yyvsp[-1].tipo;
+    yyval.dir = yyvsp[-1].dir;
+    //* algo mas?
+}
+#line 1914 "plp5.tab.c"
     break;
 
   case 44:
-#line 240 "plp5.y"
-          {}
-#line 1789 "plp5.tab.c"
+#line 358 "plp5.y"
+          {
+    Simbolo* s = tsa->buscar(yyvsp[0].lexema);
+    if(s == NULL){
+        errorSemantico(ERRNODECL, yyvsp[0].lexema, yyvsp[0].nlin, yyvsp[0].ncol);
+    }
+    int tmp = newTempDir++;
+    yyval.dir = tmp;
+
+    yyval.cod = "mov #0 " + std::to_string(tmp); // t0 = 0
+    yyval.cod += "; t0 para: ";
+    yyval.cod += yyvsp[0].lexema;
+    yyval.cod += "\n";
+    yyval.tipo = s->tipo;
+    yyval.simb = yyvsp[0].lexema;
+
+}
+#line 1935 "plp5.tab.c"
     break;
 
   case 45:
-#line 241 "plp5.y"
-                             {}
-#line 1795 "plp5.tab.c"
+#line 373 "plp5.y"
+             {
+    if(ES_TIPO_BASICO(yyvsp[-1].tipo)){
+        errorSemantico(ERRSOBRAN, yyvsp[0].lexema, yyvsp[0].nlin, yyvsp[0].ncol);
+    }
+
+    yyval.simb = yyvsp[-1].simb;
+
+}
+#line 1948 "plp5.tab.c"
+    break;
+
+  case 46:
+#line 380 "plp5.y"
+                {
+    /*
+        mismos ERRORES en arrray que en clase si sobran o fatan []
+        el indice debe ser siempre un int, sino ERROR en ]
+    */
+    if(yyvsp[-1].tipo != ENTERO){
+        errorSemantico(ERR_NOENTERO, yyvsp[0].lexema, yyvsp[0].nlin, yyvsp[0].ncol);
+    }
+
+    int tmp = newTempDir++;
+    yyval.dir = tmp;
+    // ti = ti-1 * tam + pos
+    yyval.cod = yyvsp[-4].cod;
+    yyval.cod += "; Calcula n para array\n";
+    yyval.cod += yyvsp[-2].cod; // Esimple devuelve el num necesario para seguir calculando
+    yyval.cod += "; Calcula Ti\n";
+    yyval.cod += "mov " + std::to_string(yyvsp[-4].dir)+ " A\n"; // mete el ti-1 en A
+    yyval.cod += "muli #" + std::to_string(tt->tipos[yyvsp[-4].tipo].tamanyo) + "\n"; // ti-1 * tam
+    yyval.cod += "addi " + std::to_string(yyvsp[-1].dir) + "\n"; // + pos // guardada en una dir tmp
+    //$$.cod += "";
+    yyval.cod += "mov A " + std::to_string(tmp) + "\n"; // guarda ti en una nueva tmp
+
+
+    yyval.tipo = tt->tipos[yyvsp[-4].tipo].tipoBase; // coge el nuevo tipo
+}
+#line 1978 "plp5.tab.c"
     break;
 
 
-#line 1799 "plp5.tab.c"
+#line 1982 "plp5.tab.c"
 
       default: break;
     }
@@ -2027,7 +2210,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 252 "plp5.y"
+#line 411 "plp5.y"
 
 /* ####################################################################################################### */
 /* ####################################################################################################### */

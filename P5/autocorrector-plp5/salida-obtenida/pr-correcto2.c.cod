@@ -5,52 +5,8 @@ laberinto d:3 tp:3 tm:5
 lon d:28 tp:0 tm:1 
 error d:29 tp:0 tm:1 
 salir d:30 tp:0 tm:1 
-31
-31
-31
-31
-31
-31
-31
-31
-31
-31
 mov d:31 tp:0 tm:1 
-32
-32
-32
-32
-32
-32
-32
-32
-32
-32
-32
-32
-32
-31
-31
-31
 mov d:31 tp:0 tm:1 
-32
-32
-32
-32
-32
-32
-32
-32
-32
-32
-32
-32
-32
-31
-31
-31
-31
-0
 ; START
 ; MAIN
 ; {
@@ -64,5 +20,799 @@ mov d:31 tp:0 tm:1
 ; lon[5]
 ; error
 ; salir
+
+mov #0 16000; t0 para: n
+mov #5 16001
+mov #0 16002; t0 para: i
+mov #0 16003
+mov #0 16004; t0 para: i
+mov #0 16005; t0 para: n
+; WHILE
+; {
+
+mov #0 16006; t0 para: j
+mov #0 16007
+mov #0 16008; t0 para: j
+mov #0 16009; t0 para: n
+; WHILE
+; {
+
+mov #0 16010; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16010 A
+muli #5
+addi 16011
+mov A 16012
+; Calcula n para array
+; Calcula Ti
+mov 16012 A
+muli #5
+addi 16013
+mov A 16014
+mov #0 16015
+mov #0 16016; t0 para: j
+mov #0 16017; t0 para: j
+mov #1 16018
+; }
+mov #0 16019; t0 para: i
+mov #0 16020; t0 para: i
+mov #1 16021
+; }
+mov #0 16022; t0 para: i
+mov #0 16023
+mov #0 16024; t0 para: i
+mov #0 16025; t0 para: n
+; WHILE
+; {
+
+mov #0 16026; t0 para: laberinto
+; Calcula n para array
+mov #0 16020; t0 para: i
+mov #1 16021
+; Calcula Ti
+mov 16026 A
+muli #5
+addi 16027
+mov A 16028
+; Calcula n para array
+mov #0 16020; t0 para: i
+mov #1 16021
+; Calcula Ti
+mov 16028 A
+muli #5
+addi 16029
+mov A 16030
+mov #1 16031
+mov #0 16032; t0 para: i
+mov #0 16033; t0 para: i
+mov #1 16034
+; }
+mov #0 16035; t0 para: i
+mov #0 16036
+mov #0 16037; t0 para: i
+mov #0 16038; t0 para: n
+; WHILE
+; {
+
+mov #0 16039; t0 para: laberinto
+; Calcula n para array
+mov #0 16033; t0 para: i
+mov #1 16034
+; Calcula Ti
+mov 16039 A
+muli #5
+addi 16040
+mov A 16041
+; Calcula n para array
+mov #0 16033; t0 para: i
+mov #1 16034
+; Calcula Ti
+mov 16041 A
+muli #5
+addi 16042
+mov A 16043
+mov #1 16044
+mov #0 16045; t0 para: i
+mov #0 16046; t0 para: i
+mov #1 16047
+; }
+mov #0 16048; t0 para: i
+mov #1 16049
+mov #0 16050; t0 para: i
+mov #0 16051; t0 para: n
+; WHILE
+; {
+
+mov #0 16052; t0 para: laberinto
+; Calcula n para array
+mov #0 16046; t0 para: i
+mov #1 16047
+; Calcula Ti
+mov 16052 A
+muli #5
+addi 16053
+mov A 16055
+; Calcula n para array
+mov #0 16046; t0 para: i
+mov #1 16047
+; Calcula Ti
+mov 16055 A
+muli #5
+addi 16056
+mov A 16057
+mov #1 16058
+mov #0 16059; t0 para: i
+mov #0 16060; t0 para: i
+mov #1 16061
+; }
+mov #0 16062; t0 para: lon
+mov #1 16063
+mov #0 16064; t0 para: error
+mov #0 16065
+mov #0 16066; t0 para: salir
+mov #0 16067
+mov #0 16068; t0 para: i
+mov #0 16069
+mov #0 16070; t0 para: j
+mov #0 16071
+mov #0 16072; t0 para: i
+wr 16072
+wrl
+mov #0 16073; t0 para: j
+wr 16073
+wrl
+mov #0 16074; t0 para: i
+mov #0 16075; t0 para: n
+mov #0 16076; t0 para: j
+mov #0 16077; t0 para: n
+mov #0 16078; t0 para: error
+mov #0 16079
+mov #0 16080; t0 para: salir
+mov #0 16081
+; WHILE
+; {
+
+mov #0 16082; t0 para: laberinto
+; Calcula n para array
+mov #1 16061
+; Calcula Ti
+mov 16082 A
+muli #5
+addi 16083
+mov A 16084
+; Calcula n para array
+mov #1 16061
+; Calcula Ti
+mov 16084 A
+muli #5
+addi 16085
+mov A 16086
+; IF
+; {
+; Tipo: int
+; mov
+
+mov #0 16087; t0 para: mov
+mov #0 16088
+mov #0 16089; t0 para: i
+mov #0 16090; t0 para: n
+mov #1 16091
+mov #0 16092; t0 para: j
+mov #0 16093; t0 para: n
+mov #1 16094
+; IF
+; {
+
+mov #0 16095; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16095 A
+muli #5
+addi 16096
+mov A 16098
+; Calcula n para array
+; Calcula Ti
+mov 16098 A
+muli #5
+addi 16099
+mov A 16101
+; IF
+; {
+
+mov #0 16102; t0 para: i
+mov #0 16103; t0 para: i
+mov #1 16104
+mov #0 16105; t0 para: j
+mov #0 16106; t0 para: j
+mov #1 16107
+mov #0 16108; t0 para: lon
+mov #0 16109; t0 para: lon
+mov #1 16110
+mov #0 16111; t0 para: mov
+mov #1 16112
+; }
+; }
+mov #0 16113; t0 para: mov
+mov #0 16114
+mov #0 16115; t0 para: i
+mov #0 16116; t0 para: n
+mov #1 16117
+; IF
+mov #0 16118; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16118 A
+muli #5
+addi 16119
+mov A 16121
+; Calcula n para array
+; Calcula Ti
+mov 16121 A
+muli #5
+addi 16122
+mov A 16123
+; IF
+; {
+
+mov #0 16124; t0 para: i
+mov #0 16125; t0 para: i
+mov #1 16126
+mov #0 16127; t0 para: lon
+mov #0 16128; t0 para: lon
+mov #1 16129
+mov #0 16130; t0 para: mov
+mov #1 16131
+; }
+mov #0 16132; t0 para: mov
+mov #0 16133
+mov #0 16134; t0 para: j
+mov #0 16135; t0 para: n
+mov #1 16136
+; IF
+mov #0 16137; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16137 A
+muli #5
+addi 16138
+mov A 16139
+; Calcula n para array
+; Calcula Ti
+mov 16139 A
+muli #5
+addi 16140
+mov A 16142
+; IF
+; {
+
+mov #0 16143; t0 para: j
+mov #0 16144; t0 para: j
+mov #1 16145
+mov #0 16146; t0 para: lon
+mov #0 16147; t0 para: lon
+mov #1 16148
+mov #0 16149; t0 para: mov
+mov #1 16150
+; }
+mov #0 16151; t0 para: mov
+mov #1 16152
+; IF
+; {
+
+mov #0 16153; t0 para: i
+wr 16153
+wrl
+mov #0 16154; t0 para: j
+wr 16154
+wrl
+; }
+; ELSE
+; {
+
+mov #0 16155; t0 para: i
+mov #0 16156; t0 para: n
+mov #1 16157
+mov #0 16158; t0 para: j
+mov #0 16159; t0 para: n
+mov #1 16160
+; IF
+mov #0 16161; t0 para: error
+mov #1 16162
+; ELSE
+mov #0 16163; t0 para: salir
+mov #2 16164
+; }
+; }
+; }
+mov #0 16165; t0 para: error
+; IF
+mov #0 16166; t0 para: lon
+mov #0 16167
+mov #1 16168
+mov #0 16169; t0 para: lon
+wr 16169
+wrl
+mov #0 16170; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16170 A
+muli #5
+addi 16171
+mov A 16172
+; Calcula n para array
+; Calcula Ti
+mov 16172 A
+muli #5
+addi 16173
+mov A 16174
+mov #0 16175
+mov #0 16176; t0 para: lon
+mov #1 16177
+mov #0 16178; t0 para: error
+mov #0 16179
+mov #0 16180; t0 para: salir
+mov #0 16181
+mov #0 16182; t0 para: i
+mov #0 16183
+mov #0 16184; t0 para: j
+mov #0 16185
+mov #0 16186; t0 para: i
+wr 16186
+wrl
+mov #0 16187; t0 para: j
+wr 16187
+wrl
+mov #0 16188; t0 para: i
+mov #0 16189; t0 para: n
+mov #0 16190; t0 para: j
+mov #0 16191; t0 para: n
+mov #0 16192; t0 para: error
+mov #0 16193
+mov #0 16194; t0 para: salir
+mov #0 16195
+; WHILE
+; {
+
+mov #0 16196; t0 para: laberinto
+; Calcula n para array
+; {
+; Tipo: int
+; mov
+
+mov #0 16087; t0 para: mov
+mov #0 16088
+mov #0 16089; t0 para: i
+mov #0 16090; t0 para: n
+mov #1 16091
+mov #0 16092; t0 para: j
+mov #0 16093; t0 para: n
+mov #1 16094
+; IF
+; {
+
+mov #0 16095; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16095 A
+muli #5
+addi 16096
+mov A 16098
+; Calcula n para array
+; Calcula Ti
+mov 16098 A
+muli #5
+addi 16099
+mov A 16101
+; IF
+; {
+
+mov #0 16102; t0 para: i
+mov #0 16103; t0 para: i
+mov #1 16104
+mov #0 16105; t0 para: j
+mov #0 16106; t0 para: j
+mov #1 16107
+mov #0 16108; t0 para: lon
+mov #0 16109; t0 para: lon
+mov #1 16110
+mov #0 16111; t0 para: mov
+mov #1 16112
+; }
+; }
+mov #0 16113; t0 para: mov
+mov #0 16114
+mov #0 16115; t0 para: i
+mov #0 16116; t0 para: n
+mov #1 16117
+; IF
+mov #0 16118; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16118 A
+muli #5
+addi 16119
+mov A 16121
+; Calcula n para array
+; Calcula Ti
+mov 16121 A
+muli #5
+addi 16122
+mov A 16123
+; IF
+; {
+
+mov #0 16124; t0 para: i
+mov #0 16125; t0 para: i
+mov #1 16126
+mov #0 16127; t0 para: lon
+mov #0 16128; t0 para: lon
+mov #1 16129
+mov #0 16130; t0 para: mov
+mov #1 16131
+; }
+mov #0 16132; t0 para: mov
+mov #0 16133
+mov #0 16134; t0 para: j
+mov #0 16135; t0 para: n
+mov #1 16136
+; IF
+mov #0 16137; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16137 A
+muli #5
+addi 16138
+mov A 16139
+; Calcula n para array
+; Calcula Ti
+mov 16139 A
+muli #5
+addi 16140
+mov A 16142
+; IF
+; {
+
+mov #0 16143; t0 para: j
+mov #0 16144; t0 para: j
+mov #1 16145
+mov #0 16146; t0 para: lon
+mov #0 16147; t0 para: lon
+mov #1 16148
+mov #0 16149; t0 para: mov
+mov #1 16150
+; }
+mov #0 16151; t0 para: mov
+mov #1 16152
+; IF
+; {
+
+mov #0 16153; t0 para: i
+wr 16153
+wrl
+mov #0 16154; t0 para: j
+wr 16154
+wrl
+; }
+; ELSE
+; {
+
+mov #0 16155; t0 para: i
+mov #0 16156; t0 para: n
+mov #1 16157
+mov #0 16158; t0 para: j
+mov #0 16159; t0 para: n
+mov #1 16160
+; IF
+mov #0 16161; t0 para: error
+mov #1 16162
+; ELSE
+mov #0 16163; t0 para: salir
+mov #2 16164
+; }
+; }
+; Calcula Ti
+mov 16196 A
+muli #5
+addi 16197
+mov A 16198
+; Calcula n para array
+; {
+; Tipo: int
+; mov
+
+mov #0 16087; t0 para: mov
+mov #0 16088
+mov #0 16089; t0 para: i
+mov #0 16090; t0 para: n
+mov #1 16091
+mov #0 16092; t0 para: j
+mov #0 16093; t0 para: n
+mov #1 16094
+; IF
+; {
+
+mov #0 16095; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16095 A
+muli #5
+addi 16096
+mov A 16098
+; Calcula n para array
+; Calcula Ti
+mov 16098 A
+muli #5
+addi 16099
+mov A 16101
+; IF
+; {
+
+mov #0 16102; t0 para: i
+mov #0 16103; t0 para: i
+mov #1 16104
+mov #0 16105; t0 para: j
+mov #0 16106; t0 para: j
+mov #1 16107
+mov #0 16108; t0 para: lon
+mov #0 16109; t0 para: lon
+mov #1 16110
+mov #0 16111; t0 para: mov
+mov #1 16112
+; }
+; }
+mov #0 16113; t0 para: mov
+mov #0 16114
+mov #0 16115; t0 para: i
+mov #0 16116; t0 para: n
+mov #1 16117
+; IF
+mov #0 16118; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16118 A
+muli #5
+addi 16119
+mov A 16121
+; Calcula n para array
+; Calcula Ti
+mov 16121 A
+muli #5
+addi 16122
+mov A 16123
+; IF
+; {
+
+mov #0 16124; t0 para: i
+mov #0 16125; t0 para: i
+mov #1 16126
+mov #0 16127; t0 para: lon
+mov #0 16128; t0 para: lon
+mov #1 16129
+mov #0 16130; t0 para: mov
+mov #1 16131
+; }
+mov #0 16132; t0 para: mov
+mov #0 16133
+mov #0 16134; t0 para: j
+mov #0 16135; t0 para: n
+mov #1 16136
+; IF
+mov #0 16137; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16137 A
+muli #5
+addi 16138
+mov A 16139
+; Calcula n para array
+; Calcula Ti
+mov 16139 A
+muli #5
+addi 16140
+mov A 16142
+; IF
+; {
+
+mov #0 16143; t0 para: j
+mov #0 16144; t0 para: j
+mov #1 16145
+mov #0 16146; t0 para: lon
+mov #0 16147; t0 para: lon
+mov #1 16148
+mov #0 16149; t0 para: mov
+mov #1 16150
+; }
+mov #0 16151; t0 para: mov
+mov #1 16152
+; IF
+; {
+
+mov #0 16153; t0 para: i
+wr 16153
+wrl
+mov #0 16154; t0 para: j
+wr 16154
+wrl
+; }
+; ELSE
+; {
+
+mov #0 16155; t0 para: i
+mov #0 16156; t0 para: n
+mov #1 16157
+mov #0 16158; t0 para: j
+mov #0 16159; t0 para: n
+mov #1 16160
+; IF
+mov #0 16161; t0 para: error
+mov #1 16162
+; ELSE
+mov #0 16163; t0 para: salir
+mov #2 16164
+; }
+; }
+; Calcula Ti
+mov 16198 A
+muli #5
+addi 16199
+mov A 16200
+; IF
+; {
+; Tipo: int
+; mov
+
+mov #0 16201; t0 para: mov
+mov #0 16202
+mov #0 16203; t0 para: i
+mov #0 16204; t0 para: n
+mov #1 16205
+mov #0 16206; t0 para: j
+mov #0 16207; t0 para: n
+mov #1 16208
+; IF
+; {
+
+mov #0 16209; t0 para: laberinto
+; Calcula n para array
+mov #0 16155; t0 para: i
+mov #0 16156; t0 para: n
+mov #1 16157
+mov #0 16158; t0 para: j
+mov #0 16159; t0 para: n
+mov #1 16160
+; Calcula Ti
+mov 16209 A
+muli #5
+addi 16210
+mov A 16212
+; Calcula n para array
+mov #0 16155; t0 para: i
+mov #0 16156; t0 para: n
+mov #1 16157
+mov #0 16158; t0 para: j
+mov #0 16159; t0 para: n
+mov #1 16160
+; Calcula Ti
+mov 16212 A
+muli #5
+addi 16213
+mov A 16215
+; IF
+; {
+
+mov #0 16216; t0 para: i
+mov #0 16217; t0 para: i
+mov #1 16218
+mov #0 16219; t0 para: j
+mov #0 16220; t0 para: j
+mov #1 16221
+mov #0 16222; t0 para: lon
+mov #0 16223; t0 para: lon
+mov #1 16224
+mov #0 16225; t0 para: mov
+mov #1 16226
+; }
+; }
+mov #0 16227; t0 para: mov
+mov #0 16228
+mov #0 16229; t0 para: i
+mov #0 16230; t0 para: n
+mov #1 16231
+; IF
+mov #0 16232; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16232 A
+muli #5
+addi 16233
+mov A 16235
+; Calcula n para array
+; Calcula Ti
+mov 16235 A
+muli #5
+addi 16236
+mov A 16237
+; IF
+; {
+
+mov #0 16238; t0 para: i
+mov #0 16239; t0 para: i
+mov #1 16240
+mov #0 16241; t0 para: lon
+mov #0 16242; t0 para: lon
+mov #1 16243
+mov #0 16244; t0 para: mov
+mov #1 16245
+; }
+mov #0 16246; t0 para: mov
+mov #0 16247
+mov #0 16248; t0 para: j
+mov #0 16249; t0 para: n
+mov #1 16250
+; IF
+mov #0 16251; t0 para: laberinto
+; Calcula n para array
+; Calcula Ti
+mov 16251 A
+muli #5
+addi 16252
+mov A 16253
+; Calcula n para array
+; Calcula Ti
+mov 16253 A
+muli #5
+addi 16254
+mov A 16256
+; IF
+; {
+
+mov #0 16257; t0 para: j
+mov #0 16258; t0 para: j
+mov #1 16259
+mov #0 16260; t0 para: lon
+mov #0 16261; t0 para: lon
+mov #1 16262
+mov #0 16263; t0 para: mov
+mov #1 16264
+; }
+mov #0 16265; t0 para: mov
+mov #1 16266
+; IF
+; {
+
+mov #0 16267; t0 para: i
+wr 16267
+wrl
+mov #0 16268; t0 para: j
+wr 16268
+wrl
+; }
+; ELSE
+; {
+
+mov #0 16269; t0 para: i
+mov #0 16270; t0 para: n
+mov #1 16271
+mov #0 16272; t0 para: j
+mov #0 16273; t0 para: n
+mov #1 16274
+; IF
+mov #0 16275; t0 para: error
+mov #1 16276
+; ELSE
+mov #0 16277; t0 para: salir
+mov #2 16278
+; }
+; }
+; }
+mov #0 16279; t0 para: error
+; IF
+mov #0 16280; t0 para: lon
+mov #0 16281
+mov #1 16282
+mov #0 16283; t0 para: lon
+wr 16283
+wrl
 ; }
 halt

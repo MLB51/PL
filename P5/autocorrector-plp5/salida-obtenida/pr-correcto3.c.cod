@@ -7,14 +7,6 @@ j d:20 tp:0 tm:1
 sumafila d:21 tp:1 tm:1 
 sumatotal d:22 tp:1 tm:1 
 div d:23 tp:0 tm:1 
-24
-24
-24
-24
-24
-21
-21
-19
 ; START
 ; VARS
 ; Tipo: int
@@ -29,5 +21,118 @@ div d:23 tp:0 tm:1
 ; Tipo: int
 ; i
 ; j
+
+; FOR
+; FOR
+mov #0 16006; t0 para: p
+; Calcula n para array
+; Calcula Ti
+mov 16006 A
+muli #4
+addi 16007
+mov A 16008
+; Calcula n para array
+; Calcula Ti
+mov 16008 A
+muli #4
+addi 16009
+mov A 16010
+rd 16010
+mov #0 16011; t0 para: i
+mov #0 16012; t0 para: j
+; IF
+; {
+; Tipo: float
+; sumafila; FOR
+mov #0 16006; t0 para: p
+; Calcula n para array
+; Calcula Ti
+mov 16006 A
+muli #4
+addi 16007
+mov A 16008
+; Calcula n para array
+; Calcula Ti
+mov 16008 A
+muli #4
+addi 16009
+mov A 16010
+rd 16010
+
+; sumatotal
+; Tipo: int
+; div; FOR
+mov #0 16006; t0 para: p
+; Calcula n para array
+; Calcula Ti
+mov 16006 A
+muli #4
+addi 16007
+mov A 16008
+; Calcula n para array
+; Calcula Ti
+mov 16008 A
+muli #4
+addi 16009
+mov A 16010
+rd 16010
+
+
+mov #0 16013; t0 para: div
+rd 16013
+mov #0 16014; t0 para: i
+mov #0 16015
+mov #0 16016; t0 para: sumatotal
+mov #0 16017
+mov #0 16018; t0 para: i
+mov #4 16019
+; WHILE
+; {
+
+mov #0 16020; t0 para: j
+mov #0 16021
+mov #0 16022; t0 para: sumafila
+mov #0 16023
+mov #0 16024; t0 para: j
+mov #4 16025
+; WHILE
+; {
+
+mov #0 16026; t0 para: sumafila
+mov #0 16027; t0 para: sumafila
+mov #0 16028; t0 para: p
+; Calcula n para array
+mov #0 16009; t0 para: j
+; Calcula Ti
+mov 16028 A
+muli #4
+addi 16029
+mov A 16030
+; Calcula n para array
+mov #0 16009; t0 para: j
+; Calcula Ti
+mov 16030 A
+muli #4
+addi 16031
+mov A 16032
+mov #0 16033; t0 para: j
+mov #0 16034; t0 para: j
+mov #1 16035
+; }
+mov #0 16036; t0 para: sumafila
+wr 16036
+wrl
+mov #0 16037; t0 para: i
+mov #0 16038; t0 para: i
+mov #1 16039
+mov #0 16040; t0 para: sumatotal
+mov #0 16041; t0 para: sumatotal
+mov #0 16042; t0 para: sumafila
+; }
+mov #0 16043; t0 para: sumatotal
+mov #0 16044; t0 para: div
+wr 16043
+wrl
+; }
 ; }
 halt

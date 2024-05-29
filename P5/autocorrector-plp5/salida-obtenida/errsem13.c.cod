@@ -1,11 +1,1 @@
 a d:0 tp:4 tm:10 
-100
-100
-; START
-; VARS
-; Tipo: float
-; a[10]
-; MAIN
-; {
-; }
-halt
