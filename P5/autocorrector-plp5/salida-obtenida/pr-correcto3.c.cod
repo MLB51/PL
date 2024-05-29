@@ -1,12 +1,12 @@
-a d:0 tp:0 tm:1 
-b d:1 tp:0 tm:1 
-c d:2 tp:0 tm:1 
-p d:3 tp:3 tm:4 
-i d:19 tp:0 tm:1 
-j d:20 tp:0 tm:1 
-sumafila d:21 tp:1 tm:1 
-sumatotal d:22 tp:1 tm:1 
-div d:23 tp:0 tm:1 
+; a d:0 tp:0 tm:1 
+; b d:1 tp:0 tm:1 
+; c d:2 tp:0 tm:1 
+; p d:3 tp:3 tm:4 
+; i d:19 tp:0 tm:1 
+; j d:20 tp:0 tm:1 
+; sumafila d:21 tp:1 tm:1 
+; sumatotal d:22 tp:1 tm:1 
+; div d:23 tp:0 tm:1 
 ; START
 ; VARS
 ; Tipo: int
@@ -26,18 +26,20 @@ div d:23 tp:0 tm:1
 ; FOR
 mov #0 16006; t0 para: p
 ; Calcula n para array
+mov #0 16007; t0 para: i
 ; Calcula Ti
 mov 16006 A
 muli #4
 addi 16007
 mov A 16008
 ; Calcula n para array
+mov #0 16009; t0 para: j
 ; Calcula Ti
 mov 16008 A
 muli #4
 addi 16009
 mov A 16010
-rd 16010
+rdr 16010
 mov #0 16011; t0 para: i
 mov #0 16012; t0 para: j
 ; IF
@@ -46,40 +48,44 @@ mov #0 16012; t0 para: j
 ; sumafila; FOR
 mov #0 16006; t0 para: p
 ; Calcula n para array
+mov #0 16007; t0 para: i
 ; Calcula Ti
 mov 16006 A
 muli #4
 addi 16007
 mov A 16008
 ; Calcula n para array
+mov #0 16009; t0 para: j
 ; Calcula Ti
 mov 16008 A
 muli #4
 addi 16009
 mov A 16010
-rd 16010
+rdr 16010
 
 ; sumatotal
 ; Tipo: int
 ; div; FOR
 mov #0 16006; t0 para: p
 ; Calcula n para array
+mov #0 16007; t0 para: i
 ; Calcula Ti
 mov 16006 A
 muli #4
 addi 16007
 mov A 16008
 ; Calcula n para array
+mov #0 16009; t0 para: j
 ; Calcula Ti
 mov 16008 A
 muli #4
 addi 16009
 mov A 16010
-rd 16010
+rdr 16010
 
 
 mov #0 16013; t0 para: div
-rd 16013
+rdi 16013
 mov #0 16014; t0 para: i
 mov #0 16015
 mov #0 16016; t0 para: sumatotal
@@ -102,14 +108,14 @@ mov #0 16026; t0 para: sumafila
 mov #0 16027; t0 para: sumafila
 mov #0 16028; t0 para: p
 ; Calcula n para array
-mov #0 16009; t0 para: j
+mov #0 16029; t0 para: i
 ; Calcula Ti
 mov 16028 A
 muli #4
 addi 16029
 mov A 16030
 ; Calcula n para array
-mov #0 16009; t0 para: j
+mov #0 16031; t0 para: j
 ; Calcula Ti
 mov 16030 A
 muli #4
@@ -120,7 +126,7 @@ mov #0 16034; t0 para: j
 mov #1 16035
 ; }
 mov #0 16036; t0 para: sumafila
-wr 16036
+wrr 16036
 wrl
 mov #0 16037; t0 para: i
 mov #0 16038; t0 para: i
@@ -131,7 +137,7 @@ mov #0 16042; t0 para: sumafila
 ; }
 mov #0 16043; t0 para: sumatotal
 mov #0 16044; t0 para: div
-wr 16043
+wrr 16043
 wrl
 ; }
 ; }

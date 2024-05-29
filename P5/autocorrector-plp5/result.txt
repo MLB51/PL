@@ -43,23 +43,25 @@ OK
 --------------------------
 Prueba: pr-correcto1.c
 --- Fallo en la traducción ----------
-1,3c1,2
-< ERROR(m2r) en linea 1: nombre de instruccion incorrecto (a)
-< Línea 1: a d:0 tp:0 tm:1 
-< 
+1,2c1,2
+< 0
+< ERROR(m2r) en línea 46: el primer operando de 'wrr' debe ser real.
 ---
 >    7.500
 > 7
 --------------------------
 Prueba: pr-correcto2.c
 --- Fallo en la traducción ----------
-1,3c1,28
-< ERROR(m2r) en linea 1: nombre de instruccion incorrecto (i)
-< Línea 1: i d:0 tp:0 tm:1 
-< 
+3,10c3,28
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
 ---
-> 0
-> 0
 > 1
 > 1
 > 2
@@ -89,10 +91,8 @@ Prueba: pr-correcto2.c
 --------------------------
 Prueba: pr-correcto3.c
 --- Fallo en la traducción ----------
-1,3c1,5
-< ERROR(m2r) en linea 1: nombre de instruccion incorrecto (a)
-< Línea 1: a d:0 tp:0 tm:1 
-< 
+1c1,5
+< ERROR(m2r) en línea 129: el primer operando de 'wrr' debe ser real.
 ---
 >    5.000
 >    9.000
@@ -102,12 +102,9 @@ Prueba: pr-correcto3.c
 --------------------------
 Prueba: pr-correcto4.c
 --- Fallo en la traducción ----------
-1,3c1,2
-< ERROR(m2r) en linea 1: nombre de instruccion incorrecto (a)
-< Línea 1: a d:0 tp:7 tm:1 
-< 
+2c2
+< 3
 ---
-> 0
 > 6
 --------------------------
 

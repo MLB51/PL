@@ -1,3 +1,1 @@
-ERROR(m2r) en linea 1: nombre de instruccion incorrecto (a)
-Línea 1: a d:0 tp:0 tm:1 
-
+ERROR(m2r) en línea 129: el primer operando de 'wrr' debe ser real.

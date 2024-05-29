@@ -1,10 +1,10 @@
-a d:0 tp:0 tm:1 
-b d:1 tp:0 tm:1 
-c d:2 tp:0 tm:1 
-a d:3 tp:1 tm:1 
-b d:4 tp:1 tm:1 
-a d:5 tp:0 tm:1 
-b d:6 tp:0 tm:1 
+; a d:0 tp:0 tm:1 
+; b d:1 tp:0 tm:1 
+; c d:2 tp:0 tm:1 
+; a d:3 tp:1 tm:1 
+; b d:4 tp:1 tm:1 
+; a d:5 tp:0 tm:1 
+; b d:6 tp:0 tm:1 
 ; START
 ; VARS
 ; Tipo: int
@@ -18,11 +18,11 @@ b d:6 tp:0 tm:1
 ; b
 
 mov #0 16000; t0 para: a
-mov #7.5 16001
+mov $7.5 16001
 mov #0 16002; t0 para: c
 mov #0 16003; t0 para: a
 mov #0 16004; t0 para: c
-mov #7.1 16005
+mov $7.1 16005
 ; IF
 ; {
 ; Tipo: int
@@ -39,14 +39,14 @@ mov #0 16012; t0 para: a
 mov #2 16013
 mov #2 16014
 mov #0 16015; t0 para: b
-wr 16015
+wri 16015
 wrl
 ; }
 mov #0 16016; t0 para: a
-wr 16016
+wrr 16016
 wrl
 mov #0 16017; t0 para: c
-wr 16017
+wri 16017
 wrl
 ; }
 halt

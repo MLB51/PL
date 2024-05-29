@@ -162,7 +162,7 @@ Variable : id {
     newVarDir += fullTam;
     tsa->nuevoSimbolo(s); //! cuidao, parecde que sigue haciendo la duplicacion de dfincions WTF
 
-    std::cout << s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
+    std::cout << "; "<< s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
 
     $$.cod = "; ";
     $$.cod += $1.lexema + $3.cod;
@@ -220,10 +220,10 @@ Instr : pyc {
     //     - wrr fuente Imprime el valor (real) de fuente.
     //     - wrc fuente Imprime el carácter representado por los 8 bits más bajos del valor entero 
     //     - wrl Imprime un salto de LInea
-    string formato = "";
+    string f = $5.tipo==ENTERO ? "i" : "r";
     $$.cod = $5.cod;
     $$.cod += "wr";
-    $$.cod += formato;
+    $$.cod += f;
     $$.cod += " ";
     $$.cod += std::to_string($5.dir); // direccion que devuelve la expresion
     $$.cod += "\n";
@@ -233,10 +233,10 @@ Instr : pyc {
     //     - rdi destino Lee un entero de la consola y lo carga en destino.
     //     - rdr destino Lee un real de la consola y lo carga en destino.
     //     - rdc destino Lee un carácter de la consola y carga su código ASCII en destino.
-    string formato = "";
+    string f = $6.tipo==ENTERO ? "i" : "r";
     $$.cod = $6.cod;
     $$.cod += "rd";
-    $$.cod += formato;
+    $$.cod += f;
     $$.cod += " ";
     $$.cod += std::to_string($6.dir); // direccion que devuelve la expresion
     $$.cod += "\n";
@@ -341,7 +341,7 @@ Factor :  Ref {
     int tmp = newTempDir++;
     $$.dir = tmp;
     $$.tipo = REAL;
-    $$.cod = "mov #";
+    $$.cod = "mov $";
     $$.cod += $1.lexema;
     $$.cod += " ";
     $$.cod += std::to_string(tmp);
@@ -391,7 +391,7 @@ Ref :  id {
     // ti = ti-1 * tam + pos
     $$.cod = $1.cod;
     $$.cod += "; Calcula n para array\n";
-    $$.cod += $3.cod; // Esimple devuelve el num necesario para seguir calculando
+    $$.cod += $4.cod; // Esimple devuelve el num necesario para seguir calculando
     $$.cod += "; Calcula Ti\n";
     $$.cod += "mov " + std::to_string($1.dir)+ " A\n"; // mete el ti-1 en A
     $$.cod += "muli #" + std::to_string(tt->tipos[$1.tipo].tamanyo) + "\n"; // ti-1 * tam

@@ -1,5 +1,5 @@
-a d:0 tp:7 tm:1 
-b d:4 tp:0 tm:1 
+; a d:0 tp:7 tm:1 
+; b d:4 tp:0 tm:1 
 ; START
 ; VARS
 ; Tipo: int
@@ -17,66 +17,42 @@ mov #5 16004
 mov #4 16005
 mov #0 16006; t0 para: a
 ; Calcula n para array
-mov #1 16001
-mov #3 16002
-mov #2 16003
-mov #5 16004
-mov #4 16005
+mov #0 16007
 ; Calcula Ti
 mov 16006 A
 muli #1
 addi 16007
 mov A 16008
 ; Calcula n para array
-mov #1 16001
-mov #3 16002
-mov #2 16003
-mov #5 16004
-mov #4 16005
+mov #1 16009
 ; Calcula Ti
 mov 16008 A
 muli #2
 addi 16009
 mov A 16010
 ; Calcula n para array
-mov #1 16001
-mov #3 16002
-mov #2 16003
-mov #5 16004
-mov #4 16005
+mov #0 16011
 ; Calcula Ti
 mov 16010 A
 muli #1
 addi 16011
 mov A 16012
 ; Calcula n para array
-mov #1 16001
-mov #3 16002
-mov #2 16003
-mov #5 16004
-mov #4 16005
+mov #0 16013
 ; Calcula Ti
 mov 16012 A
 muli #1
 addi 16013
 mov A 16014
 ; Calcula n para array
-mov #1 16001
-mov #3 16002
-mov #2 16003
-mov #5 16004
-mov #4 16005
+mov #1 16015
 ; Calcula Ti
 mov 16014 A
 muli #2
 addi 16015
 mov A 16016
 ; Calcula n para array
-mov #1 16001
-mov #3 16002
-mov #2 16003
-mov #5 16004
-mov #4 16005
+mov #0 16017
 ; Calcula Ti
 mov 16016 A
 muli #1
@@ -85,42 +61,42 @@ mov A 16018
 mov #0 16019; t0 para: b
 mov #0 16020; t0 para: a
 ; Calcula n para array
-mov #0 16019; t0 para: b
+mov #0 16021
 ; Calcula Ti
 mov 16020 A
 muli #1
 addi 16021
 mov A 16022
 ; Calcula n para array
-mov #0 16019; t0 para: b
+mov #0 16023
 ; Calcula Ti
 mov 16022 A
 muli #2
 addi 16023
 mov A 16024
 ; Calcula n para array
-mov #0 16019; t0 para: b
+mov #0 16025
 ; Calcula Ti
 mov 16024 A
 muli #1
 addi 16025
 mov A 16026
 ; Calcula n para array
-mov #0 16019; t0 para: b
+mov #0 16027
 ; Calcula Ti
 mov 16026 A
 muli #1
 addi 16027
 mov A 16028
 ; Calcula n para array
-mov #0 16019; t0 para: b
+mov #0 16029
 ; Calcula Ti
 mov 16028 A
 muli #2
 addi 16029
 mov A 16030
 ; Calcula n para array
-mov #0 16019; t0 para: b
+mov #0 16031
 ; Calcula Ti
 mov 16030 A
 muli #1
@@ -130,48 +106,42 @@ mov #0 16033; t0 para: b
 mov #1 16034
 mov #0 16035; t0 para: a
 ; Calcula n para array
-mov #0 16033; t0 para: b
-mov #1 16034
+mov #0 16036
 ; Calcula Ti
 mov 16035 A
 muli #1
 addi 16036
 mov A 16037
 ; Calcula n para array
-mov #0 16033; t0 para: b
-mov #1 16034
+mov #1 16038
 ; Calcula Ti
 mov 16037 A
 muli #2
 addi 16038
 mov A 16039
 ; Calcula n para array
-mov #0 16033; t0 para: b
-mov #1 16034
+mov #0 16040
 ; Calcula Ti
 mov 16039 A
 muli #1
 addi 16040
 mov A 16041
 ; Calcula n para array
-mov #0 16033; t0 para: b
-mov #1 16034
+mov #0 16042
 ; Calcula Ti
 mov 16041 A
 muli #1
 addi 16042
 mov A 16043
 ; Calcula n para array
-mov #0 16033; t0 para: b
-mov #1 16034
+mov #0 16044
 ; Calcula Ti
 mov 16043 A
 muli #2
 addi 16044
 mov A 16045
 ; Calcula n para array
-mov #0 16033; t0 para: b
-mov #1 16034
+mov #0 16046
 ; Calcula Ti
 mov 16045 A
 muli #1
@@ -181,48 +151,42 @@ mov #0 16048; t0 para: b
 mov #2 16049
 mov #0 16050; t0 para: a
 ; Calcula n para array
-mov #0 16048; t0 para: b
-mov #2 16049
+mov #0 16051
 ; Calcula Ti
 mov 16050 A
 muli #1
 addi 16051
 mov A 16052
 ; Calcula n para array
-mov #0 16048; t0 para: b
-mov #2 16049
+mov #0 16053
 ; Calcula Ti
 mov 16052 A
 muli #2
 addi 16053
 mov A 16054
 ; Calcula n para array
-mov #0 16048; t0 para: b
-mov #2 16049
+mov #0 16055
 ; Calcula Ti
 mov 16054 A
 muli #1
 addi 16055
 mov A 16056
 ; Calcula n para array
-mov #0 16048; t0 para: b
-mov #2 16049
+mov #0 16057
 ; Calcula Ti
 mov 16056 A
 muli #1
 addi 16057
 mov A 16058
 ; Calcula n para array
-mov #0 16048; t0 para: b
-mov #2 16049
+mov #1 16059
 ; Calcula Ti
 mov 16058 A
 muli #2
 addi 16059
 mov A 16060
 ; Calcula n para array
-mov #0 16048; t0 para: b
-mov #2 16049
+mov #0 16061
 ; Calcula Ti
 mov 16060 A
 muli #1
@@ -231,40 +195,46 @@ mov A 16062
 mov #0 16063; t0 para: b
 mov #3 16064
 mov #0 16065; t0 para: b
-wr 16065
+wri 16065
 wrl
 mov #0 16066; t0 para: a
 ; Calcula n para array
+mov #0 16067
 ; Calcula Ti
 mov 16066 A
 muli #1
 addi 16067
 mov A 16068
 ; Calcula n para array
+mov #1 16069
 ; Calcula Ti
 mov 16068 A
 muli #2
 addi 16069
 mov A 16070
 ; Calcula n para array
+mov #0 16071
 ; Calcula Ti
 mov 16070 A
 muli #1
 addi 16071
 mov A 16072
 ; Calcula n para array
+mov #0 16073
 ; Calcula Ti
 mov 16072 A
 muli #1
 addi 16073
 mov A 16074
 ; Calcula n para array
+mov #1 16075
 ; Calcula Ti
 mov 16074 A
 muli #2
 addi 16075
 mov A 16076
 ; Calcula n para array
+mov #0 16077
 ; Calcula Ti
 mov 16076 A
 muli #1
@@ -272,36 +242,42 @@ addi 16077
 mov A 16078
 mov #0 16079; t0 para: a
 ; Calcula n para array
+mov #0 16080
 ; Calcula Ti
 mov 16079 A
 muli #1
 addi 16080
 mov A 16081
 ; Calcula n para array
+mov #0 16082
 ; Calcula Ti
 mov 16081 A
 muli #2
 addi 16082
 mov A 16083
 ; Calcula n para array
+mov #0 16084
 ; Calcula Ti
 mov 16083 A
 muli #1
 addi 16084
 mov A 16085
 ; Calcula n para array
+mov #0 16086
 ; Calcula Ti
 mov 16085 A
 muli #1
 addi 16086
 mov A 16087
 ; Calcula n para array
+mov #0 16088
 ; Calcula Ti
 mov 16087 A
 muli #2
 addi 16088
 mov A 16089
 ; Calcula n para array
+mov #0 16090
 ; Calcula Ti
 mov 16089 A
 muli #1
@@ -309,36 +285,42 @@ addi 16090
 mov A 16091
 mov #0 16092; t0 para: a
 ; Calcula n para array
+mov #0 16093
 ; Calcula Ti
 mov 16092 A
 muli #1
 addi 16093
 mov A 16094
 ; Calcula n para array
+mov #1 16095
 ; Calcula Ti
 mov 16094 A
 muli #2
 addi 16095
 mov A 16096
 ; Calcula n para array
+mov #0 16097
 ; Calcula Ti
 mov 16096 A
 muli #1
 addi 16097
 mov A 16098
 ; Calcula n para array
+mov #0 16099
 ; Calcula Ti
 mov 16098 A
 muli #1
 addi 16099
 mov A 16100
 ; Calcula n para array
+mov #0 16101
 ; Calcula Ti
 mov 16100 A
 muli #2
 addi 16101
 mov A 16102
 ; Calcula n para array
+mov #0 16103
 ; Calcula Ti
 mov 16102 A
 muli #1
@@ -346,42 +328,48 @@ addi 16103
 mov A 16104
 mov #0 16105; t0 para: a
 ; Calcula n para array
+mov #0 16106
 ; Calcula Ti
 mov 16105 A
 muli #1
 addi 16106
 mov A 16107
 ; Calcula n para array
+mov #0 16108
 ; Calcula Ti
 mov 16107 A
 muli #2
 addi 16108
 mov A 16109
 ; Calcula n para array
+mov #0 16110
 ; Calcula Ti
 mov 16109 A
 muli #1
 addi 16110
 mov A 16111
 ; Calcula n para array
+mov #0 16112
 ; Calcula Ti
 mov 16111 A
 muli #1
 addi 16112
 mov A 16113
 ; Calcula n para array
+mov #1 16114
 ; Calcula Ti
 mov 16113 A
 muli #2
 addi 16114
 mov A 16115
 ; Calcula n para array
+mov #0 16116
 ; Calcula Ti
 mov 16115 A
 muli #1
 addi 16116
 mov A 16117
-wr 16078
+wri 16078
 wrl
 ; }
 halt

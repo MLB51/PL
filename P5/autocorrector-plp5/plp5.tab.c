@@ -1609,7 +1609,7 @@ yyreduce:
     newVarDir += fullTam;
     tsa->nuevoSimbolo(s); //! cuidao, parecde que sigue haciendo la duplicacion de dfincions WTF
 
-    std::cout << s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
+    std::cout << "; "<< s.nombre << " d:" << s.dir << " tp:" << s.tipo << " tm:" << s.tam << " " << std::endl;
 
     yyval.cod = "; ";
     yyval.cod += yyvsp[-2].lexema + yyvsp[0].cod;
@@ -1709,10 +1709,10 @@ yyreduce:
     //     - wrr fuente Imprime el valor (real) de fuente.
     //     - wrc fuente Imprime el carácter representado por los 8 bits más bajos del valor entero 
     //     - wrl Imprime un salto de LInea
-    string formato = "";
+    string f = yyvsp[-2].tipo==ENTERO ? "i" : "r";
     yyval.cod = yyvsp[-2].cod;
     yyval.cod += "wr";
-    yyval.cod += formato;
+    yyval.cod += f;
     yyval.cod += " ";
     yyval.cod += std::to_string(yyvsp[-2].dir); // direccion que devuelve la expresion
     yyval.cod += "\n";
@@ -1728,10 +1728,10 @@ yyreduce:
     //     - rdi destino Lee un entero de la consola y lo carga en destino.
     //     - rdr destino Lee un real de la consola y lo carga en destino.
     //     - rdc destino Lee un carácter de la consola y carga su código ASCII en destino.
-    string formato = "";
+    string f = yyvsp[-2].tipo==ENTERO ? "i" : "r";
     yyval.cod = yyvsp[-2].cod;
     yyval.cod += "rd";
-    yyval.cod += formato;
+    yyval.cod += f;
     yyval.cod += " ";
     yyval.cod += std::to_string(yyvsp[-2].dir); // direccion que devuelve la expresion
     yyval.cod += "\n";
@@ -1892,7 +1892,7 @@ yyreduce:
     int tmp = newTempDir++;
     yyval.dir = tmp;
     yyval.tipo = REAL;
-    yyval.cod = "mov #";
+    yyval.cod = "mov $";
     yyval.cod += yyvsp[0].lexema;
     yyval.cod += " ";
     yyval.cod += std::to_string(tmp);
@@ -1963,7 +1963,7 @@ yyreduce:
     // ti = ti-1 * tam + pos
     yyval.cod = yyvsp[-4].cod;
     yyval.cod += "; Calcula n para array\n";
-    yyval.cod += yyvsp[-2].cod; // Esimple devuelve el num necesario para seguir calculando
+    yyval.cod += yyvsp[-1].cod; // Esimple devuelve el num necesario para seguir calculando
     yyval.cod += "; Calcula Ti\n";
     yyval.cod += "mov " + std::to_string(yyvsp[-4].dir)+ " A\n"; // mete el ti-1 en A
     yyval.cod += "muli #" + std::to_string(tt->tipos[yyvsp[-4].tipo].tamanyo) + "\n"; // ti-1 * tam

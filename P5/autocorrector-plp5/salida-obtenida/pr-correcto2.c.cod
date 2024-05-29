@@ -1,12 +1,12 @@
-i d:0 tp:0 tm:1 
-j d:1 tp:0 tm:1 
-n d:2 tp:0 tm:1 
-laberinto d:3 tp:3 tm:5 
-lon d:28 tp:0 tm:1 
-error d:29 tp:0 tm:1 
-salir d:30 tp:0 tm:1 
-mov d:31 tp:0 tm:1 
-mov d:31 tp:0 tm:1 
+; i d:0 tp:0 tm:1 
+; j d:1 tp:0 tm:1 
+; n d:2 tp:0 tm:1 
+; laberinto d:3 tp:3 tm:5 
+; lon d:28 tp:0 tm:1 
+; error d:29 tp:0 tm:1 
+; salir d:30 tp:0 tm:1 
+; mov d:31 tp:0 tm:1 
+; mov d:31 tp:0 tm:1 
 ; START
 ; MAIN
 ; {
@@ -39,12 +39,14 @@ mov #0 16009; t0 para: n
 
 mov #0 16010; t0 para: laberinto
 ; Calcula n para array
+mov #0 16011; t0 para: i
 ; Calcula Ti
 mov 16010 A
 muli #5
 addi 16011
 mov A 16012
 ; Calcula n para array
+mov #0 16013; t0 para: j
 ; Calcula Ti
 mov 16012 A
 muli #5
@@ -68,16 +70,14 @@ mov #0 16025; t0 para: n
 
 mov #0 16026; t0 para: laberinto
 ; Calcula n para array
-mov #0 16020; t0 para: i
-mov #1 16021
+mov #0 16027; t0 para: i
 ; Calcula Ti
 mov 16026 A
 muli #5
 addi 16027
 mov A 16028
 ; Calcula n para array
-mov #0 16020; t0 para: i
-mov #1 16021
+mov #0 16029; t0 para: i
 ; Calcula Ti
 mov 16028 A
 muli #5
@@ -97,16 +97,14 @@ mov #0 16038; t0 para: n
 
 mov #0 16039; t0 para: laberinto
 ; Calcula n para array
-mov #0 16033; t0 para: i
-mov #1 16034
+mov #0 16040; t0 para: i
 ; Calcula Ti
 mov 16039 A
 muli #5
 addi 16040
 mov A 16041
 ; Calcula n para array
-mov #0 16033; t0 para: i
-mov #1 16034
+mov #0 16042
 ; Calcula Ti
 mov 16041 A
 muli #5
@@ -126,16 +124,15 @@ mov #0 16051; t0 para: n
 
 mov #0 16052; t0 para: laberinto
 ; Calcula n para array
-mov #0 16046; t0 para: i
-mov #1 16047
+mov #0 16053; t0 para: n
+mov #1 16054
 ; Calcula Ti
 mov 16052 A
 muli #5
 addi 16053
 mov A 16055
 ; Calcula n para array
-mov #0 16046; t0 para: i
-mov #1 16047
+mov #0 16056; t0 para: i
 ; Calcula Ti
 mov 16055 A
 muli #5
@@ -157,10 +154,10 @@ mov #0 16069
 mov #0 16070; t0 para: j
 mov #0 16071
 mov #0 16072; t0 para: i
-wr 16072
+wri 16072
 wrl
 mov #0 16073; t0 para: j
-wr 16073
+wri 16073
 wrl
 mov #0 16074; t0 para: i
 mov #0 16075; t0 para: n
@@ -175,14 +172,14 @@ mov #0 16081
 
 mov #0 16082; t0 para: laberinto
 ; Calcula n para array
-mov #1 16061
+mov #0 16083; t0 para: i
 ; Calcula Ti
 mov 16082 A
 muli #5
 addi 16083
 mov A 16084
 ; Calcula n para array
-mov #1 16061
+mov #0 16085; t0 para: j
 ; Calcula Ti
 mov 16084 A
 muli #5
@@ -206,12 +203,16 @@ mov #1 16094
 
 mov #0 16095; t0 para: laberinto
 ; Calcula n para array
+mov #0 16096; t0 para: i
+mov #1 16097
 ; Calcula Ti
 mov 16095 A
 muli #5
 addi 16096
 mov A 16098
 ; Calcula n para array
+mov #0 16099; t0 para: j
+mov #1 16100
 ; Calcula Ti
 mov 16098 A
 muli #5
@@ -241,12 +242,15 @@ mov #1 16117
 ; IF
 mov #0 16118; t0 para: laberinto
 ; Calcula n para array
+mov #0 16119; t0 para: i
+mov #1 16120
 ; Calcula Ti
 mov 16118 A
 muli #5
 addi 16119
 mov A 16121
 ; Calcula n para array
+mov #0 16122; t0 para: j
 ; Calcula Ti
 mov 16121 A
 muli #5
@@ -272,12 +276,15 @@ mov #1 16136
 ; IF
 mov #0 16137; t0 para: laberinto
 ; Calcula n para array
+mov #0 16138; t0 para: i
 ; Calcula Ti
 mov 16137 A
 muli #5
 addi 16138
 mov A 16139
 ; Calcula n para array
+mov #0 16140; t0 para: j
+mov #1 16141
 ; Calcula Ti
 mov 16139 A
 muli #5
@@ -301,10 +308,10 @@ mov #1 16152
 ; {
 
 mov #0 16153; t0 para: i
-wr 16153
+wri 16153
 wrl
 mov #0 16154; t0 para: j
-wr 16154
+wri 16154
 wrl
 ; }
 ; ELSE
@@ -331,16 +338,18 @@ mov #0 16166; t0 para: lon
 mov #0 16167
 mov #1 16168
 mov #0 16169; t0 para: lon
-wr 16169
+wri 16169
 wrl
 mov #0 16170; t0 para: laberinto
 ; Calcula n para array
+mov #1 16171
 ; Calcula Ti
 mov 16170 A
 muli #5
 addi 16171
 mov A 16172
 ; Calcula n para array
+mov #1 16173
 ; Calcula Ti
 mov 16172 A
 muli #5
@@ -358,10 +367,10 @@ mov #0 16183
 mov #0 16184; t0 para: j
 mov #0 16185
 mov #0 16186; t0 para: i
-wr 16186
+wri 16186
 wrl
 mov #0 16187; t0 para: j
-wr 16187
+wri 16187
 wrl
 mov #0 16188; t0 para: i
 mov #0 16189; t0 para: n
@@ -376,282 +385,14 @@ mov #0 16195
 
 mov #0 16196; t0 para: laberinto
 ; Calcula n para array
-; {
-; Tipo: int
-; mov
-
-mov #0 16087; t0 para: mov
-mov #0 16088
-mov #0 16089; t0 para: i
-mov #0 16090; t0 para: n
-mov #1 16091
-mov #0 16092; t0 para: j
-mov #0 16093; t0 para: n
-mov #1 16094
-; IF
-; {
-
-mov #0 16095; t0 para: laberinto
-; Calcula n para array
-; Calcula Ti
-mov 16095 A
-muli #5
-addi 16096
-mov A 16098
-; Calcula n para array
-; Calcula Ti
-mov 16098 A
-muli #5
-addi 16099
-mov A 16101
-; IF
-; {
-
-mov #0 16102; t0 para: i
-mov #0 16103; t0 para: i
-mov #1 16104
-mov #0 16105; t0 para: j
-mov #0 16106; t0 para: j
-mov #1 16107
-mov #0 16108; t0 para: lon
-mov #0 16109; t0 para: lon
-mov #1 16110
-mov #0 16111; t0 para: mov
-mov #1 16112
-; }
-; }
-mov #0 16113; t0 para: mov
-mov #0 16114
-mov #0 16115; t0 para: i
-mov #0 16116; t0 para: n
-mov #1 16117
-; IF
-mov #0 16118; t0 para: laberinto
-; Calcula n para array
-; Calcula Ti
-mov 16118 A
-muli #5
-addi 16119
-mov A 16121
-; Calcula n para array
-; Calcula Ti
-mov 16121 A
-muli #5
-addi 16122
-mov A 16123
-; IF
-; {
-
-mov #0 16124; t0 para: i
-mov #0 16125; t0 para: i
-mov #1 16126
-mov #0 16127; t0 para: lon
-mov #0 16128; t0 para: lon
-mov #1 16129
-mov #0 16130; t0 para: mov
-mov #1 16131
-; }
-mov #0 16132; t0 para: mov
-mov #0 16133
-mov #0 16134; t0 para: j
-mov #0 16135; t0 para: n
-mov #1 16136
-; IF
-mov #0 16137; t0 para: laberinto
-; Calcula n para array
-; Calcula Ti
-mov 16137 A
-muli #5
-addi 16138
-mov A 16139
-; Calcula n para array
-; Calcula Ti
-mov 16139 A
-muli #5
-addi 16140
-mov A 16142
-; IF
-; {
-
-mov #0 16143; t0 para: j
-mov #0 16144; t0 para: j
-mov #1 16145
-mov #0 16146; t0 para: lon
-mov #0 16147; t0 para: lon
-mov #1 16148
-mov #0 16149; t0 para: mov
-mov #1 16150
-; }
-mov #0 16151; t0 para: mov
-mov #1 16152
-; IF
-; {
-
-mov #0 16153; t0 para: i
-wr 16153
-wrl
-mov #0 16154; t0 para: j
-wr 16154
-wrl
-; }
-; ELSE
-; {
-
-mov #0 16155; t0 para: i
-mov #0 16156; t0 para: n
-mov #1 16157
-mov #0 16158; t0 para: j
-mov #0 16159; t0 para: n
-mov #1 16160
-; IF
-mov #0 16161; t0 para: error
-mov #1 16162
-; ELSE
-mov #0 16163; t0 para: salir
-mov #2 16164
-; }
-; }
+mov #0 16197; t0 para: i
 ; Calcula Ti
 mov 16196 A
 muli #5
 addi 16197
 mov A 16198
 ; Calcula n para array
-; {
-; Tipo: int
-; mov
-
-mov #0 16087; t0 para: mov
-mov #0 16088
-mov #0 16089; t0 para: i
-mov #0 16090; t0 para: n
-mov #1 16091
-mov #0 16092; t0 para: j
-mov #0 16093; t0 para: n
-mov #1 16094
-; IF
-; {
-
-mov #0 16095; t0 para: laberinto
-; Calcula n para array
-; Calcula Ti
-mov 16095 A
-muli #5
-addi 16096
-mov A 16098
-; Calcula n para array
-; Calcula Ti
-mov 16098 A
-muli #5
-addi 16099
-mov A 16101
-; IF
-; {
-
-mov #0 16102; t0 para: i
-mov #0 16103; t0 para: i
-mov #1 16104
-mov #0 16105; t0 para: j
-mov #0 16106; t0 para: j
-mov #1 16107
-mov #0 16108; t0 para: lon
-mov #0 16109; t0 para: lon
-mov #1 16110
-mov #0 16111; t0 para: mov
-mov #1 16112
-; }
-; }
-mov #0 16113; t0 para: mov
-mov #0 16114
-mov #0 16115; t0 para: i
-mov #0 16116; t0 para: n
-mov #1 16117
-; IF
-mov #0 16118; t0 para: laberinto
-; Calcula n para array
-; Calcula Ti
-mov 16118 A
-muli #5
-addi 16119
-mov A 16121
-; Calcula n para array
-; Calcula Ti
-mov 16121 A
-muli #5
-addi 16122
-mov A 16123
-; IF
-; {
-
-mov #0 16124; t0 para: i
-mov #0 16125; t0 para: i
-mov #1 16126
-mov #0 16127; t0 para: lon
-mov #0 16128; t0 para: lon
-mov #1 16129
-mov #0 16130; t0 para: mov
-mov #1 16131
-; }
-mov #0 16132; t0 para: mov
-mov #0 16133
-mov #0 16134; t0 para: j
-mov #0 16135; t0 para: n
-mov #1 16136
-; IF
-mov #0 16137; t0 para: laberinto
-; Calcula n para array
-; Calcula Ti
-mov 16137 A
-muli #5
-addi 16138
-mov A 16139
-; Calcula n para array
-; Calcula Ti
-mov 16139 A
-muli #5
-addi 16140
-mov A 16142
-; IF
-; {
-
-mov #0 16143; t0 para: j
-mov #0 16144; t0 para: j
-mov #1 16145
-mov #0 16146; t0 para: lon
-mov #0 16147; t0 para: lon
-mov #1 16148
-mov #0 16149; t0 para: mov
-mov #1 16150
-; }
-mov #0 16151; t0 para: mov
-mov #1 16152
-; IF
-; {
-
-mov #0 16153; t0 para: i
-wr 16153
-wrl
-mov #0 16154; t0 para: j
-wr 16154
-wrl
-; }
-; ELSE
-; {
-
-mov #0 16155; t0 para: i
-mov #0 16156; t0 para: n
-mov #1 16157
-mov #0 16158; t0 para: j
-mov #0 16159; t0 para: n
-mov #1 16160
-; IF
-mov #0 16161; t0 para: error
-mov #1 16162
-; ELSE
-mov #0 16163; t0 para: salir
-mov #2 16164
-; }
-; }
+mov #0 16199; t0 para: j
 ; Calcula Ti
 mov 16198 A
 muli #5
@@ -675,24 +416,16 @@ mov #1 16208
 
 mov #0 16209; t0 para: laberinto
 ; Calcula n para array
-mov #0 16155; t0 para: i
-mov #0 16156; t0 para: n
-mov #1 16157
-mov #0 16158; t0 para: j
-mov #0 16159; t0 para: n
-mov #1 16160
+mov #0 16210; t0 para: i
+mov #1 16211
 ; Calcula Ti
 mov 16209 A
 muli #5
 addi 16210
 mov A 16212
 ; Calcula n para array
-mov #0 16155; t0 para: i
-mov #0 16156; t0 para: n
-mov #1 16157
-mov #0 16158; t0 para: j
-mov #0 16159; t0 para: n
-mov #1 16160
+mov #0 16213; t0 para: j
+mov #1 16214
 ; Calcula Ti
 mov 16212 A
 muli #5
@@ -722,12 +455,15 @@ mov #1 16231
 ; IF
 mov #0 16232; t0 para: laberinto
 ; Calcula n para array
+mov #0 16233; t0 para: i
+mov #1 16234
 ; Calcula Ti
 mov 16232 A
 muli #5
 addi 16233
 mov A 16235
 ; Calcula n para array
+mov #0 16236; t0 para: j
 ; Calcula Ti
 mov 16235 A
 muli #5
@@ -753,12 +489,15 @@ mov #1 16250
 ; IF
 mov #0 16251; t0 para: laberinto
 ; Calcula n para array
+mov #0 16252; t0 para: i
 ; Calcula Ti
 mov 16251 A
 muli #5
 addi 16252
 mov A 16253
 ; Calcula n para array
+mov #0 16254; t0 para: j
+mov #1 16255
 ; Calcula Ti
 mov 16253 A
 muli #5
@@ -782,10 +521,10 @@ mov #1 16266
 ; {
 
 mov #0 16267; t0 para: i
-wr 16267
+wri 16267
 wrl
 mov #0 16268; t0 para: j
-wr 16268
+wri 16268
 wrl
 ; }
 ; ELSE
@@ -812,7 +551,7 @@ mov #0 16280; t0 para: lon
 mov #0 16281
 mov #1 16282
 mov #0 16283; t0 para: lon
-wr 16283
+wri 16283
 wrl
 ; }
 halt
