@@ -210,30 +210,74 @@ Instr : pyc {
 
 } | Ref asig Expr pyc {
     // id = E ;
-    // comprobar tipos? creo que no, vale todo con todo mientras se cumpla que no implqieu arrays
-    //
     $$.cod = $1.cod + $3.cod;
-    
-    Simbolo* s = tsa->buscar($1.simb);
-    $$.cod += "; Se calcula la pos total para la Ref de la asignacion\n";
-    $$.cod += "mov " + std::to_string($1.dir) + " A \n";
-    $$.cod += "addi #"+ std::to_string(s->dir) + " \n"; // suma dirbase a la pos en el array
-    //std::cout << ";var " << $1.simb << s->dir << std::endl;
-    $$.cod += "; Asignacion para "+ $1.simb +"\n";
-    $$.cod += "mov " + std::to_string($3.dir) + " @A \n";
 
-    // mov fuente -> destino
+    string dir3 = std::to_string($3.dir);
+    if($3.simb!=""){
+        // p. ej: a = b;
+        // la ref de $1. no viene full calculada
+        // la de b si
+        $$.cod += "mov " + dir3 + " A\n";
+
+        Simbolo* s = tsa->buscar($1.simb);
+        $$.cod += "mov " + std::to_string($1.dir) + " B \n";
+        
+        $$.cod += "; Asignacion para "+ $1.simb +"="+ $3.simb +"\n";
+        //$$.cod += "wri A \n";
+        //$$.cod += "wrl \n";
+        //$$.cod += "wri B \n";
+        //$$.cod += "wrl \n";
+        
+        $$.cod += "mov @A @B+"+std::to_string(s->dir)+"\n";
+        
+        //$$.cod += "wrr @B+"+std::to_string(s->dir)+"\n";
+        //$$.cod += "wrl \n";
+
+        if($1.tipo!=$3.tipo){
+            $$.cod += "; Arregla tipos\n";
+            
+            $$.cod += "mov @B+"+std::to_string(s->dir)+" A\n";
+            if($1.tipo==ENTERO){
+                $$.cod += "rtoi\n";
+            }else{
+                $$.cod += "itor\n";
+            }
+            $$.cod += "mov A @B+"+std::to_string(s->dir)+"\n";
+        }
+        if($1.tipo==ENTERO && $3.tipo ==REAL){
+        }else if($1.tipo==REAL && $3.tipo ==ENTERO){
+        }
+
+    }else{
+            
+        Simbolo* s = tsa->buscar($1.simb);
+        $$.cod += "; Se calcula la pos total para la Ref de la asignacion\n";
+        $$.cod += "mov " + std::to_string($1.dir) + " A \n";
+        $$.cod += "addi #"+ std::to_string(s->dir) + " \n"; // suma dirbase a la pos en el array
+        //std::cout << ";var " << $1.simb << s->dir << std::endl;
+
+        if($1.tipo==ENTERO && $3.tipo ==REAL){
+            $$.cod += "rtoi\n";
+        }else if($1.tipo==REAL && $3.tipo ==ENTERO){
+            $$.cod += "itor\n";
+        }
+
+        $$.cod += "; Asignacion para "+ $1.simb +"\n";
+        $$.cod += "mov " + dir3 + " @A \n";
+
+    }
+    
 
     // necesito mover
     // de: posicion memoria $3.dir (almacena el resultado de Expr) 
     // a: posicion guardada en A (dirbase + pos_array)
 
-    $$.cod += "wri " + std::to_string($1.dir) + "  \n";
-    $$.cod += "wri A \n";
+    //$$.cod += "wri " + std::to_string($1.dir) + "  \n";
+    /*$$.cod += "wri A \n";
     $$.cod += "wrl \n";
     if($1.tipo==ENTERO){
         $$.cod += "wri @A \n";
-        $$.cod += "wrr 3 \n";
+        //$$.cod += "wrr 3 \n";
     }else{
         $$.cod += "wrr @A \n";
     }
@@ -244,7 +288,7 @@ Instr : pyc {
         $$.cod += "wrr "+std::to_string($3.dir) +"\n";
     }
     $$.cod += "wrl \n";
-    $$.cod += "wrl \n";
+    $$.cod += "wrl \n";*/
 
 } | escribe pari formato coma Expr pard pyc {
     // hacer conversiones para los formatos, also escribe siempre hace wrl AL FINAL, como si tuvies un \n
@@ -254,6 +298,12 @@ Instr : pyc {
     //     - wrl Imprime un salto de LInea
 
     $$.cod = $5.cod;
+
+    if($5.simb!=""){
+        $$.cod += "mov " + std::to_string($5.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($5.dir) + " \n";
+    }
+
     string f = "i";
     $$.cod += "mov " + std::to_string($5.dir) + " A\n";
     if(std::string($3.lexema).find("d") != std::string::npos){
@@ -262,15 +312,16 @@ Instr : pyc {
         }
     }else if(std::string($3.lexema).find("g") != std::string::npos){
         f = "r";
-        if($5.tipo == REAL){
-            $$.cod += "itor\n";
-        }
-    }  if(std::string($3.lexema).find("c") != std::string::npos){
-        f = "c";
-        if($5.tipo == REAL){
+        if($5.tipo == ENTERO){
             $$.cod += "itor\n";
         }
     } 
+    // if(std::string($3.lexema).find("c") != std::string::npos){
+    //    f = "c";
+    //    if($5.tipo == REAL){
+    //        $$.cod += "itor\n";
+    //    }
+    //} 
 
     $$.cod += "wr";
     $$.cod += f;
@@ -359,6 +410,16 @@ Expr :  Expr oprel Esimple {
 
  
     $$.cod += "; OPREL\n";
+    // si cualquiera de los dos es referencia
+    // se sacan los valores de la var y se meten en la tmp
+    if($1.simb!=""){
+        $$.cod += "mov " + std::to_string($1.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($1.dir) + " \n";
+    }
+    if($3.simb!=""){
+        $$.cod += "mov " + std::to_string($3.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($3.dir) + " \n";
+    }
 
     if($1.tipo != $3.tipo){
         if($1.tipo == ENTERO){ // si son distintos cambia solo el entero
@@ -385,13 +446,18 @@ Expr :  Expr oprel Esimple {
     }
 
     int tmp = newTempDir++;
-    $$.dir = tmp,
+    $$.dir = tmp;
+    if($$.tipo==REAL){
+        $$.tipo = ENTERO;
+    }
     $$.cod += "mov A " + std::to_string(tmp) + " \n";
+    $$.simb = "";
 
 } | Esimple {
     $$.cod = $1.cod;
     $$.tipo = $1.tipo;
     $$.dir = $1.dir;
+    $$.simb = $1.simb;
 
 };
 
@@ -402,6 +468,25 @@ Esimple :  Esimple opas Term  {
 
     $$.cod += "; OPAS\n";
 
+    // si cualquiera de los dos es referencia
+    // se sacan los valores de la var y se meten en la tmp
+    if($1.simb!=""){
+        $$.cod += "mov " + std::to_string($1.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($1.dir) + " \n";
+        //if($1.tipo==ENTERO)
+        //$$.cod += "wri " + std::to_string($1.dir) + "\n";
+        //else
+        //$$.cod += "wrr " + std::to_string($1.dir) + "\n";
+    }
+    if($3.simb!=""){
+        $$.cod += "mov " + std::to_string($3.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($3.dir) + " \n";
+        //if($3.tipo==ENTERO)
+        //$$.cod += "wri " + std::to_string($3.dir) + "\n";
+        //else
+        //$$.cod += "wrr " + std::to_string($3.dir) + "\n";
+    }
+
     if($1.tipo != $3.tipo){
         if($1.tipo == ENTERO){ // si son distintos cambia solo el entero
             $$.cod += "mov " + std::to_string($1.dir) + " A\n";
@@ -412,6 +497,7 @@ Esimple :  Esimple opas Term  {
             $$.cod += "itor\n";
             $$.cod += operacion + "r " + std::to_string($1.dir) + "\n";
         }
+        //$$.cod += "wrr A\n";
         $$.tipo = REAL;
 
     }else{ // si son iguales no se requiere cambio de tipo
@@ -419,10 +505,12 @@ Esimple :  Esimple opas Term  {
             $$.cod += "mov " + std::to_string($1.dir) + " A\n";
             $$.cod += operacion + "i " + std::to_string($3.dir) + "\n";
             $$.tipo = ENTERO;
+        //$$.cod += "wri A\n";
         }else {
             $$.cod += "mov " + std::to_string($1.dir) + " A\n";
             $$.cod += operacion + "r " + std::to_string($3.dir) + "\n";
             $$.tipo = REAL;
+        //$$.cod += "wrr A\n";
         }
     }
 
@@ -430,11 +518,13 @@ Esimple :  Esimple opas Term  {
     int tmp = newTempDir++;
     $$.dir = tmp,
     $$.cod += "mov A " + std::to_string(tmp) + " \n";
+    $$.simb = "";
 
 } | Term {
     $$.cod = $1.cod;
     $$.tipo = $1.tipo;
     $$.dir = $1.dir;
+    $$.simb = $1.simb;
 
 };
 
@@ -442,9 +532,21 @@ Esimple :  Esimple opas Term  {
 Term :  Term opmd Factor {
 // div entre enteros : > entero, si 1 es real se convierte el otro
     $$.cod = $1.cod + $3.cod; 
+    
     string operacion = (strcmp($2.lexema, "*")==0)? "mul": "div";
 
     $$.cod += "; OPMD\n";
+
+    // si cualquiera de los dos es referencia
+    // se sacan los valores de la var y se meten en la tmp
+    if($1.simb!=""){
+        $$.cod += "mov " + std::to_string($1.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($1.dir) + " \n";
+    }
+    if($3.simb!=""){
+        $$.cod += "mov " + std::to_string($3.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($3.dir) + " \n";
+    }
 
     if($1.tipo != $3.tipo){
         if($1.tipo == ENTERO){ // si son distintos cambia solo el entero
@@ -457,16 +559,19 @@ Term :  Term opmd Factor {
             $$.cod += operacion + "r " + std::to_string($1.dir) + "\n";
         }
         $$.tipo = REAL;
+        //$$.cod += "wrr A\n";
 
     }else{ // si son iguales no se requiere cambio de tipo
         if($1.tipo == ENTERO){
             $$.cod += "mov " + std::to_string($1.dir) + " A\n";
             $$.cod += operacion + "i " + std::to_string($3.dir) + "\n";
             $$.tipo = ENTERO;
+        //$$.cod += "wri A\n";
         }else {
             $$.cod += "mov " + std::to_string($1.dir) + " A\n";
             $$.cod += operacion + "r " + std::to_string($3.dir) + "\n";
             $$.tipo = REAL;
+        //$$.cod += "wrr A\n";
         }
     }
 
@@ -474,12 +579,14 @@ Term :  Term opmd Factor {
     int tmp = newTempDir++;
     $$.dir = tmp,
     $$.cod += "mov A " + std::to_string(tmp) + " \n";
+    $$.simb = "";
     
 
 } | Factor {
     $$.cod = $1.cod;
     $$.tipo = $1.tipo;
     $$.dir = $1.dir;
+    $$.simb = $1.simb;
 
 };
 
@@ -498,6 +605,7 @@ Factor :  Ref {
     $$.cod += "mov A " + std::to_string($1.dir) + " \n";
     $$.dir = $1.dir;
     $$.tipo = $1.tipo;
+    $$.simb = $1.simb;
 
 } | nentero {
     int tmp = newTempDir++;
@@ -508,6 +616,7 @@ Factor :  Ref {
     $$.cod += " ";
     $$.cod += std::to_string(tmp);
     $$.cod += "\n";
+    $$.simb = "";
 
 } | nreal {
     int tmp = newTempDir++;
@@ -518,11 +627,13 @@ Factor :  Ref {
     $$.cod += " ";
     $$.cod += std::to_string(tmp);
     $$.cod += "\n";
+    $$.simb = "";
 
 } | pari Expr pard {
     $$.cod = $2.cod;
     $$.tipo = $2.tipo;
     $$.dir = $2.dir;
+    $$.simb = "";
     //* algo mas?
 };
 

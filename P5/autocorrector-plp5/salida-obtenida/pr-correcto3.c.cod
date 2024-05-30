@@ -56,6 +56,10 @@ mov 16014 A
 addi #20 
 mov A 16014 
 ; OPREL
+mov 16013 B
+mov @B+0 16013 
+mov 16014 B
+mov @B+0 16014 
 mov 16013 A
 eqli 16014
 mov A 16015 
@@ -129,30 +133,14 @@ mov 16017 A
 addi #19 
 ; Asignacion para i
 mov 16018 @A 
-wri 16017  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16018
-wrl 
-wrl 
 mov #0 16019; t0 para: sumatotal
 mov #0 16020
 ; Se calcula la pos total para la Ref de la asignacion
 mov 16019 A 
 addi #22 
+itor
 ; Asignacion para sumatotal
 mov 16020 @A 
-wri 16019  
-wri A 
-wrl 
-wrr @A 
-wrl 
-wri 16020
-wrl 
-wrl 
 mov #0 16021; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16021 A 
@@ -160,6 +148,8 @@ addi #19
 mov A 16021 
 mov #4 16022
 ; OPREL
+mov 16021 B
+mov @B+0 16021 
 mov 16021 A
 lssi 16022
 mov A 16023 
@@ -173,30 +163,14 @@ mov 16024 A
 addi #20 
 ; Asignacion para j
 mov 16025 @A 
-wri 16024  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16025
-wrl 
-wrl 
 mov #0 16026; t0 para: sumafila
 mov #0 16027
 ; Se calcula la pos total para la Ref de la asignacion
 mov 16026 A 
 addi #21 
+itor
 ; Asignacion para sumafila
 mov 16027 @A 
-wri 16026  
-wri A 
-wrl 
-wrr @A 
-wrl 
-wri 16027
-wrl 
-wrl 
 mov #0 16028; t0 para: j
 ; Se calcula la pos total para la Ref
 mov 16028 A 
@@ -204,6 +178,8 @@ addi #20
 mov A 16028 
 mov #4 16029
 ; OPREL
+mov 16028 B
+mov @B+0 16028 
 mov 16028 A
 lssi 16029
 mov A 16030 
@@ -244,6 +220,10 @@ mov 16037 A
 addi #3 
 mov A 16037 
 ; OPAS
+mov 16032 B
+mov @B+0 16032 
+mov 16037 B
+mov @B+0 16037 
 mov 16032 A
 addr 16037
 mov A 16038 
@@ -252,14 +232,6 @@ mov 16031 A
 addi #21 
 ; Asignacion para sumafila
 mov 16038 @A 
-wri 16031  
-wri A 
-wrl 
-wrr @A 
-wrl 
-wrr 16038
-wrl 
-wrl 
 mov #0 16039; t0 para: j
 mov #0 16040; t0 para: j
 ; Se calcula la pos total para la Ref
@@ -268,6 +240,8 @@ addi #20
 mov A 16040 
 mov #1 16041
 ; OPAS
+mov 16040 B
+mov @B+0 16040 
 mov 16040 A
 addi 16041
 mov A 16042 
@@ -276,23 +250,15 @@ mov 16039 A
 addi #20 
 ; Asignacion para j
 mov 16042 @A 
-wri 16039  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16042
-wrl 
-wrl 
 ; }
 mov #0 16043; t0 para: sumafila
 ; Se calcula la pos total para la Ref
 mov 16043 A 
 addi #21 
 mov A 16043 
+mov 16043 B
+mov @B+0 16043 
 mov 16043 A
-itor
 wrr A
 wrl
 mov #0 16044; t0 para: i
@@ -303,6 +269,8 @@ addi #19
 mov A 16045 
 mov #1 16046
 ; OPAS
+mov 16045 B
+mov @B+0 16045 
 mov 16045 A
 addi 16046
 mov A 16047 
@@ -311,15 +279,6 @@ mov 16044 A
 addi #19 
 ; Asignacion para i
 mov 16047 @A 
-wri 16044  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16047
-wrl 
-wrl 
 mov #0 16048; t0 para: sumatotal
 mov #0 16049; t0 para: sumatotal
 ; Se calcula la pos total para la Ref
@@ -332,6 +291,10 @@ mov 16050 A
 addi #21 
 mov A 16050 
 ; OPAS
+mov 16049 B
+mov @B+0 16049 
+mov 16050 B
+mov @B+0 16050 
 mov 16049 A
 addr 16050
 mov A 16051 
@@ -340,14 +303,6 @@ mov 16048 A
 addi #22 
 ; Asignacion para sumatotal
 mov 16051 @A 
-wri 16048  
-wri A 
-wrl 
-wrr @A 
-wrl 
-wrr 16051
-wrl 
-wrl 
 ; }
 mov #0 16052; t0 para: sumatotal
 ; Se calcula la pos total para la Ref
@@ -360,6 +315,10 @@ mov 16053 A
 addi #23 
 mov A 16053 
 ; OPMD
+mov 16052 B
+mov @B+0 16052 
+mov 16053 B
+mov @B+0 16053 
 mov 16053 A
 itor
 divr 16052

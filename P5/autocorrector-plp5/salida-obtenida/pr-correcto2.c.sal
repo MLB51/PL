@@ -1,6 +1,10 @@
-02
-5
-ERROR(m2r) al leer un valor de la posicion de memoria 3 sin haberlo
-inicializado, en la instrucción 33
-Línea 33: wrr 3 
-
+0
+0
+2
+2
+-1
+0
+0
+2
+2
+-1

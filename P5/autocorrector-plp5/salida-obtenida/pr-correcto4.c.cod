@@ -36,15 +36,6 @@ mov 16000 A
 addi #4 
 ; Asignacion para b
 mov 16009 @A 
-wri 16000  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16009
-wrl 
-wrl 
 mov #0 16010; t0 para: a
 ; Calcula n para array
 mov #0 16011
@@ -93,20 +84,10 @@ mov #0 16023; t0 para: b
 mov 16023 A 
 addi #4 
 mov A 16023 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16022 A 
-addi #0 
-; Asignacion para a
-mov 16023 @A 
-wri 16022  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16023
-wrl 
-wrl 
+mov 16023 A
+mov 16022 B 
+; Asignacion para a=b
+mov @A @B+0
 mov #0 16024; t0 para: a
 ; Calcula n para array
 mov #0 16025
@@ -157,6 +138,8 @@ addi #4
 mov A 16037 
 mov #1 16038
 ; OPAS
+mov 16037 B
+mov @B+0 16037 
 mov 16037 A
 addi 16038
 mov A 16039 
@@ -165,15 +148,6 @@ mov 16036 A
 addi #0 
 ; Asignacion para a
 mov 16039 @A 
-wri 16036  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16039
-wrl 
-wrl 
 mov #0 16040; t0 para: a
 ; Calcula n para array
 mov #0 16041
@@ -224,6 +198,8 @@ addi #4
 mov A 16053 
 mov #2 16054
 ; OPAS
+mov 16053 B
+mov @B+0 16053 
 mov 16053 A
 addi 16054
 mov A 16055 
@@ -232,15 +208,6 @@ mov 16052 A
 addi #0 
 ; Asignacion para a
 mov 16055 @A 
-wri 16052  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16055
-wrl 
-wrl 
 mov #0 16056; t0 para: a
 ; Calcula n para array
 mov #0 16057
@@ -291,6 +258,8 @@ addi #4
 mov A 16069 
 mov #3 16070
 ; OPAS
+mov 16069 B
+mov @B+0 16069 
 mov 16069 A
 addi 16070
 mov A 16071 
@@ -299,20 +268,13 @@ mov 16068 A
 addi #0 
 ; Asignacion para a
 mov 16071 @A 
-wri 16068  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16071
-wrl 
-wrl 
 mov #0 16072; t0 para: b
 ; Se calcula la pos total para la Ref
 mov 16072 A 
 addi #4 
 mov A 16072 
+mov 16072 B
+mov @B+0 16072 
 mov 16072 A
 wri A
 wrl
@@ -411,6 +373,10 @@ mov 16098 A
 addi #0 
 mov A 16098 
 ; OPAS
+mov 16085 B
+mov @B+0 16085 
+mov 16098 B
+mov @B+0 16098 
 mov 16085 A
 addi 16098
 mov A 16099 
@@ -462,6 +428,8 @@ mov 16112 A
 addi #0 
 mov A 16112 
 ; OPAS
+mov 16112 B
+mov @B+0 16112 
 mov 16099 A
 addi 16112
 mov A 16113 
@@ -513,6 +481,8 @@ mov 16126 A
 addi #0 
 mov A 16126 
 ; OPAS
+mov 16126 B
+mov @B+0 16126 
 mov 16113 A
 addi 16126
 mov A 16127 

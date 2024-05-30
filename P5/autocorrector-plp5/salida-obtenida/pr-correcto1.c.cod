@@ -22,34 +22,20 @@ mov 16000 A
 addi #3 
 ; Asignacion para a
 mov 16001 @A 
-wri 16000  
-wri A 
-wrl 
-wrr @A 
-wrl 
-wrr 16001
-wrl 
-wrl 
 mov #0 16002; t0 para: c
 mov #0 16003; t0 para: a
 ; Se calcula la pos total para la Ref
 mov 16003 A 
 addi #3 
 mov A 16003 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16002 A 
-addi #2 
-; Asignacion para c
-mov 16003 @A 
-wri 16002  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wrr 16003
-wrl 
-wrl 
+mov 16003 A
+mov 16002 B 
+; Asignacion para c=a
+mov @A @B+2
+; Arregla tipos
+mov @B+2 A
+rtoi
+mov A @B+2
 mov #0 16004; t0 para: c
 ; Se calcula la pos total para la Ref
 mov 16004 A 
@@ -57,6 +43,8 @@ addi #2
 mov A 16004 
 mov $7.1 16005
 ; OPREL
+mov 16004 B
+mov @B+0 16004 
 mov 16004 A
 itor
 gtrr 16005
@@ -87,6 +75,8 @@ mov 16009 A
 muli 16012
 mov A 16013 
 ; OPAS
+mov 16008 B
+mov @B+0 16008 
 mov 16008 A
 addi 16013
 mov A 16014 
@@ -95,15 +85,6 @@ mov 16007 A
 addi #5 
 ; Asignacion para a
 mov 16014 @A 
-wri 16007  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16014
-wrl 
-wrl 
 mov #0 16015; t0 para: b
 mov #0 16016; t0 para: a
 ; Se calcula la pos total para la Ref
@@ -112,6 +93,8 @@ addi #5
 mov A 16016 
 mov #2 16017
 ; OPMD
+mov 16016 B
+mov @B+0 16016 
 mov 16016 A
 divi 16017
 mov A 16018 
@@ -125,20 +108,13 @@ mov 16015 A
 addi #6 
 ; Asignacion para b
 mov 16020 @A 
-wri 16015  
-wri A 
-wrl 
-wri @A 
-wrr 3 
-wrl 
-wri 16020
-wrl 
-wrl 
 mov #0 16021; t0 para: b
 ; Se calcula la pos total para la Ref
 mov 16021 A 
 addi #6 
 mov A 16021 
+mov 16021 B
+mov @B+0 16021 
 mov 16021 A
 wri A
 wrl
@@ -148,8 +124,9 @@ mov #0 16022; t0 para: a
 mov 16022 A 
 addi #3 
 mov A 16022 
+mov 16022 B
+mov @B+0 16022 
 mov 16022 A
-itor
 wrr A
 wrl
 mov #0 16023; t0 para: c
@@ -157,6 +134,8 @@ mov #0 16023; t0 para: c
 mov 16023 A 
 addi #2 
 mov A 16023 
+mov 16023 B
+mov @B+0 16023 
 mov 16023 A
 wri A
 wrl
