@@ -42,36 +42,53 @@ Prueba: errsem9-4.c
 OK
 --------------------------
 Prueba: pr-correcto1.c
---- Fallo en la traducción ----------
-1d0
-< 2
+OK
 --------------------------
 Prueba: pr-correcto2.c
 --- Fallo en la traducción ----------
-2a3,4
-> 1
-> 1
-5c7,11
-< -1
+3,25c3,11
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
+< 0
 ---
+> 1
+> 1
+> 2
+> 2
 > 3
 > 3
 > 4
 > 4
 > 5
-7a14,15
-> 1
-> 0
-8a17,22
+29a16,18
+> 2
 > 0
 > 3
-> 0
+30a20
 > 4
-> 1
+31a22,28
 > 4
-10c24,28
-< -1
----
+> 2
 > 4
 > 3
 > 4
@@ -80,9 +97,11 @@ Prueba: pr-correcto2.c
 --------------------------
 Prueba: pr-correcto3.c
 --- Fallo en la traducción ----------
-1,3c1,5
-< ERROR(m2r) en línea 94: la instruccion no comienza por letra (empieza por <=>)
-< Línea 94:  => 
+1,5c1,5
+< 
+< ERROR(m2r) al leer un valor de la posicion de memoria 19 sin haberlo
+< inicializado, en la instrucción 31
+< Línea 31: mov @B+0 16000 
 < 
 ---
 >    5.000
@@ -92,6 +111,24 @@ Prueba: pr-correcto3.c
 > 6
 --------------------------
 Prueba: pr-correcto4.c
+OK
+--------------------------
+Prueba: pr-correcto5.c
+--- Fallo en la traducción ----------
+11c11
+< 0
+---
+> 10
+13,16c13
+< 2
+< 2
+< 2
+< 2
+---
+> 10
+\ No hay ningún carácter de nueva línea al final del archivo
+--------------------------
+Prueba: pr-correcto6.c
 OK
 --------------------------
 

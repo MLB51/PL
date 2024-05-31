@@ -55,6 +55,7 @@ int MAX_TMP_DIR = 16383;
 int newVarDir = 0;
 int newTempDir = 16000;
 
+int newLabel = 0;
 
 
 %}
@@ -77,11 +78,11 @@ X   : S {
 
 
 S   : FVM {
-    $$.cod = "; START\n" + $1.cod + "halt";
+    $$.cod = $1.cod + "\nhalt\n";
 };
 
 FVM : DVar FVM {
-    $$.cod = "; VARS\n" + $1.cod + $2.cod;
+    $$.cod = $1.cod + $2.cod;
 
 } | entero main_f pari pard Bloque {
     $$.cod = "; MAIN\n" + $5.cod;
@@ -200,7 +201,6 @@ SeqInstr : SeqInstr Instr {
     $$.cod = "\n";
 };
 
-
 Instr : pyc {
     //! nada?
     $$.cod = ";pyc\n";
@@ -266,29 +266,6 @@ Instr : pyc {
         $$.cod += "mov " + dir3 + " @A \n";
 
     }
-    
-
-    // necesito mover
-    // de: posicion memoria $3.dir (almacena el resultado de Expr) 
-    // a: posicion guardada en A (dirbase + pos_array)
-
-    //$$.cod += "wri " + std::to_string($1.dir) + "  \n";
-    /*$$.cod += "wri A \n";
-    $$.cod += "wrl \n";
-    if($1.tipo==ENTERO){
-        $$.cod += "wri @A \n";
-        //$$.cod += "wrr 3 \n";
-    }else{
-        $$.cod += "wrr @A \n";
-    }
-    $$.cod += "wrl \n";
-    if($3.tipo==ENTERO){
-        $$.cod += "wri "+std::to_string($3.dir) +"\n";
-    }else{
-        $$.cod += "wrr "+std::to_string($3.dir) +"\n";
-    }
-    $$.cod += "wrl \n";
-    $$.cod += "wrl \n";*/
 
 } | escribe pari formato coma Expr pard pyc {
     // hacer conversiones para los formatos, also escribe siempre hace wrl AL FINAL, como si tuvies un \n
@@ -332,37 +309,90 @@ Instr : pyc {
     //     - rdi destino Lee un entero de la consola y lo carga en destino.
     //     - rdr destino Lee un real de la consola y lo carga en destino.
     //     - rdc destino Lee un carácter de la consola y carga su código ASCII en destino.
-    string f = $6.tipo==ENTERO ? "i" : "r";
+    
     $$.cod = $6.cod;
-    $$.cod += "rd";
-    $$.cod += f;
-    $$.cod += " ";
-    $$.cod += std::to_string($6.dir); // direccion que devuelve la expresion
+
+    $$.cod += "mov " + std::to_string($5.dir) + " B\n";
+
+    string f = "i";
+    string conversion ="";
+    
+    if(std::string($3.lexema).find("d") != std::string::npos){
+        if($6.tipo == REAL){
+            conversion = "rtoi\n";
+        }
+    }else if(std::string($3.lexema).find("g") != std::string::npos){
+        f = "r";
+        if($6.tipo == ENTERO){
+            conversion = "itor\n";
+        }
+    } 
+
+    Simbolo* s = tsa->buscar($6.simb);
+
+
+    $$.cod += "rd" + f+ " ";
+    $$.cod += "@B+" + std::to_string(s->dir); // pos en array + pos en memoria
     $$.cod += "\n";
+    $$.cod += conversion;
 
 } | si pari Expr pard Instr {
     // if y while cumplen lo de if(134) -> True, if(0) -> false
 
 
+    string elseLabel = "L"+std::to_string(newLabel++);
+
     $$.cod = $3.cod;
-    $$.cod += "; IF\n";
+    if($3.simb!=""){
+        $$.cod += "mov " + std::to_string($3.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($3.dir) + " \n";
+    }
+    
+    $$.cod += "mov " + std::to_string($3.dir) + " A\n";
+    $$.cod += "; ---------------------IF\n";
+    $$.cod += "jz "+elseLabel+" \n";
     $$.cod += $5.cod;
+    $$.cod += elseLabel+" \n";
 
 } | si pari Expr pard Instr sino Instr {
+    string elseLabel = "L"+std::to_string(newLabel++);
+    string endifLabel = "L"+std::to_string(newLabel++);
 
     $$.cod = $3.cod;
-    $$.cod += "; IF\n";
+    if($3.simb!=""){
+        $$.cod += "mov " + std::to_string($3.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($3.dir) + " \n";
+    }
+    $$.cod += "mov " + std::to_string($3.dir) + " A\n";
+    $$.cod += "; ---------------------IF\n";
+    $$.cod += "jz "+elseLabel+" \n";
     $$.cod += $5.cod;
-    $$.cod += "; ELSE\n";
+    $$.cod += "jmp "+endifLabel+" \n";
+    $$.cod += "; ---------------------ELSE\n";
+    $$.cod += elseLabel+" \n";
     $$.cod += $7.cod;
+    $$.cod += endifLabel+" \n";
 
 } | mientras pari Expr pard Instr {
+    string startLabel = "L"+std::to_string(newLabel++);
+    string endLabel = "L"+std::to_string(newLabel++);
 
-    $$.cod = $3.cod;
-    $$.cod += "; WHILE\n";
+    // en cada iter se evalua la Expr ($3)
+    $$.cod += startLabel+" \n";
+    $$.cod += $3.cod;
+    if($3.simb!=""){
+        $$.cod += "mov " + std::to_string($3.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($3.dir) + " \n";
+    }
+    $$.cod += "mov " + std::to_string($3.dir) + " A\n";
+    $$.cod += "; ---------------------WHILE\n";
+    $$.cod += "jz "+endLabel+" \n";
     $$.cod += $5.cod;
+    $$.cod += "jmp "+startLabel+" \n";
+    $$.cod += endLabel+" \n";
 
 } | para pari id asig Esimple pyc Expr pyc id incrdecr pard Instr {
+    //         3        5           7       9     10         12
     /*
         Se tiene que comprobar en el for
         1. identificador existe
@@ -370,11 +400,45 @@ Instr : pyc {
         3. lo mismo con el 2 id
         id1 y id2 pueden ser distintos pero a nadie le importa
     */
+    Simbolo* s1 = tsa->buscar($3.simb);
+    if(s1->tipo!=ENTERO)
+        errorSemantico(ERR_NOENTERO, $3.lexema, $3.nlin, $3.ncol);
     $$.cod = $5.cod;
-    $$.cod = $7.cod;
-    $$.cod = "; FOR\n";
-    $$.cod += $12.cod;
+    if($5.simb!=""){
+        $$.cod += "mov " + std::to_string($5.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($5.dir) + " \n";
+    }
+    string startLabel = "L"+std::to_string(newLabel++);
+    string endLabel = "L"+std::to_string(newLabel++);
 
+    $$.cod += startLabel+"\n";
+    $$.cod += $7.cod;
+    if($7.simb!=""){
+        $$.cod += "mov " + std::to_string($7.dir) + " B\n";
+        $$.cod += "mov @B+0 " + std::to_string($7.dir) + " \n";
+    }
+
+    $$.cod += "mov " + std::to_string($7.dir) + " A\n";
+    $$.cod += "jz "+endLabel+"\n";
+    
+
+    Simbolo* s2 = tsa->buscar($9.simb);
+    if(s2->tipo!=ENTERO)
+        errorSemantico(ERR_NOENTERO, $9.lexema, $9.nlin, $9.ncol);
+
+    $$.cod = "; ---------------------FOR\n";
+    $$.cod += $12.cod;
+    $$.cod += "mov " + std::to_string($5.dir) + " A\n";
+    string instruccion;
+    if(strcmp($10.lexema, "++")== 0){
+        instruccion = "addi";
+    }else{
+        instruccion = "subi";
+    }
+    $$.cod += instruccion + " "+ std::to_string(s1->tipo) + "\n";
+    $$.cod += "mov A " + std::to_string($9.dir) + " ; Incrdecr FOR\n";
+    $$.cod += "jmp "+startLabel+"\n";
+    $$.cod += endLabel+"\n";
 
 };
 
@@ -401,7 +465,7 @@ Expr :  Expr oprel Esimple {
     } else if(strcmp($2.lexema, "<")==0){
         operacion = "lss";
     } else if(strcmp($2.lexema, "<=")==0){
-        operacion = "eql";
+        operacion = "leq";
     } else if(strcmp($2.lexema, ">")==0){
         operacion = "gtr";
     } else if(strcmp($2.lexema, ">=")==0){
@@ -409,7 +473,7 @@ Expr :  Expr oprel Esimple {
     } 
 
  
-    $$.cod += "; OPREL\n";
+    $$.cod += "; ---------------------OPREL\n";
     // si cualquiera de los dos es referencia
     // se sacan los valores de la var y se meten en la tmp
     if($1.simb!=""){
@@ -466,7 +530,7 @@ Esimple :  Esimple opas Term  {
     $$.cod = $1.cod + $3.cod; 
     string operacion = (strcmp($2.lexema, "+")==0)? "add": "sub";
 
-    $$.cod += "; OPAS\n";
+    $$.cod += "; ---------------------OPAS\n";
 
     // si cualquiera de los dos es referencia
     // se sacan los valores de la var y se meten en la tmp
@@ -530,12 +594,12 @@ Esimple :  Esimple opas Term  {
 
 
 Term :  Term opmd Factor {
-// div entre enteros : > entero, si 1 es real se convierte el otro
+    // div entre enteros : > entero, si 1 es real se convierte el otro
     $$.cod = $1.cod + $3.cod; 
     
     string operacion = (strcmp($2.lexema, "*")==0)? "mul": "div";
 
-    $$.cod += "; OPMD\n";
+    $$.cod += "; ---------------------OPMD\n";
 
     // si cualquiera de los dos es referencia
     // se sacan los valores de la var y se meten en la tmp

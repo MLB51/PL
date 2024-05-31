@@ -1,5 +1,3 @@
-; START
-; VARS
 ; Tipo: int
 ; a[1][2][1][1][2][1] => 
 ;  dir:0 tp:7 tm:1 
@@ -12,22 +10,22 @@
 mov #0 16000; t0 para: b
 mov #1 16001
 mov #3 16002
-; OPAS
+; ---------------------OPAS
 mov 16001 A
 subi 16002
 mov A 16003 
 mov #2 16004
 mov #5 16005
-; OPMD
+; ---------------------OPMD
 mov 16004 A
 muli 16005
 mov A 16006 
 mov #4 16007
-; OPMD
+; ---------------------OPMD
 mov 16006 A
 divi 16007
 mov A 16008 
-; OPAS
+; ---------------------OPAS
 mov 16003 A
 addi 16008
 mov A 16009 
@@ -137,7 +135,7 @@ mov 16037 A
 addi #4 
 mov A 16037 
 mov #1 16038
-; OPAS
+; ---------------------OPAS
 mov 16037 B
 mov @B+0 16037 
 mov 16037 A
@@ -197,7 +195,7 @@ mov 16053 A
 addi #4 
 mov A 16053 
 mov #2 16054
-; OPAS
+; ---------------------OPAS
 mov 16053 B
 mov @B+0 16053 
 mov 16053 A
@@ -257,7 +255,7 @@ mov 16069 A
 addi #4 
 mov A 16069 
 mov #3 16070
-; OPAS
+; ---------------------OPAS
 mov 16069 B
 mov @B+0 16069 
 mov 16069 A
@@ -372,7 +370,7 @@ mov A 16098
 mov 16098 A 
 addi #0 
 mov A 16098 
-; OPAS
+; ---------------------OPAS
 mov 16085 B
 mov @B+0 16085 
 mov 16098 B
@@ -427,7 +425,7 @@ mov A 16112
 mov 16112 A 
 addi #0 
 mov A 16112 
-; OPAS
+; ---------------------OPAS
 mov 16112 B
 mov @B+0 16112 
 mov 16099 A
@@ -480,7 +478,7 @@ mov A 16126
 mov 16126 A 
 addi #0 
 mov A 16126 
-; OPAS
+; ---------------------OPAS
 mov 16126 B
 mov @B+0 16126 
 mov 16113 A
@@ -490,4 +488,6 @@ mov 16127 A
 wri A
 wrl
 ; }
+
 halt
+

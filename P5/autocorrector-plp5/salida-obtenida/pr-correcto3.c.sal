@@ -1,3 +1,5 @@
-ERROR(m2r) en línea 94: la instruccion no comienza por letra (empieza por <=>)
-Línea 94:  => 
+
+ERROR(m2r) al leer un valor de la posicion de memoria 19 sin haberlo
+inicializado, en la instrucción 31
+Línea 31: mov @B+0 16000 
 

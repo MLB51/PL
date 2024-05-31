@@ -1,0 +1,264 @@
+; MAIN
+; {
+; Tipo: int
+; a => 
+;  dir:0 tp:0 tm:1 
+; b => 
+;  dir:1 tp:0 tm:1 
+; c => 
+;  dir:2 tp:0 tm:1 
+; Tipo: int
+; v[3] => 
+;  dir:3 tp:2 tm:3 
+; Tipo: int
+; i[3] => 
+;  dir:6 tp:0 tm:1 
+
+mov #0 16000; t0 para: i
+mov #0 16001
+; Se calcula la pos total para la Ref de la asignacion
+mov 16000 A 
+addi #6 
+; Asignacion para i
+mov 16001 @A 
+mov #0 16002; t0 para: a
+mov #0 16003
+; Se calcula la pos total para la Ref de la asignacion
+mov 16002 A 
+addi #0 
+; Asignacion para a
+mov 16003 @A 
+mov #0 16004; t0 para: b
+mov #1 16005
+; Se calcula la pos total para la Ref de la asignacion
+mov 16004 A 
+addi #1 
+; Asignacion para b
+mov 16005 @A 
+mov #0 16006; t0 para: c
+mov #10 16007
+; Se calcula la pos total para la Ref de la asignacion
+mov 16006 A 
+addi #2 
+; Asignacion para c
+mov 16007 @A 
+L0 
+mov #0 16008; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16008 A 
+addi #0 
+mov A 16008 
+mov #0 16009; t0 para: c
+; Se calcula la pos total para la Ref
+mov 16009 A 
+addi #2 
+mov A 16009 
+; ---------------------OPREL
+mov 16008 B
+mov @B+0 16008 
+mov 16009 B
+mov @B+0 16009 
+mov 16008 A
+lssi 16009
+mov A 16010 
+mov 16010 A
+; ---------------------WHILE
+jz L1 
+; {
+
+mov #0 16011; t0 para: a
+mov #0 16012; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16012 A 
+addi #0 
+mov A 16012 
+mov #0 16013; t0 para: b
+; Se calcula la pos total para la Ref
+mov 16013 A 
+addi #1 
+mov A 16013 
+; ---------------------OPAS
+mov 16012 B
+mov @B+0 16012 
+mov 16013 B
+mov @B+0 16013 
+mov 16012 A
+addi 16013
+mov A 16014 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16011 A 
+addi #0 
+; Asignacion para a
+mov 16014 @A 
+mov #0 16015; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16015 A 
+addi #0 
+mov A 16015 
+mov 16015 B
+mov @B+0 16015 
+mov 16015 A
+wri A
+wrl
+; }
+jmp L0 
+L1 
+mov #0 16016; t0 para: a
+mov #0 16017
+; Se calcula la pos total para la Ref de la asignacion
+mov 16016 A 
+addi #0 
+; Asignacion para a
+mov 16017 @A 
+L2 
+mov #0 16018; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16018 A 
+addi #0 
+mov A 16018 
+mov #3 16019
+; ---------------------OPREL
+mov 16018 B
+mov @B+0 16018 
+mov 16018 A
+lssi 16019
+mov A 16020 
+mov 16020 A
+; ---------------------WHILE
+jz L3 
+; {
+
+mov #0 16021; t0 para: v
+; Calcula n para array
+mov #0 16022; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16022 A 
+addi #0 
+mov A 16022 
+; Calcula Ti
+mov 16021 A
+muli #3
+addi 16022
+mov A 16023
+mov #0 16024; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16024 A 
+addi #0 
+mov A 16024 
+mov 16024 A
+mov 16023 B 
+; Asignacion para v=a
+mov @A @B+3
+mov #0 16025; t0 para: v
+; Calcula n para array
+mov #0 16026; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16026 A 
+addi #0 
+mov A 16026 
+; Calcula Ti
+mov 16025 A
+muli #3
+addi 16026
+mov A 16027
+; Se calcula la pos total para la Ref
+mov 16027 A 
+addi #3 
+mov A 16027 
+mov 16027 B
+mov @B+0 16027 
+mov 16027 A
+wri A
+wrl
+mov #0 16028; t0 para: a
+mov #0 16029; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16029 A 
+addi #0 
+mov A 16029 
+mov #1 16030
+; ---------------------OPAS
+mov 16029 B
+mov @B+0 16029 
+mov 16029 A
+addi 16030
+mov A 16031 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16028 A 
+addi #0 
+; Asignacion para a
+mov 16031 @A 
+; }
+jmp L2 
+L3 
+mov #0 16032; t0 para: a
+mov #0 16033
+; Se calcula la pos total para la Ref de la asignacion
+mov 16032 A 
+addi #0 
+; Asignacion para a
+mov 16033 @A 
+L4 
+mov #0 16034; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16034 A 
+addi #0 
+mov A 16034 
+mov #3 16035
+; ---------------------OPREL
+mov 16034 B
+mov @B+0 16034 
+mov 16034 A
+lssi 16035
+mov A 16036 
+mov 16036 A
+; ---------------------WHILE
+jz L5 
+; {
+
+mov #0 16037; t0 para: v
+; Calcula n para array
+mov #0 16038; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16038 A 
+addi #0 
+mov A 16038 
+; Calcula Ti
+mov 16037 A
+muli #3
+addi 16038
+mov A 16039
+; Se calcula la pos total para la Ref
+mov 16039 A 
+addi #3 
+mov A 16039 
+mov 16039 B
+mov @B+0 16039 
+mov 16039 A
+wri A
+wrl
+mov #0 16040; t0 para: a
+mov #0 16041; t0 para: a
+; Se calcula la pos total para la Ref
+mov 16041 A 
+addi #0 
+mov A 16041 
+mov #1 16042
+; ---------------------OPAS
+mov 16041 B
+mov @B+0 16041 
+mov 16041 A
+addi 16042
+mov A 16043 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16040 A 
+addi #0 
+; Asignacion para a
+mov 16043 @A 
+; }
+jmp L4 
+L5 
+; }
+
+halt
+

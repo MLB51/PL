@@ -1,4 +1,3 @@
-; START
 ; MAIN
 ; {
 ; Tipo: int
@@ -33,6 +32,7 @@ mov 16002 A
 addi #0 
 ; Asignacion para i
 mov 16003 @A 
+L2 
 mov #0 16004; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16004 A 
@@ -43,7 +43,7 @@ mov #0 16005; t0 para: n
 mov 16005 A 
 addi #2 
 mov A 16005 
-; OPREL
+; ---------------------OPREL
 mov 16004 B
 mov @B+0 16004 
 mov 16005 B
@@ -51,7 +51,9 @@ mov @B+0 16005
 mov 16004 A
 lssi 16005
 mov A 16006 
-; WHILE
+mov 16006 A
+; ---------------------WHILE
+jz L3 
 ; {
 
 mov #0 16007; t0 para: j
@@ -61,6 +63,7 @@ mov 16007 A
 addi #1 
 ; Asignacion para j
 mov 16008 @A 
+L0 
 mov #0 16009; t0 para: j
 ; Se calcula la pos total para la Ref
 mov 16009 A 
@@ -71,7 +74,7 @@ mov #0 16010; t0 para: n
 mov 16010 A 
 addi #2 
 mov A 16010 
-; OPREL
+; ---------------------OPREL
 mov 16009 B
 mov @B+0 16009 
 mov 16010 B
@@ -79,7 +82,9 @@ mov @B+0 16010
 mov 16009 A
 lssi 16010
 mov A 16011 
-; WHILE
+mov 16011 A
+; ---------------------WHILE
+jz L1 
 ; {
 
 mov #0 16012; t0 para: laberinto
@@ -118,7 +123,7 @@ mov 16019 A
 addi #1 
 mov A 16019 
 mov #1 16020
-; OPAS
+; ---------------------OPAS
 mov 16019 B
 mov @B+0 16019 
 mov 16019 A
@@ -130,6 +135,8 @@ addi #1
 ; Asignacion para j
 mov 16021 @A 
 ; }
+jmp L0 
+L1 
 mov #0 16022; t0 para: i
 mov #0 16023; t0 para: i
 ; Se calcula la pos total para la Ref
@@ -137,7 +144,7 @@ mov 16023 A
 addi #0 
 mov A 16023 
 mov #1 16024
-; OPAS
+; ---------------------OPAS
 mov 16023 B
 mov @B+0 16023 
 mov 16023 A
@@ -149,6 +156,8 @@ addi #0
 ; Asignacion para i
 mov 16025 @A 
 ; }
+jmp L2 
+L3 
 mov #0 16026; t0 para: i
 mov #0 16027
 ; Se calcula la pos total para la Ref de la asignacion
@@ -156,6 +165,7 @@ mov 16026 A
 addi #0 
 ; Asignacion para i
 mov 16027 @A 
+L4 
 mov #0 16028; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16028 A 
@@ -166,7 +176,7 @@ mov #0 16029; t0 para: n
 mov 16029 A 
 addi #2 
 mov A 16029 
-; OPREL
+; ---------------------OPREL
 mov 16028 B
 mov @B+0 16028 
 mov 16029 B
@@ -174,7 +184,9 @@ mov @B+0 16029
 mov 16028 A
 lssi 16029
 mov A 16030 
-; WHILE
+mov 16030 A
+; ---------------------WHILE
+jz L5 
 ; {
 
 mov #0 16031; t0 para: laberinto
@@ -213,7 +225,7 @@ mov 16038 A
 addi #0 
 mov A 16038 
 mov #1 16039
-; OPAS
+; ---------------------OPAS
 mov 16038 B
 mov @B+0 16038 
 mov 16038 A
@@ -225,6 +237,8 @@ addi #0
 ; Asignacion para i
 mov 16040 @A 
 ; }
+jmp L4 
+L5 
 mov #0 16041; t0 para: i
 mov #0 16042
 ; Se calcula la pos total para la Ref de la asignacion
@@ -232,6 +246,7 @@ mov 16041 A
 addi #0 
 ; Asignacion para i
 mov 16042 @A 
+L6 
 mov #0 16043; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16043 A 
@@ -242,7 +257,7 @@ mov #0 16044; t0 para: n
 mov 16044 A 
 addi #2 
 mov A 16044 
-; OPREL
+; ---------------------OPREL
 mov 16043 B
 mov @B+0 16043 
 mov 16044 B
@@ -250,7 +265,9 @@ mov @B+0 16044
 mov 16043 A
 lssi 16044
 mov A 16045 
-; WHILE
+mov 16045 A
+; ---------------------WHILE
+jz L7 
 ; {
 
 mov #0 16046; t0 para: laberinto
@@ -285,7 +302,7 @@ mov 16053 A
 addi #0 
 mov A 16053 
 mov #1 16054
-; OPAS
+; ---------------------OPAS
 mov 16053 B
 mov @B+0 16053 
 mov 16053 A
@@ -297,6 +314,8 @@ addi #0
 ; Asignacion para i
 mov 16055 @A 
 ; }
+jmp L6 
+L7 
 mov #0 16056; t0 para: i
 mov #1 16057
 ; Se calcula la pos total para la Ref de la asignacion
@@ -304,6 +323,7 @@ mov 16056 A
 addi #0 
 ; Asignacion para i
 mov 16057 @A 
+L8 
 mov #0 16058; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16058 A 
@@ -314,7 +334,7 @@ mov #0 16059; t0 para: n
 mov 16059 A 
 addi #2 
 mov A 16059 
-; OPREL
+; ---------------------OPREL
 mov 16058 B
 mov @B+0 16058 
 mov 16059 B
@@ -322,7 +342,9 @@ mov @B+0 16059
 mov 16058 A
 lssi 16059
 mov A 16060 
-; WHILE
+mov 16060 A
+; ---------------------WHILE
+jz L9 
 ; {
 
 mov #0 16061; t0 para: laberinto
@@ -333,7 +355,7 @@ mov 16062 A
 addi #2 
 mov A 16062 
 mov #1 16063
-; OPAS
+; ---------------------OPAS
 mov 16062 B
 mov @B+0 16062 
 mov 16062 A
@@ -368,7 +390,7 @@ mov 16070 A
 addi #0 
 mov A 16070 
 mov #1 16071
-; OPAS
+; ---------------------OPAS
 mov 16070 B
 mov @B+0 16070 
 mov 16070 A
@@ -380,1442 +402,342 @@ addi #0
 ; Asignacion para i
 mov 16072 @A 
 ; }
-mov #0 16073; t0 para: lon
-mov #1 16074
+jmp L8 
+L9 
+mov #0 16073; t0 para: i
+mov #0 16074
 ; Se calcula la pos total para la Ref de la asignacion
 mov 16073 A 
-addi #28 
-; Asignacion para lon
-mov 16074 @A 
-mov #0 16075; t0 para: error
-mov #0 16076
-; Se calcula la pos total para la Ref de la asignacion
-mov 16075 A 
-addi #29 
-; Asignacion para error
-mov 16076 @A 
-mov #0 16077; t0 para: salir
-mov #0 16078
-; Se calcula la pos total para la Ref de la asignacion
-mov 16077 A 
-addi #30 
-; Asignacion para salir
-mov 16078 @A 
-mov #0 16079; t0 para: i
-mov #0 16080
-; Se calcula la pos total para la Ref de la asignacion
-mov 16079 A 
 addi #0 
 ; Asignacion para i
-mov 16080 @A 
-mov #0 16081; t0 para: j
-mov #0 16082
+mov 16074 @A 
+L12 
+mov #0 16075; t0 para: i
+; Se calcula la pos total para la Ref
+mov 16075 A 
+addi #0 
+mov A 16075 
+mov #0 16076; t0 para: n
+; Se calcula la pos total para la Ref
+mov 16076 A 
+addi #2 
+mov A 16076 
+; ---------------------OPREL
+mov 16075 B
+mov @B+0 16075 
+mov 16076 B
+mov @B+0 16076 
+mov 16075 A
+lssi 16076
+mov A 16077 
+mov 16077 A
+; ---------------------WHILE
+jz L13 
+; {
+
+mov #0 16078; t0 para: j
+mov #0 16079
 ; Se calcula la pos total para la Ref de la asignacion
-mov 16081 A 
+mov 16078 A 
 addi #1 
 ; Asignacion para j
-mov 16082 @A 
-mov #0 16083; t0 para: i
+mov 16079 @A 
+L10 
+mov #0 16080; t0 para: j
 ; Se calcula la pos total para la Ref
-mov 16083 A 
-addi #0 
-mov A 16083 
-mov 16083 B
-mov @B+0 16083 
-mov 16083 A
-wri A
-wrl
-mov #0 16084; t0 para: j
+mov 16080 A 
+addi #1 
+mov A 16080 
+mov #0 16081; t0 para: n
+; Se calcula la pos total para la Ref
+mov 16081 A 
+addi #2 
+mov A 16081 
+; ---------------------OPREL
+mov 16080 B
+mov @B+0 16080 
+mov 16081 B
+mov @B+0 16081 
+mov 16080 A
+lssi 16081
+mov A 16082 
+mov 16082 A
+; ---------------------WHILE
+jz L11 
+; {
+
+mov #0 16083; t0 para: laberinto
+; Calcula n para array
+mov #0 16084; t0 para: i
 ; Se calcula la pos total para la Ref
 mov 16084 A 
-addi #1 
-mov A 16084 
-mov 16084 B
-mov @B+0 16084 
-mov 16084 A
-wri A
-wrl
-mov #0 16085; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16085 A 
 addi #0 
-mov A 16085 
-mov #0 16086; t0 para: n
+mov A 16084 
+; Calcula Ti
+mov 16083 A
+muli #5
+addi 16084
+mov A 16085
+; Calcula n para array
+mov #0 16086; t0 para: j
 ; Se calcula la pos total para la Ref
 mov 16086 A 
-addi #2 
-mov A 16086 
-; OPREL
-mov 16085 B
-mov @B+0 16085 
-mov 16086 B
-mov @B+0 16086 
-mov 16085 A
-lssi 16086
-mov A 16087 
-mov #0 16088; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16088 A 
 addi #1 
-mov A 16088 
-mov #0 16089; t0 para: n
+mov A 16086 
+; Calcula Ti
+mov 16085 A
+muli #5
+addi 16086
+mov A 16087
+; Se calcula la pos total para la Ref
+mov 16087 A 
+addi #3 
+mov A 16087 
+mov 16087 B
+mov @B+0 16087 
+mov 16087 A
+wri A
+wrl
+mov #0 16088; t0 para: j
+mov #0 16089; t0 para: j
 ; Se calcula la pos total para la Ref
 mov 16089 A 
-addi #2 
+addi #1 
 mov A 16089 
-; OPREL
-mov 16088 B
-mov @B+0 16088 
+mov #1 16090
+; ---------------------OPAS
 mov 16089 B
 mov @B+0 16089 
-mov 16088 A
-lssi 16089
-mov A 16090 
-; OPMD
-mov 16087 A
-muli 16090
+mov 16089 A
+addi 16090
 mov A 16091 
-mov #0 16092; t0 para: error
-; Se calcula la pos total para la Ref
-mov 16092 A 
-addi #29 
-mov A 16092 
-mov #0 16093
-; OPREL
-mov 16092 B
-mov @B+0 16092 
-mov 16092 A
-eqli 16093
-mov A 16094 
-; OPMD
-mov 16091 A
-muli 16094
-mov A 16095 
-mov #0 16096; t0 para: salir
-; Se calcula la pos total para la Ref
-mov 16096 A 
-addi #30 
-mov A 16096 
-mov #0 16097
-; OPREL
-mov 16096 B
-mov @B+0 16096 
-mov 16096 A
-eqli 16097
-mov A 16098 
-; OPMD
-mov 16095 A
-muli 16098
-mov A 16099 
-; WHILE
-; {
-
-mov #0 16100; t0 para: laberinto
-; Calcula n para array
-mov #0 16101; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16101 A 
-addi #0 
-mov A 16101 
-; Calcula Ti
-mov 16100 A
-muli #5
-addi 16101
-mov A 16102
-; Calcula n para array
-mov #0 16103; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16103 A 
-addi #1 
-mov A 16103 
-; Calcula Ti
-mov 16102 A
-muli #5
-addi 16103
-mov A 16104
-; Se calcula la pos total para la Ref
-mov 16104 A 
-addi #3 
-mov A 16104 
-; IF
-; {
-; Tipo: int
-; mov => 
-;  dir:31 tp:0 tm:1 
-
-mov #0 16105; t0 para: mov
-mov #0 16106
 ; Se calcula la pos total para la Ref de la asignacion
-mov 16105 A 
-addi #31 
-; Asignacion para mov
-mov 16106 @A 
-mov #0 16107; t0 para: i
+mov 16088 A 
+addi #1 
+; Asignacion para j
+mov 16091 @A 
+; }
+jmp L10 
+L11 
+mov #0 16092; t0 para: i
+mov #0 16093; t0 para: i
+; Se calcula la pos total para la Ref
+mov 16093 A 
+addi #0 
+mov A 16093 
+mov #1 16094
+; ---------------------OPAS
+mov 16093 B
+mov @B+0 16093 
+mov 16093 A
+addi 16094
+mov A 16095 
+; Se calcula la pos total para la Ref de la asignacion
+mov 16092 A 
+addi #0 
+; Asignacion para i
+mov 16095 @A 
+; }
+jmp L12 
+L13 
+mov #0 16096; t0 para: lon
+mov #1 16097
+; Se calcula la pos total para la Ref de la asignacion
+mov 16096 A 
+addi #28 
+; Asignacion para lon
+mov 16097 @A 
+mov #0 16098; t0 para: error
+mov #0 16099
+; Se calcula la pos total para la Ref de la asignacion
+mov 16098 A 
+addi #29 
+; Asignacion para error
+mov 16099 @A 
+mov #0 16100; t0 para: salir
+mov #0 16101
+; Se calcula la pos total para la Ref de la asignacion
+mov 16100 A 
+addi #30 
+; Asignacion para salir
+mov 16101 @A 
+mov #0 16102; t0 para: i
+mov #0 16103
+; Se calcula la pos total para la Ref de la asignacion
+mov 16102 A 
+addi #0 
+; Asignacion para i
+mov 16103 @A 
+mov #0 16104; t0 para: j
+mov #0 16105
+; Se calcula la pos total para la Ref de la asignacion
+mov 16104 A 
+addi #1 
+; Asignacion para j
+mov 16105 @A 
+mov #0 16106; t0 para: i
+; Se calcula la pos total para la Ref
+mov 16106 A 
+addi #0 
+mov A 16106 
+mov 16106 B
+mov @B+0 16106 
+mov 16106 A
+wri A
+wrl
+mov #0 16107; t0 para: j
 ; Se calcula la pos total para la Ref
 mov 16107 A 
-addi #0 
+addi #1 
 mov A 16107 
-mov #0 16108; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16108 A 
-addi #2 
-mov A 16108 
-mov #1 16109
-; OPAS
-mov 16108 B
-mov @B+0 16108 
-mov 16108 A
-subi 16109
-mov A 16110 
-; OPREL
 mov 16107 B
 mov @B+0 16107 
 mov 16107 A
-lssi 16110
-mov A 16111 
-mov #0 16112; t0 para: j
+wri A
+wrl
+mov #0 16108; t0 para: error
 ; Se calcula la pos total para la Ref
-mov 16112 A 
-addi #1 
+mov 16108 A 
+addi #29 
+mov A 16108 
+mov 16108 B
+mov @B+0 16108 
+mov 16108 A
+; ---------------------IF
+jz L14 
+mov #0 16109; t0 para: lon
+mov #0 16110
+mov #1 16111
+; ---------------------OPAS
+mov 16110 A
+subi 16111
 mov A 16112 
-mov #0 16113; t0 para: n
+; Se calcula la pos total para la Ref de la asignacion
+mov 16109 A 
+addi #28 
+; Asignacion para lon
+mov 16112 @A 
+L14 
+mov #0 16113; t0 para: lon
 ; Se calcula la pos total para la Ref
 mov 16113 A 
-addi #2 
+addi #28 
 mov A 16113 
-mov #1 16114
-; OPAS
 mov 16113 B
 mov @B+0 16113 
 mov 16113 A
-subi 16114
-mov A 16115 
-; OPREL
-mov 16112 B
-mov @B+0 16112 
-mov 16112 A
-lssi 16115
-mov A 16116 
-; OPMD
-mov 16111 A
-muli 16116
-mov A 16117 
-; IF
-; {
-
-mov #0 16118; t0 para: laberinto
+wri A
+wrl
+mov #0 16114; t0 para: laberinto
 ; Calcula n para array
-mov #0 16119; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16119 A 
-addi #0 
-mov A 16119 
-mov #1 16120
-; OPAS
-mov 16119 B
-mov @B+0 16119 
-mov 16119 A
-addi 16120
-mov A 16121 
+mov #1 16115
 ; Calcula Ti
-mov 16118 A
+mov 16114 A
 muli #5
-addi 16121
-mov A 16122
+addi 16115
+mov A 16116
 ; Calcula n para array
-mov #0 16123; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16123 A 
-addi #1 
-mov A 16123 
-mov #1 16124
-; OPAS
-mov 16123 B
-mov @B+0 16123 
-mov 16123 A
-addi 16124
-mov A 16125 
+mov #1 16117
 ; Calcula Ti
-mov 16122 A
+mov 16116 A
 muli #5
-addi 16125
-mov A 16126
-; Se calcula la pos total para la Ref
-mov 16126 A 
-addi #3 
-mov A 16126 
-; IF
-; {
-
-mov #0 16127; t0 para: i
-mov #0 16128; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16128 A 
-addi #0 
-mov A 16128 
-mov #1 16129
-; OPAS
-mov 16128 B
-mov @B+0 16128 
-mov 16128 A
-addi 16129
-mov A 16130 
+addi 16117
+mov A 16118
+mov #0 16119
 ; Se calcula la pos total para la Ref de la asignacion
-mov 16127 A 
+mov 16118 A 
+addi #3 
+; Asignacion para laberinto
+mov 16119 @A 
+mov #0 16120; t0 para: lon
+mov #1 16121
+; Se calcula la pos total para la Ref de la asignacion
+mov 16120 A 
+addi #28 
+; Asignacion para lon
+mov 16121 @A 
+mov #0 16122; t0 para: error
+mov #0 16123
+; Se calcula la pos total para la Ref de la asignacion
+mov 16122 A 
+addi #29 
+; Asignacion para error
+mov 16123 @A 
+mov #0 16124; t0 para: salir
+mov #0 16125
+; Se calcula la pos total para la Ref de la asignacion
+mov 16124 A 
+addi #30 
+; Asignacion para salir
+mov 16125 @A 
+mov #0 16126; t0 para: i
+mov #0 16127
+; Se calcula la pos total para la Ref de la asignacion
+mov 16126 A 
 addi #0 
 ; Asignacion para i
-mov 16130 @A 
+mov 16127 @A 
+mov #0 16128; t0 para: j
+mov #0 16129
+; Se calcula la pos total para la Ref de la asignacion
+mov 16128 A 
+addi #1 
+; Asignacion para j
+mov 16129 @A 
+mov #0 16130; t0 para: i
+; Se calcula la pos total para la Ref
+mov 16130 A 
+addi #0 
+mov A 16130 
+mov 16130 B
+mov @B+0 16130 
+mov 16130 A
+wri A
+wrl
 mov #0 16131; t0 para: j
-mov #0 16132; t0 para: j
+; Se calcula la pos total para la Ref
+mov 16131 A 
+addi #1 
+mov A 16131 
+mov 16131 B
+mov @B+0 16131 
+mov 16131 A
+wri A
+wrl
+mov #0 16132; t0 para: error
 ; Se calcula la pos total para la Ref
 mov 16132 A 
-addi #1 
+addi #29 
 mov A 16132 
-mov #1 16133
-; OPAS
 mov 16132 B
 mov @B+0 16132 
 mov 16132 A
-addi 16133
-mov A 16134 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16131 A 
-addi #1 
-; Asignacion para j
-mov 16134 @A 
-mov #0 16135; t0 para: lon
-mov #0 16136; t0 para: lon
-; Se calcula la pos total para la Ref
-mov 16136 A 
-addi #28 
+; ---------------------IF
+jz L15 
+mov #0 16133; t0 para: lon
+mov #0 16134
+mov #1 16135
+; ---------------------OPAS
+mov 16134 A
+subi 16135
 mov A 16136 
-mov #1 16137
-; OPAS
-mov 16136 B
-mov @B+0 16136 
-mov 16136 A
-addi 16137
-mov A 16138 
 ; Se calcula la pos total para la Ref de la asignacion
-mov 16135 A 
+mov 16133 A 
 addi #28 
 ; Asignacion para lon
-mov 16138 @A 
-mov #0 16139; t0 para: mov
-mov #1 16140
-; Se calcula la pos total para la Ref de la asignacion
-mov 16139 A 
-addi #31 
-; Asignacion para mov
-mov 16140 @A 
-; }
-; }
-mov #0 16141; t0 para: mov
+mov 16136 @A 
+L15 
+mov #0 16137; t0 para: lon
 ; Se calcula la pos total para la Ref
-mov 16141 A 
-addi #31 
-mov A 16141 
-mov #0 16142
-; OPREL
-mov 16141 B
-mov @B+0 16141 
-mov 16141 A
-eqli 16142
-mov A 16143 
-mov #0 16144; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16144 A 
-addi #0 
-mov A 16144 
-mov #0 16145; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16145 A 
-addi #2 
-mov A 16145 
-mov #1 16146
-; OPAS
-mov 16145 B
-mov @B+0 16145 
-mov 16145 A
-subi 16146
-mov A 16147 
-; OPREL
-mov 16144 B
-mov @B+0 16144 
-mov 16144 A
-lssi 16147
-mov A 16148 
-; OPMD
-mov 16143 A
-muli 16148
-mov A 16149 
-; IF
-mov #0 16150; t0 para: laberinto
-; Calcula n para array
-mov #0 16151; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16151 A 
-addi #0 
-mov A 16151 
-mov #1 16152
-; OPAS
-mov 16151 B
-mov @B+0 16151 
-mov 16151 A
-addi 16152
-mov A 16153 
-; Calcula Ti
-mov 16150 A
-muli #5
-addi 16153
-mov A 16154
-; Calcula n para array
-mov #0 16155; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16155 A 
-addi #1 
-mov A 16155 
-; Calcula Ti
-mov 16154 A
-muli #5
-addi 16155
-mov A 16156
-; Se calcula la pos total para la Ref
-mov 16156 A 
-addi #3 
-mov A 16156 
-; IF
-; {
-
-mov #0 16157; t0 para: i
-mov #0 16158; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16158 A 
-addi #0 
-mov A 16158 
-mov #1 16159
-; OPAS
-mov 16158 B
-mov @B+0 16158 
-mov 16158 A
-addi 16159
-mov A 16160 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16157 A 
-addi #0 
-; Asignacion para i
-mov 16160 @A 
-mov #0 16161; t0 para: lon
-mov #0 16162; t0 para: lon
-; Se calcula la pos total para la Ref
-mov 16162 A 
+mov 16137 A 
 addi #28 
-mov A 16162 
-mov #1 16163
-; OPAS
-mov 16162 B
-mov @B+0 16162 
-mov 16162 A
-addi 16163
-mov A 16164 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16161 A 
-addi #28 
-; Asignacion para lon
-mov 16164 @A 
-mov #0 16165; t0 para: mov
-mov #1 16166
-; Se calcula la pos total para la Ref de la asignacion
-mov 16165 A 
-addi #31 
-; Asignacion para mov
-mov 16166 @A 
-; }
-mov #0 16167; t0 para: mov
-; Se calcula la pos total para la Ref
-mov 16167 A 
-addi #31 
-mov A 16167 
-mov #0 16168
-; OPREL
-mov 16167 B
-mov @B+0 16167 
-mov 16167 A
-eqli 16168
-mov A 16169 
-mov #0 16170; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16170 A 
-addi #1 
-mov A 16170 
-mov #0 16171; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16171 A 
-addi #2 
-mov A 16171 
-mov #1 16172
-; OPAS
-mov 16171 B
-mov @B+0 16171 
-mov 16171 A
-subi 16172
-mov A 16173 
-; OPREL
-mov 16170 B
-mov @B+0 16170 
-mov 16170 A
-lssi 16173
-mov A 16174 
-; OPMD
-mov 16169 A
-muli 16174
-mov A 16175 
-; IF
-mov #0 16176; t0 para: laberinto
-; Calcula n para array
-mov #0 16177; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16177 A 
-addi #0 
-mov A 16177 
-; Calcula Ti
-mov 16176 A
-muli #5
-addi 16177
-mov A 16178
-; Calcula n para array
-mov #0 16179; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16179 A 
-addi #1 
-mov A 16179 
-mov #1 16180
-; OPAS
-mov 16179 B
-mov @B+0 16179 
-mov 16179 A
-addi 16180
-mov A 16181 
-; Calcula Ti
-mov 16178 A
-muli #5
-addi 16181
-mov A 16182
-; Se calcula la pos total para la Ref
-mov 16182 A 
-addi #3 
-mov A 16182 
-; IF
-; {
-
-mov #0 16183; t0 para: j
-mov #0 16184; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16184 A 
-addi #1 
-mov A 16184 
-mov #1 16185
-; OPAS
-mov 16184 B
-mov @B+0 16184 
-mov 16184 A
-addi 16185
-mov A 16186 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16183 A 
-addi #1 
-; Asignacion para j
-mov 16186 @A 
-mov #0 16187; t0 para: lon
-mov #0 16188; t0 para: lon
-; Se calcula la pos total para la Ref
-mov 16188 A 
-addi #28 
-mov A 16188 
-mov #1 16189
-; OPAS
-mov 16188 B
-mov @B+0 16188 
-mov 16188 A
-addi 16189
-mov A 16190 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16187 A 
-addi #28 
-; Asignacion para lon
-mov 16190 @A 
-mov #0 16191; t0 para: mov
-mov #1 16192
-; Se calcula la pos total para la Ref de la asignacion
-mov 16191 A 
-addi #31 
-; Asignacion para mov
-mov 16192 @A 
-; }
-mov #0 16193; t0 para: mov
-; Se calcula la pos total para la Ref
-mov 16193 A 
-addi #31 
-mov A 16193 
-mov #1 16194
-; OPREL
-mov 16193 B
-mov @B+0 16193 
-mov 16193 A
-eqli 16194
-mov A 16195 
-; IF
-; {
-
-mov #0 16196; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16196 A 
-addi #0 
-mov A 16196 
-mov 16196 B
-mov @B+0 16196 
-mov 16196 A
-wri A
-wrl
-mov #0 16197; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16197 A 
-addi #1 
-mov A 16197 
-mov 16197 B
-mov @B+0 16197 
-mov 16197 A
+mov A 16137 
+mov 16137 B
+mov @B+0 16137 
+mov 16137 A
 wri A
 wrl
 ; }
-; ELSE
-; {
 
-mov #0 16198; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16198 A 
-addi #0 
-mov A 16198 
-mov #0 16199; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16199 A 
-addi #2 
-mov A 16199 
-mov #1 16200
-; OPAS
-mov 16199 B
-mov @B+0 16199 
-mov 16199 A
-subi 16200
-mov A 16201 
-; OPREL
-mov 16198 B
-mov @B+0 16198 
-mov 16198 A
-lssi 16201
-mov A 16202 
-mov #0 16203; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16203 A 
-addi #1 
-mov A 16203 
-mov #0 16204; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16204 A 
-addi #2 
-mov A 16204 
-mov #1 16205
-; OPAS
-mov 16204 B
-mov @B+0 16204 
-mov 16204 A
-subi 16205
-mov A 16206 
-; OPREL
-mov 16203 B
-mov @B+0 16203 
-mov 16203 A
-lssi 16206
-mov A 16207 
-; OPAS
-mov 16202 A
-addi 16207
-mov A 16208 
-; IF
-mov #0 16209; t0 para: error
-mov #1 16210
-; Se calcula la pos total para la Ref de la asignacion
-mov 16209 A 
-addi #29 
-; Asignacion para error
-mov 16210 @A 
-; ELSE
-mov #0 16211; t0 para: salir
-mov #2 16212
-; Se calcula la pos total para la Ref de la asignacion
-mov 16211 A 
-addi #30 
-; Asignacion para salir
-mov 16212 @A 
-; }
-; }
-; }
-mov #0 16213; t0 para: error
-; Se calcula la pos total para la Ref
-mov 16213 A 
-addi #29 
-mov A 16213 
-; IF
-mov #0 16214; t0 para: lon
-mov #0 16215
-mov #1 16216
-; OPAS
-mov 16215 A
-subi 16216
-mov A 16217 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16214 A 
-addi #28 
-; Asignacion para lon
-mov 16217 @A 
-mov #0 16218; t0 para: lon
-; Se calcula la pos total para la Ref
-mov 16218 A 
-addi #28 
-mov A 16218 
-mov 16218 B
-mov @B+0 16218 
-mov 16218 A
-wri A
-wrl
-mov #0 16219; t0 para: laberinto
-; Calcula n para array
-mov #1 16220
-; Calcula Ti
-mov 16219 A
-muli #5
-addi 16220
-mov A 16221
-; Calcula n para array
-mov #1 16222
-; Calcula Ti
-mov 16221 A
-muli #5
-addi 16222
-mov A 16223
-mov #0 16224
-; Se calcula la pos total para la Ref de la asignacion
-mov 16223 A 
-addi #3 
-; Asignacion para laberinto
-mov 16224 @A 
-mov #0 16225; t0 para: lon
-mov #1 16226
-; Se calcula la pos total para la Ref de la asignacion
-mov 16225 A 
-addi #28 
-; Asignacion para lon
-mov 16226 @A 
-mov #0 16227; t0 para: error
-mov #0 16228
-; Se calcula la pos total para la Ref de la asignacion
-mov 16227 A 
-addi #29 
-; Asignacion para error
-mov 16228 @A 
-mov #0 16229; t0 para: salir
-mov #0 16230
-; Se calcula la pos total para la Ref de la asignacion
-mov 16229 A 
-addi #30 
-; Asignacion para salir
-mov 16230 @A 
-mov #0 16231; t0 para: i
-mov #0 16232
-; Se calcula la pos total para la Ref de la asignacion
-mov 16231 A 
-addi #0 
-; Asignacion para i
-mov 16232 @A 
-mov #0 16233; t0 para: j
-mov #0 16234
-; Se calcula la pos total para la Ref de la asignacion
-mov 16233 A 
-addi #1 
-; Asignacion para j
-mov 16234 @A 
-mov #0 16235; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16235 A 
-addi #0 
-mov A 16235 
-mov 16235 B
-mov @B+0 16235 
-mov 16235 A
-wri A
-wrl
-mov #0 16236; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16236 A 
-addi #1 
-mov A 16236 
-mov 16236 B
-mov @B+0 16236 
-mov 16236 A
-wri A
-wrl
-mov #0 16237; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16237 A 
-addi #0 
-mov A 16237 
-mov #0 16238; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16238 A 
-addi #2 
-mov A 16238 
-; OPREL
-mov 16237 B
-mov @B+0 16237 
-mov 16238 B
-mov @B+0 16238 
-mov 16237 A
-lssi 16238
-mov A 16239 
-mov #0 16240; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16240 A 
-addi #1 
-mov A 16240 
-mov #0 16241; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16241 A 
-addi #2 
-mov A 16241 
-; OPREL
-mov 16240 B
-mov @B+0 16240 
-mov 16241 B
-mov @B+0 16241 
-mov 16240 A
-lssi 16241
-mov A 16242 
-; OPMD
-mov 16239 A
-muli 16242
-mov A 16243 
-mov #0 16244; t0 para: error
-; Se calcula la pos total para la Ref
-mov 16244 A 
-addi #29 
-mov A 16244 
-mov #0 16245
-; OPREL
-mov 16244 B
-mov @B+0 16244 
-mov 16244 A
-eqli 16245
-mov A 16246 
-; OPMD
-mov 16243 A
-muli 16246
-mov A 16247 
-mov #0 16248; t0 para: salir
-; Se calcula la pos total para la Ref
-mov 16248 A 
-addi #30 
-mov A 16248 
-mov #0 16249
-; OPREL
-mov 16248 B
-mov @B+0 16248 
-mov 16248 A
-eqli 16249
-mov A 16250 
-; OPMD
-mov 16247 A
-muli 16250
-mov A 16251 
-; WHILE
-; {
-
-mov #0 16252; t0 para: laberinto
-; Calcula n para array
-mov #0 16253; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16253 A 
-addi #0 
-mov A 16253 
-; Calcula Ti
-mov 16252 A
-muli #5
-addi 16253
-mov A 16254
-; Calcula n para array
-mov #0 16255; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16255 A 
-addi #1 
-mov A 16255 
-; Calcula Ti
-mov 16254 A
-muli #5
-addi 16255
-mov A 16256
-; Se calcula la pos total para la Ref
-mov 16256 A 
-addi #3 
-mov A 16256 
-; IF
-; {
-; Tipo: int
-; mov => 
-;  dir:31 tp:0 tm:1 
-
-mov #0 16257; t0 para: mov
-mov #0 16258
-; Se calcula la pos total para la Ref de la asignacion
-mov 16257 A 
-addi #31 
-; Asignacion para mov
-mov 16258 @A 
-mov #0 16259; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16259 A 
-addi #0 
-mov A 16259 
-mov #0 16260; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16260 A 
-addi #2 
-mov A 16260 
-mov #1 16261
-; OPAS
-mov 16260 B
-mov @B+0 16260 
-mov 16260 A
-subi 16261
-mov A 16262 
-; OPREL
-mov 16259 B
-mov @B+0 16259 
-mov 16259 A
-lssi 16262
-mov A 16263 
-mov #0 16264; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16264 A 
-addi #1 
-mov A 16264 
-mov #0 16265; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16265 A 
-addi #2 
-mov A 16265 
-mov #1 16266
-; OPAS
-mov 16265 B
-mov @B+0 16265 
-mov 16265 A
-subi 16266
-mov A 16267 
-; OPREL
-mov 16264 B
-mov @B+0 16264 
-mov 16264 A
-lssi 16267
-mov A 16268 
-; OPMD
-mov 16263 A
-muli 16268
-mov A 16269 
-; IF
-; {
-
-mov #0 16270; t0 para: laberinto
-; Calcula n para array
-mov #0 16271; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16271 A 
-addi #0 
-mov A 16271 
-mov #1 16272
-; OPAS
-mov 16271 B
-mov @B+0 16271 
-mov 16271 A
-addi 16272
-mov A 16273 
-; Calcula Ti
-mov 16270 A
-muli #5
-addi 16273
-mov A 16274
-; Calcula n para array
-mov #0 16275; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16275 A 
-addi #1 
-mov A 16275 
-mov #1 16276
-; OPAS
-mov 16275 B
-mov @B+0 16275 
-mov 16275 A
-addi 16276
-mov A 16277 
-; Calcula Ti
-mov 16274 A
-muli #5
-addi 16277
-mov A 16278
-; Se calcula la pos total para la Ref
-mov 16278 A 
-addi #3 
-mov A 16278 
-; IF
-; {
-
-mov #0 16279; t0 para: i
-mov #0 16280; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16280 A 
-addi #0 
-mov A 16280 
-mov #1 16281
-; OPAS
-mov 16280 B
-mov @B+0 16280 
-mov 16280 A
-addi 16281
-mov A 16282 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16279 A 
-addi #0 
-; Asignacion para i
-mov 16282 @A 
-mov #0 16283; t0 para: j
-mov #0 16284; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16284 A 
-addi #1 
-mov A 16284 
-mov #1 16285
-; OPAS
-mov 16284 B
-mov @B+0 16284 
-mov 16284 A
-addi 16285
-mov A 16286 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16283 A 
-addi #1 
-; Asignacion para j
-mov 16286 @A 
-mov #0 16287; t0 para: lon
-mov #0 16288; t0 para: lon
-; Se calcula la pos total para la Ref
-mov 16288 A 
-addi #28 
-mov A 16288 
-mov #1 16289
-; OPAS
-mov 16288 B
-mov @B+0 16288 
-mov 16288 A
-addi 16289
-mov A 16290 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16287 A 
-addi #28 
-; Asignacion para lon
-mov 16290 @A 
-mov #0 16291; t0 para: mov
-mov #1 16292
-; Se calcula la pos total para la Ref de la asignacion
-mov 16291 A 
-addi #31 
-; Asignacion para mov
-mov 16292 @A 
-; }
-; }
-mov #0 16293; t0 para: mov
-; Se calcula la pos total para la Ref
-mov 16293 A 
-addi #31 
-mov A 16293 
-mov #0 16294
-; OPREL
-mov 16293 B
-mov @B+0 16293 
-mov 16293 A
-eqli 16294
-mov A 16295 
-mov #0 16296; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16296 A 
-addi #0 
-mov A 16296 
-mov #0 16297; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16297 A 
-addi #2 
-mov A 16297 
-mov #1 16298
-; OPAS
-mov 16297 B
-mov @B+0 16297 
-mov 16297 A
-subi 16298
-mov A 16299 
-; OPREL
-mov 16296 B
-mov @B+0 16296 
-mov 16296 A
-lssi 16299
-mov A 16300 
-; OPMD
-mov 16295 A
-muli 16300
-mov A 16301 
-; IF
-mov #0 16302; t0 para: laberinto
-; Calcula n para array
-mov #0 16303; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16303 A 
-addi #0 
-mov A 16303 
-mov #1 16304
-; OPAS
-mov 16303 B
-mov @B+0 16303 
-mov 16303 A
-addi 16304
-mov A 16305 
-; Calcula Ti
-mov 16302 A
-muli #5
-addi 16305
-mov A 16306
-; Calcula n para array
-mov #0 16307; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16307 A 
-addi #1 
-mov A 16307 
-; Calcula Ti
-mov 16306 A
-muli #5
-addi 16307
-mov A 16308
-; Se calcula la pos total para la Ref
-mov 16308 A 
-addi #3 
-mov A 16308 
-; IF
-; {
-
-mov #0 16309; t0 para: i
-mov #0 16310; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16310 A 
-addi #0 
-mov A 16310 
-mov #1 16311
-; OPAS
-mov 16310 B
-mov @B+0 16310 
-mov 16310 A
-addi 16311
-mov A 16312 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16309 A 
-addi #0 
-; Asignacion para i
-mov 16312 @A 
-mov #0 16313; t0 para: lon
-mov #0 16314; t0 para: lon
-; Se calcula la pos total para la Ref
-mov 16314 A 
-addi #28 
-mov A 16314 
-mov #1 16315
-; OPAS
-mov 16314 B
-mov @B+0 16314 
-mov 16314 A
-addi 16315
-mov A 16316 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16313 A 
-addi #28 
-; Asignacion para lon
-mov 16316 @A 
-mov #0 16317; t0 para: mov
-mov #1 16318
-; Se calcula la pos total para la Ref de la asignacion
-mov 16317 A 
-addi #31 
-; Asignacion para mov
-mov 16318 @A 
-; }
-mov #0 16319; t0 para: mov
-; Se calcula la pos total para la Ref
-mov 16319 A 
-addi #31 
-mov A 16319 
-mov #0 16320
-; OPREL
-mov 16319 B
-mov @B+0 16319 
-mov 16319 A
-eqli 16320
-mov A 16321 
-mov #0 16322; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16322 A 
-addi #1 
-mov A 16322 
-mov #0 16323; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16323 A 
-addi #2 
-mov A 16323 
-mov #1 16324
-; OPAS
-mov 16323 B
-mov @B+0 16323 
-mov 16323 A
-subi 16324
-mov A 16325 
-; OPREL
-mov 16322 B
-mov @B+0 16322 
-mov 16322 A
-lssi 16325
-mov A 16326 
-; OPMD
-mov 16321 A
-muli 16326
-mov A 16327 
-; IF
-mov #0 16328; t0 para: laberinto
-; Calcula n para array
-mov #0 16329; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16329 A 
-addi #0 
-mov A 16329 
-; Calcula Ti
-mov 16328 A
-muli #5
-addi 16329
-mov A 16330
-; Calcula n para array
-mov #0 16331; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16331 A 
-addi #1 
-mov A 16331 
-mov #1 16332
-; OPAS
-mov 16331 B
-mov @B+0 16331 
-mov 16331 A
-addi 16332
-mov A 16333 
-; Calcula Ti
-mov 16330 A
-muli #5
-addi 16333
-mov A 16334
-; Se calcula la pos total para la Ref
-mov 16334 A 
-addi #3 
-mov A 16334 
-; IF
-; {
-
-mov #0 16335; t0 para: j
-mov #0 16336; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16336 A 
-addi #1 
-mov A 16336 
-mov #1 16337
-; OPAS
-mov 16336 B
-mov @B+0 16336 
-mov 16336 A
-addi 16337
-mov A 16338 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16335 A 
-addi #1 
-; Asignacion para j
-mov 16338 @A 
-mov #0 16339; t0 para: lon
-mov #0 16340; t0 para: lon
-; Se calcula la pos total para la Ref
-mov 16340 A 
-addi #28 
-mov A 16340 
-mov #1 16341
-; OPAS
-mov 16340 B
-mov @B+0 16340 
-mov 16340 A
-addi 16341
-mov A 16342 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16339 A 
-addi #28 
-; Asignacion para lon
-mov 16342 @A 
-mov #0 16343; t0 para: mov
-mov #1 16344
-; Se calcula la pos total para la Ref de la asignacion
-mov 16343 A 
-addi #31 
-; Asignacion para mov
-mov 16344 @A 
-; }
-mov #0 16345; t0 para: mov
-; Se calcula la pos total para la Ref
-mov 16345 A 
-addi #31 
-mov A 16345 
-mov #1 16346
-; OPREL
-mov 16345 B
-mov @B+0 16345 
-mov 16345 A
-eqli 16346
-mov A 16347 
-; IF
-; {
-
-mov #0 16348; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16348 A 
-addi #0 
-mov A 16348 
-mov 16348 B
-mov @B+0 16348 
-mov 16348 A
-wri A
-wrl
-mov #0 16349; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16349 A 
-addi #1 
-mov A 16349 
-mov 16349 B
-mov @B+0 16349 
-mov 16349 A
-wri A
-wrl
-; }
-; ELSE
-; {
-
-mov #0 16350; t0 para: i
-; Se calcula la pos total para la Ref
-mov 16350 A 
-addi #0 
-mov A 16350 
-mov #0 16351; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16351 A 
-addi #2 
-mov A 16351 
-mov #1 16352
-; OPAS
-mov 16351 B
-mov @B+0 16351 
-mov 16351 A
-subi 16352
-mov A 16353 
-; OPREL
-mov 16350 B
-mov @B+0 16350 
-mov 16350 A
-lssi 16353
-mov A 16354 
-mov #0 16355; t0 para: j
-; Se calcula la pos total para la Ref
-mov 16355 A 
-addi #1 
-mov A 16355 
-mov #0 16356; t0 para: n
-; Se calcula la pos total para la Ref
-mov 16356 A 
-addi #2 
-mov A 16356 
-mov #1 16357
-; OPAS
-mov 16356 B
-mov @B+0 16356 
-mov 16356 A
-subi 16357
-mov A 16358 
-; OPREL
-mov 16355 B
-mov @B+0 16355 
-mov 16355 A
-lssi 16358
-mov A 16359 
-; OPAS
-mov 16354 A
-addi 16359
-mov A 16360 
-; IF
-mov #0 16361; t0 para: error
-mov #1 16362
-; Se calcula la pos total para la Ref de la asignacion
-mov 16361 A 
-addi #29 
-; Asignacion para error
-mov 16362 @A 
-; ELSE
-mov #0 16363; t0 para: salir
-mov #2 16364
-; Se calcula la pos total para la Ref de la asignacion
-mov 16363 A 
-addi #30 
-; Asignacion para salir
-mov 16364 @A 
-; }
-; }
-; }
-mov #0 16365; t0 para: error
-; Se calcula la pos total para la Ref
-mov 16365 A 
-addi #29 
-mov A 16365 
-; IF
-mov #0 16366; t0 para: lon
-mov #0 16367
-mov #1 16368
-; OPAS
-mov 16367 A
-subi 16368
-mov A 16369 
-; Se calcula la pos total para la Ref de la asignacion
-mov 16366 A 
-addi #28 
-; Asignacion para lon
-mov 16369 @A 
-mov #0 16370; t0 para: lon
-; Se calcula la pos total para la Ref
-mov 16370 A 
-addi #28 
-mov A 16370 
-mov 16370 B
-mov @B+0 16370 
-mov 16370 A
-wri A
-wrl
-; }
 halt
+

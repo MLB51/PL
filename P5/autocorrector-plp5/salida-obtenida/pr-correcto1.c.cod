@@ -1,5 +1,3 @@
-; START
-; VARS
 ; Tipo: int
 ; a => 
 ;  dir:0 tp:0 tm:1 
@@ -42,14 +40,16 @@ mov 16004 A
 addi #2 
 mov A 16004 
 mov $7.1 16005
-; OPREL
+; ---------------------OPREL
 mov 16004 B
 mov @B+0 16004 
 mov 16004 A
 itor
 gtrr 16005
 mov A 16006 
-; IF
+mov 16006 A
+; ---------------------IF
+jz L0 
 ; {
 ; Tipo: int
 ; a => 
@@ -66,15 +66,15 @@ mov A 16008
 mov #3 16009
 mov #10 16010
 mov #9 16011
-; OPMD
+; ---------------------OPMD
 mov 16010 A
 divi 16011
 mov A 16012 
-; OPMD
+; ---------------------OPMD
 mov 16009 A
 muli 16012
 mov A 16013 
-; OPAS
+; ---------------------OPAS
 mov 16008 B
 mov @B+0 16008 
 mov 16008 A
@@ -92,14 +92,14 @@ mov 16016 A
 addi #5 
 mov A 16016 
 mov #2 16017
-; OPMD
+; ---------------------OPMD
 mov 16016 B
 mov @B+0 16016 
 mov 16016 A
 divi 16017
 mov A 16018 
 mov #2 16019
-; OPMD
+; ---------------------OPMD
 mov 16018 A
 divi 16019
 mov A 16020 
@@ -119,6 +119,7 @@ mov 16021 A
 wri A
 wrl
 ; }
+L0 
 mov #0 16022; t0 para: a
 ; Se calcula la pos total para la Ref
 mov 16022 A 
@@ -140,4 +141,6 @@ mov 16023 A
 wri A
 wrl
 ; }
+
 halt
+
